@@ -1,4 +1,4 @@
-fetch('DataSiswa.txt')
+fetch('https://nakha-mub.github.io/kurikulum-smanko-sulsel/coba/DataSiswa.txt')
       .then(response => {
         if (!response.ok) {
           throw new Error('Gagal mengambil data');
