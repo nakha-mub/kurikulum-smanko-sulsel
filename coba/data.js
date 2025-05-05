@@ -1,4 +1,4 @@
-fetch('DataSiswa.txt')
+data = fetch('DataSiswa.txt')
       .then(response => {
         if (!response.ok) {
           throw new Error('Gagal mengambil data');
