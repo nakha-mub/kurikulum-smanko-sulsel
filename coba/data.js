@@ -1,4 +1,4 @@
-fetch('DataSiswa.txt')
+const rawData = fetch('DataSiswa.txt')
       .then(response => {
         if (!response.ok) {
           throw new Error('Gagal mengambil data');
@@ -6,7 +6,7 @@ fetch('DataSiswa.txt')
         return response.text();
       })
       .then(data => {
-        const rawData = data;
+        console.log = data;
       })
       .catch(error => {
         console.log = 'Terjadi kesalahan: ' + error.message;
