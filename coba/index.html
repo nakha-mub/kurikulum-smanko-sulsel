@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login Kelulusan</title>
+  <script src="data.js"></script>
+  <style>
+    body { font-family: Arial; text-align: center; padding: 50px; }
+    input { padding: 10px; margin: 10px; width: 200px; }
+    button { padding: 10px 20px; }
+  </style>
+</head>
+<body>
+  <h2>Login Pengumuman Kelulusan</h2>
+  <input type="text" id="nisn" placeholder="Masukkan NISN" /><br />
+  <input type="password" id="password" placeholder="Password = NISN" /><br />
+  <button onclick="login()">Login</button>
+
+  <p id="error" style="color: red;"></p>
+
+  <script>
+    function login() {
+      const nisn = document.getElementById("nisn").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const siswa = students.find(s => s.nisn === nisn);
+	  console.log(siswa.nisn);
+      
+      if (siswa && password === siswa.nisn) {
+        localStorage.setItem("siswa", JSON.stringify(siswa));
+        window.location.href = "dashboard.html";
+      } else {
+        document.getElementById("error").innerText = "NISN atau password salah.";
+      }
+    }
+  </script>
+</body>
+</html>
