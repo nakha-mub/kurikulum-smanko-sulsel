@@ -21,7 +21,9 @@
     <h2>Pengumuman Kelulusan</h2>
     <p id="nama"></p>
     <p id="kelas"></p>
+    <p id="nis"></p>
     <p id="jk"></p>
+    <p id="cabor"></p>
     <p id="status" class=""></p>
     <button onclick="logout()">Logout</button>
   </div>
@@ -34,7 +36,9 @@
     } else {
       document.getElementById("nama").innerText = `Nama: ${siswa.nama}`;
       document.getElementById("kelas").innerText = `Kelas: ${siswa.kelas}`;
-      document.getElementById("jk").innerText = `Rata-rata Nilai: ${siswa.jk}`;
+      document.getElementById("nis").innerText = `NIS/NISN: ${siswa.nis} / ${siswa.nisn}`;
+      document.getElementById("jk").innerText = `Jenis Kelamin: ${siswa.jk}`;
+       document.getElementById("cabor").innerText = `Cabang Olahraga: ${siswa.cabor}`;
       const statusEl = document.getElementById("status");
       statusEl.innerText = `Status: ${siswa.status}`;
       statusEl.className = siswa.status === "Lulus" ? "lulus" : "tidak-lulus";
