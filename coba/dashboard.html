@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kartu Kelulusan</title>
+  <style>
+    body { font-family: Arial; padding: 40px; background: #f4f4f4; }
+    .card {
+      max-width: 400px; margin: auto; padding: 20px;
+      background: white; border-radius: 10px; box-shadow: 0 0 10px #ccc;
+      text-align: center;
+    }
+    h2 { margin-bottom: 20px; }
+    p { font-size: 18px; }
+    .lulus { color: green; font-weight: bold; }
+    .tidak-lulus { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Pengumuman Kelulusan</h2>
+    <p id="nama"></p>
+    <p id="kelas"></p>
+    <p id="jk"></p>
+    <p id="status" class=""></p>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    const siswa = JSON.parse(localStorage.getItem("siswa"));
+
+    if (!siswa) {
+      window.location.href = "index.html";
+    } else {
+      document.getElementById("nama").innerText = `Nama: ${siswa.nama}`;
+      document.getElementById("kelas").innerText = `Kelas: ${siswa.kelas}`;
+      document.getElementById("jk").innerText = `Rata-rata Nilai: ${siswa.jk}`;
+      const statusEl = document.getElementById("status");
+      statusEl.innerText = `Status: ${siswa.status}`;
+      statusEl.className = siswa.status === "Lulus" ? "lulus" : "tidak-lulus";
+    }
+
+    function logout() {
+      localStorage.removeItem("siswa");
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>
