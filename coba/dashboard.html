@@ -39,11 +39,11 @@
       document.getElementById("nis").innerText = `NIS/NISN: ${siswa.nis} / ${siswa.nisn}`;
       document.getElementById("jk").innerText = `Jenis Kelamin: ${siswa.jk}`;
       document.getElementById("cabor").innerText = `Cabang Olahraga: ${siswa.cabor}`;
-      document.getElementById("status").innerText = `Cabang Olahraga: ${siswa.status}`;
+      //document.getElementById("status").innerText = `Status: ${siswa.status}`;
       
-      /*const statusEl = document.getElementById("status");
+      const statusEl = document.getElementById("status");
       statusEl.innerText = `Status: ${siswa.status}`;
-      statusEl.className = siswa.status === "Lulus" ? "lulus" : "tidak-lulus";*/
+      statusEl.className = siswa.status === "LULUS" ? "lulus" : "tidak-lulus";
     }
 
     function logout() {
