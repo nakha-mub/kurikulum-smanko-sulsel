@@ -24,7 +24,7 @@
       const nisn = document.getElementById("nisn").value.trim();
       const password = document.getElementById("password").value.trim();
       const siswa = students.find(s => s.nisn === nisn);
-	  console.log(siswa.nisn);
+	  //console.log(siswa.nisn);
       
       if (siswa && password === siswa.nisn) {
         localStorage.setItem("siswa", JSON.stringify(siswa));
