@@ -11,8 +11,8 @@ fetch('https://nakha-mub.github.io/kurikulum-smanko-sulsel/coba/DataSiswa.txt')
       .catch(error => {
         document.getElementById('output').value = 'Terjadi kesalahan: ' + error.message;
       });
-
-const rawData = document.getElementById('output').value;
+var a = document.getElementById('output').value;
+const rawData = a;
 
 /*
 const rawData = `
