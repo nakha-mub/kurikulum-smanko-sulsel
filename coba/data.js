@@ -1,18 +1,4 @@
-async function fetchData(url) {
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const text = await response.text();
-    return text;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return null;
-  }
-}
-
-fetchData('DataSiswa.txt')
+fetch('DataSiswa.txt')
       .then(response => {
         if (!response.ok) {
           throw new Error('Gagal mengambil data');
@@ -20,13 +6,13 @@ fetchData('DataSiswa.txt')
         return response.text();
       })
       .then(data => {
-        const rawData = data;
+        document.getElementById('output').textContent = data;
       })
       .catch(error => {
-       const rawData = 'Terjadi kesalahan: ' + error.message;
+        document.getElementById('output').textContent = 'Terjadi kesalahan: ' + error.message;
       });
 
-//const rawData = data;
+const rawData = document.getElementById('output').textContent;
 
 
 /*const rawData = `
