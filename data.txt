@@ -1,0 +1,3 @@
+Nama: Andi
+NISN: 1234567890
+Status: Lulus

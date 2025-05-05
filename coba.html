@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Fetch Data dari TXT</title>
+</head>
+<body>
+  <h2>Data Siswa</h2>
+  <pre id="output">Memuat data...</pre>
+
+  <script>
+    // Fungsi untuk fetch file txt
+    fetch('data.txt')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Gagal mengambil data');
+        }
+        return response.text();
+      })
+      .then(data => {
+        document.getElementById('output').textContent = data;
+      })
+      .catch(error => {
+        document.getElementById('output').textContent = 'Terjadi kesalahan: ' + error.message;
+      });
+  </script>
+</body>
+</html>
