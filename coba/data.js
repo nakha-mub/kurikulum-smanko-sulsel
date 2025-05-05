@@ -1,4 +1,18 @@
-fetch('DataSiswa.txt')
+async function fetchData(url) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const text = await response.text();
+    return text;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return null;
+  }
+}
+
+fetchData('DataSiswa.txt')
       .then(response => {
         if (!response.ok) {
           throw new Error('Gagal mengambil data');
