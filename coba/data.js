@@ -6,10 +6,10 @@ fetch('https://nakha-mub.github.io/kurikulum-smanko-sulsel/coba/DataSiswa.txt')
         return response.text();
       })
       .then(data => {
-        document.getElementById('output').textContent = data;
+        document.getElementById('output').value = data;
       })
       .catch(error => {
-        document.getElementById('output').textContent = 'Terjadi kesalahan: ' + error.message;
+        document.getElementById('output').value = 'Terjadi kesalahan: ' + error.message;
       });
 
 const rawData = document.getElementById('output').value;
