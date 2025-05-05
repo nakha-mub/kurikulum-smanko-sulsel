@@ -38,10 +38,12 @@
       document.getElementById("kelas").innerText = `Kelas: ${siswa.kelas}`;
       document.getElementById("nis").innerText = `NIS/NISN: ${siswa.nis} / ${siswa.nisn}`;
       document.getElementById("jk").innerText = `Jenis Kelamin: ${siswa.jk}`;
-       document.getElementById("cabor").innerText = `Cabang Olahraga: ${siswa.cabor}`;
-      const statusEl = document.getElementById("status");
+      document.getElementById("cabor").innerText = `Cabang Olahraga: ${siswa.cabor}`;
+      document.getElementById("status").innerText = `Cabang Olahraga: ${siswa.status}`;
+      
+      /*const statusEl = document.getElementById("status");
       statusEl.innerText = `Status: ${siswa.status}`;
-      statusEl.className = siswa.status === "Lulus" ? "lulus" : "tidak-lulus";
+      statusEl.className = siswa.status === "Lulus" ? "lulus" : "tidak-lulus";*/
     }
 
     function logout() {
