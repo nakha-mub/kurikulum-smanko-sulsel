@@ -1,6 +1,6 @@
 Nama	NIS	NISN	Password	Kelas	JK	Cabor	Status Kelulusan
-Aditia Yuda	11922	59335723	siluman	XII RPL	Laki-laki	Tenis Meja	LULUS
-Budi Santoso	11923	59335724	rahasia	XII RPL	Laki-laki	Bulu Tangkis	TIDAK LULUS
-Citra Dewi	11924	59335725	citraku	XII TKJ	Perempuan	Voli	LULUS
-Dedi Kurniawan	11925	59335726	dedikarya	XII RPL	Laki-laki	Sepak Bola	TIDAK LULUS
-Eka Novita	11926	59335727	novi123	XII TKJ	Perempuan	Atletik	LULUS
+Aditia Yuda	11922	0059335723	siluman	XII RPL	Laki-laki	Tenis Meja	LULUS
+Budi Santoso	11923	0059335724	rahasia	XII RPL	Laki-laki	Bulu Tangkis	TIDAK LULUS
+Citra Dewi	11924	0059335725	citraku	XII TKJ	Perempuan	Voli	LULUS
+Dedi Kurniawan	11925	0059335726	dedikarya	XII RPL	Laki-laki	Sepak Bola	TIDAK LULUS
+Eka Novita	11926	0059335727	novi123	XII TKJ	Perempuan	Atletik	LULUS
