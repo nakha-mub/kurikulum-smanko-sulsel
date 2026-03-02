@@ -149,7 +149,7 @@ const students = rawData.trim().split('\n').map(line => {
 });
 
 console.log(students);
-document.getElementById('output').value = "aa "+students;
+document.getElementById('output').value = students;
 
 /*const students = [
   {
