@@ -1,38 +1,226 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <title>Login Kelulusan</title>
-  
-  <style>
-    body { font-family: Arial; text-align: center; padding: 50px; }
-    input { padding: 10px; margin: 10px; width: 200px; }
-    button { padding: 10px 20px; }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sertifikat TKA | SMAN Khusus Keberbakatan Olahraga Sulsel</title>
+	<link rel="icon" type="image/png" href="assets/img/Logo SMANKO fix (bg putih).png">
+    
+    <style>
+        :root {
+            --primary-color: #1e3a8a; /* Biru Navy */
+            --secondary-color: #f8fafc;
+            --accent-color: #ef4444; /* Merah untuk error/aksen */
+            --text-dark: #1f2937;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e2e8f0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header & Logo */
+        header {
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .logo-container img {
+            height: 80px; /* Sesuaikan dengan logo sekolah Anda */
+            margin-bottom: 5px;
+        }
+
+        header h1 {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin: 5px 0;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Main Content / Login Card */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: white;
+            padding: 10px 40px 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-card h2 {
+            color: var(--text-dark);
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            box-sizing: border-box; /* Penting agar padding tidak merusak lebar */
+            transition: border 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            ring: 2px solid var(--primary-color);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #172554;
+        }
+
+        #error {
+            color: var(--accent-color);
+            font-size: 0.85rem;
+            margin-top: 15px;
+            min-height: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-info {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 15px;
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+    </style>
 </head>
 <body>
-  <h2>Login Pengumuman Kelulusan</h2>
-  <input type="text" id="nisn" placeholder="Masukkan NISN" /><br />
-  <input type="password" id="password" placeholder="Password = NISN" /><br />
-  <button onclick="login()">Login</button>
 
-  <p id="error" style="color: red;"></p>
-<textarea id="output">Memuat data...</textarea>
-	<script src="data.js"></script>
-  <script>
-    function login() {
-      const nisn = document.getElementById("nisn").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const siswa = students.find(s => s.nisn === nisn);
-	  //console.log(siswa.nisn);
-      
-      if (siswa && password === siswa.nisn) {
-        localStorage.setItem("siswa", JSON.stringify(siswa));
-        window.location.href = "dashboard.html";
-      } else {
-        document.getElementById("error").innerText = "NISN atau password salah.";
-      }
-    }
-  </script>
+    <header>
+        <div class="logo-container">
+            <img src="assets/img/Logo SMANKO fix (bg putih).png" alt="Logo Sekolah">
+        </div>
+        <h1>UPT SMAN Khusus Keberbakatan Olahraga</h1>
+        <h1 style="font-size: 1rem; font-weight: normal;">Dinas Pendidikan <br>Pemerintah Provinsi Sulawesi Selatan</h1>
+    </header>
+
+    <main>
+        <div class="login-card">
+            <h2>SERTIFIKAT HASIL TKA <br>TAHUN 2025</h2>
+            
+            <div class="input-group">
+                <label for="nisn">Nomor Induk Siswa Nasional (NISN)</label>
+                <input type="text" id="nisn" placeholder="Contoh: 0041234567" />
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Gunakan NISN sebagai password" />
+            </div>
+
+            <button onclick="login()">Masuk ke Sistem</button>
+            <span id="error"></span>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-info">
+                <strong>Kontak Sekolah:</strong><br>
+                Jl. Pajjaiang Komp. GOR Sudiang, Kota Makassar, Sulawesi Selatan<br>
+                
+            </div>
+            <div class="footer-bottom">
+                &copy; 2025 UPT SMAN Khusus Keberbakatan Olahraga Prov. Sulsel. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script>
+        function login() {
+            const nisnInput = document.getElementById("nisn");
+            const passwordInput = document.getElementById("password");
+            const errorElement = document.getElementById("error");
+
+            const nisn = nisnInput.value.trim();
+            const password = passwordInput.value.trim();
+
+            // Validasi sederhana jika data.js belum termuat
+            if (typeof students === 'undefined') {
+                errorElement.innerText = "Sistem sedang memuat data, silakan tunggu.";
+                return;
+            }
+
+            const siswa = students.find(s => s.nisn === nisn);
+
+            if (siswa && password === siswa.nisn) {
+                localStorage.setItem("siswa", JSON.stringify(siswa));
+                window.location.href = "dashboard.html";
+            } else {
+                errorElement.innerText = "NISN atau Password tidak ditemukan.";
+                // Memberikan efek visual merah pada input saat salah
+                nisnInput.style.borderColor = "var(--accent-color)";
+                passwordInput.style.borderColor = "var(--accent-color)";
+            }
+        }
+    </script>
 </body>
 </html>
