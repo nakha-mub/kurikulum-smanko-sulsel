@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengumuman Kelulusan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            text-align: center;
+        }
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .card {
+            text-align: left;
+            background-color: #e9f7ef;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 20px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Pengumuman Kelulusan</h2>
+        <input type="text" id="nisn" placeholder="Masukkan NISN">
+        <input type="password" id="password" placeholder="Masukkan Password">
+        <button onclick="cekKelulusan()">Cek Kelulusan</button>
+        <div id="hasil" class="card" style="display:none"></div>
+        <div id="error" class="error"></div>
+    </div>
+
+    <script>
+        async function fetchData() {
+            const response = await fetch('data_siswa.txt');
+            return await response.text();
+        }
+
+        function parseData(text) {
+            const lines = text.trim().split('\n');
+            const headers = lines[0].split('\t');
+            const data = lines.slice(1).map(line => {
+                const values = line.split('\t');
+                const obj = {};
+                headers.forEach((header, i) => obj[header.trim()] = values[i].trim());
+                return obj;
+            });
+            return data;
+        }
+
+        async function cekKelulusan() {
+            const nisn = document.getElementById('nisn').value;
+            const password = document.getElementById('password').value;
+            const hasilDiv = document.getElementById('hasil');
+            const errorDiv = document.getElementById('error');
+
+            hasilDiv.style.display = 'none';
+            errorDiv.textContent = '';
+
+            const textData = await fetchData();
+            const siswaList = parseData(textData);
+            const siswa = siswaList.find(s => s['NISN'] === nisn && s['PASSWORD'] === password);
+
+            if (siswa) {
+                hasilDiv.innerHTML = `
+                    <strong>Nama:</strong> ${siswa['Nama']}<br>
+                    <strong>NIS:</strong> ${siswa['NIS']}<br>
+                    <strong>NISN:</strong> ${siswa['NISN']}<br>
+                    <strong>Kelas:</strong> ${siswa['Kelas']}<br>
+                    <strong>Jenis Kelamin:</strong> ${siswa['JK']}<br>
+                    <strong>Cabang Olahraga:</strong> ${siswa['Cabor']}<br>
+                    <strong>Status Kelulusan:</strong> <b>${siswa['Status Kelulusan']}</b>
+                `;
+                hasilDiv.style.display = 'block';
+            } else {
+                errorDiv.textContent = 'NISN atau Password salah.';
+            }
+        }
+    </script>
+</body>
+</html>
