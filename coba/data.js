@@ -1,4 +1,4 @@
-/*fetch('https://nakha-mub.github.io/kurikulum-smanko-sulsel/coba/DataSiswa.txt')
+fetch('https://nakha-mub.github.io/kurikulum-smanko-sulsel/coba/DataSiswa.txt')
       .then(response => {
         if (!response.ok) {
           throw new Error('Gagal mengambil data');
@@ -6,16 +6,15 @@
         return response.text();
       })
       .then(data => {
-        document.getElementById('output').value = data;
+        const rawData = data;
       })
       .catch(error => {
-        document.getElementById('output').value = 'Terjadi kesalahan: ' + error.message;
+        const rawData = 'Terjadi kesalahan: ' + error.message;
       });
-var a = document.getElementById('output').value;
-const rawData = a;
-*/
+//var a = document.getElementById('output').value;
+//const rawData = a;
 
-const rawData = `
+/*const rawData = `
 Kelas	NIS	NISN	Nama	JK	Cabor	Status
 XII IPA 1	22231001	78687146	A. ARYA INDRA RABBANI	L	SEPAK BOLA	LULUS
 XII IPA 1	22231013	68864284	ACHMAD HAMZAH	L	KARATE	LULUS
@@ -140,6 +139,7 @@ XII IPS 2	22231128	0058423972	ERWIN JAYADI	L	KEMPO	LULUS
 XII IPS 2	24251190	0075412552	ALMUNAWARAH	P	BULUTANGKIS	LULUS
 
 `;
+*/
 // Tempelkan seluruh isi file di sini
 
 
