@@ -1,73 +1,244 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <title>Kartu Kelulusan</title>
-  <style>
-    body { font-family: Arial; padding: 40px; background: #f4f4f4; }
-    .card {
-      max-width: 400px; margin: auto; padding: 20px;
-      background: white; border-radius: 10px; box-shadow: 0 0 10px #ccc;
-      text-align: center;
-    }
-    h2 { margin-bottom: 20px; }
-    p { font-size: 18px; }
-    .lulus { color: green; font-weight: bold; }
-    .tidak-lulus { color: red; font-weight: bold; }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sertifikat TKA | SMAN Khusus Keberbakatan Olahraga Sulsel</title>
+	<link rel="icon" type="image/png" href="assets/img/Logo SMANKO fix (bg putih).png">
+    
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #f8fafc;
+            --success-color: #16a34a;
+            --error-color: #dc2626;
+            --text-dark: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #e2e8f0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header yang sama dengan Login */
+        header {
+            background-color: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+
+        header img { height: 50px; }
+        header h1 { font-size: 1rem; color: var(--primary-color); margin: 0; text-transform: uppercase; }
+
+        main {
+            flex: 1;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .result-card {
+            background: white;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .card-header h2 { margin: 0; font-size: 1.2rem; letter-spacing: 1px; }
+
+        .card-body { padding: 30px; }
+
+        /* Styling Tabel Data */
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
+
+        .info-table td {
+            padding: 12px 5px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.95rem;
+        }
+
+        .label { color: #64748b; font-weight: 500; width: 40%; }
+        .value { color: var(--text-dark); font-weight: 600; }
+
+        /* Status Styling */
+        .status-box {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .lulus { 
+            background-color: #dcfce7; 
+            color: var(--success-color); 
+            border: 2px solid var(--success-color); 
+            font-weight: bold;
+        }
+        
+        .tidak-lulus { 
+            background-color: #fee2e2; 
+            color: var(--error-color); 
+            border: 2px solid var(--error-color); 
+            font-weight: bold;
+        }
+
+        /* Tombol Aksi */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-download { background-color: var(--primary-color); color: white; }
+        .btn-download:hover { background-color: #1e40af; transform: translateY(-2px); }
+
+        .btn-logout { background-color: #f1f5f9; color: #475569; }
+        .btn-logout:hover { background-color: #e2e8f0; }
+
+        /* Footer */
+        footer {
+            background-color: #1e293b;
+            color: #cbd5e1;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+    </style>
 </head>
 <body>
-  <div class="card">
-    <h2>Pengumuman Kelulusan</h2>
-    <p id="nama"></p>
-    <p id="kelas"></p>
-    <p id="nis"></p>
-    <p id="jk"></p>
-    <p id="cabor"></p>
-    <p id="status" class=""></p>
-    <button onclick="logout()">Logout</button>
 
-  <script>
-    const siswa = JSON.parse(localStorage.getItem("siswa"));
-    console.log(siswa);
-
-    if (!siswa) {
-      window.location.href = "index.html";
-    } else {
-      document.getElementById("nama").innerText = `Nama: ${siswa.nama}`;
-      document.getElementById("kelas").innerText = `Kelas: ${siswa.kelas}`;
-      document.getElementById("nis").innerText = `NIS/NISN: ${siswa.nis} / ${siswa.nisn}`;
-      document.getElementById("jk").innerText = `Jenis Kelamin: ${siswa.jk}`;
-      document.getElementById("cabor").innerText = `Cabang Olahraga: ${siswa.cabor}`;
-      //document.getElementById("status").innerText = `Status: ${siswa.status}`;
-      
-      const statusEl = document.getElementById("status");
-      statusEl.innerText = `Status: ${siswa.status}`;
-      statusEl.className = siswa.status === "LULUS" ? "lulus" : "tidak-lulus";
-	  
-	  
-    }
-
-    function logout() {
-      localStorage.removeItem("siswa");
-      window.location.href = "index.html";
-    }
+    <header>
+        <img src="assets/img/Logo SMANKO fix (bg putih).png" alt="Logo Sekolah">
+        <h1>Dashboard Data Peserta Didik</h1>
+    </header>
 	
-	function downloadPDF() {
-		// Asumsi file tersimpan di folder yang sama dengan format: nama_user.pdf
-		const fileUrl = `${siswa.nisn}.pdf`; 
 
-		const link = document.createElement('a');
-		link.href = fileUrl;
-		link.download = `Sertifikat TKA (${siswa.nisn}) ${siswa.nama}.pdf`; // Nama file saat di-download
-		document.body.appendChild(link);
-		link.click();
-		document.body.removeChild(link);
-	}
-  </script>
+    <main>
+        <div class="result-card">
+            <div class="card-header">
+                <h2>DATA UMUM SERTIFIKAT TKA</h2>
+            </div>
+            
+            <div class="card-body">
+                <table class="info-table">
+                    <tr><td class="label">Nama Lengkap</td><td class="value" id="nama">-</td></tr>
+                    <tr><td class="label">NIS / NISN</td><td class="value" id="nisn">-</td></tr>
+                    <tr><td class="label">Kelas</td><td class="value" id="kelas">-</td></tr>
+                    <tr><td class="label">Jenis Kelamin</td><td class="value" id="jk">-</td></tr>
+                    <tr><td class="label">Cabang Olahraga</td><td class="value" id="cabor">-</td></tr>
+                </table>
 
-	<button onclick="downloadPDF()">Download Sertifikat</button>
-  </div>
-	
+                <div class="action-buttons">
+                    <button id="btnDownload" onclick="downloadPDF()" class="btn btn-download">Download Sertifikat (PDF)</button>
+                    <button onclick="logout()" class="btn btn-logout">Keluar dari Sistem</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-info">
+                <strong>Kontak Sekolah:</strong><br>
+                Jl. Pajjaiang Komp. GOR Sudiang, Kota Makassar, Sulawesi Selatan<br>
+                
+            </div>
+            <div class="footer-bottom">
+                &copy; 2025 UPT SMAN Khusus Keberbakatan Olahraga Prov. Sulsel. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Ambil data dari localStorage
+        const siswa = JSON.parse(localStorage.getItem("siswa"));
+
+        if (!siswa) {
+            // Jika tidak ada data login, tendang kembali ke index
+            window.location.href = "index.html";
+        } else {
+            // Isi data ke elemen HTML
+            document.getElementById("nama").innerText = siswa.nama;
+            document.getElementById("nisn").innerText = `${siswa.nis} / ${siswa.nisn}`;
+            document.getElementById("kelas").innerText = siswa.kelas;
+			if (siswa.jk === "L") { 
+				var gd = "LAKI-LAKI"; 
+			} else { 
+				var gd = "PEREMPUAN"; 
+			}
+            document.getElementById("jk").innerText = gd;
+			
+            document.getElementById("cabor").innerText = siswa.cabor;
+            
+            const statusText = siswa.status.toUpperCase();
+            //const statusEl = document.getElementById("status");
+            const containerEl = document.getElementById("status-container");
+            
+            /*statusEl.innerText = statusText;
+
+            // Logika styling status dan tombol download
+            if (statusText === "LULUS") {
+                containerEl.className = "status-box lulus";
+            } else {
+                containerEl.className = "status-box tidak-lulus";
+                // Opsional: Sembunyikan tombol download jika tidak lulus
+                // document.getElementById("btnDownload").style.display = "none";
+            }*/
+        }
+
+        function logout() {
+            localStorage.removeItem("siswa");
+            window.location.href = "index.html";
+        }
+
+        function downloadPDF() {
+            if (!siswa) return;
+            // Menuju folder file_sertifikat/ dengan nama file NISN.pdf
+            const fileUrl = `file_sertifikat/${siswa.nisn}.pdf`;
+            
+            const link = document.createElement('a');
+            link.href = fileUrl;
+            link.download = `Sertifikat_${siswa.nisn}_${siswa.nama.replace(/\s+/g, '_')}.pdf`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+			alert("File Sertifikat anda sudah di-unduh");
+        }
+    </script>
 </body>
 </html>
