@@ -6,13 +6,13 @@ fetch('https://nakha-mub.github.io/kurikulum-smanko-sulsel/coba/DataSiswa.txt')
         return response.text();
       })
       .then(data => {
-        const rawData = data;
+        document.getElementById('output').value = data;
       })
       .catch(error => {
-        const rawData = 'Terjadi kesalahan: ' + error.message;
+        document.getElementById('output').value = 'Terjadi kesalahan: ' + error.message;
       });
-//var a = document.getElementById('output').value;
-//const rawData = a;
+const a = document.getElementById('output').value;
+const rawData = a;
 
 /*const rawData = `
 Kelas	NIS	NISN	Nama	JK	Cabor	Status
