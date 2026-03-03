@@ -229,11 +229,11 @@
         function downloadPDF() {
             if (!siswa) return;
             // Menuju folder file_sertifikat/ dengan nama file NISN.pdf
-            const fileUrl = `file_sertifikat/${siswa.nisn}.pdf`;
+            const fileUrl = `file_sertifikat/${siswa.nama_file}.pdf`;
             
             const link = document.createElement('a');
             link.href = fileUrl;
-            link.download = `Sertifikat_${siswa.nisn}_${siswa.nama.replace(/\s+/g, '_')}.pdf`;
+            link.download = `Sertifikat TKA - ${siswa.nama.replace(/\s+/g, '_')} - ${siswa.nisn}.pdf`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
