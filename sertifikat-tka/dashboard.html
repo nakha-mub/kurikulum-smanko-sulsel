@@ -184,7 +184,7 @@
                     <table class="info-table">
                         <tr><td class="label">Nama Lengkap</td><td class="value" id="nama" style="font-weight: bold;">-</td></tr>
 						<tr><td class="label">Tempat lahir</td><td class="value" id="tpt_lahir">-</td></tr>
-						<tr><td class="label">Tanggal lahir</td><td class="value" id="tgl_lahir">-</td></tr>
+						<!--<tr><td class="label">Tanggal lahir</td><td class="value" id="tgl_lahir">-</td></tr>-->
                         <tr><td class="label">NIS / NISN</td><td class="value" id="nisn">-</td></tr>
                         <tr><td class="label">Kelas</td><td class="value" id="kelas">-</td></tr>
                         <tr><td class="label">Jenis Kelamin</td><td class="value" id="jk">-</td></tr>
@@ -230,8 +230,8 @@
             document.getElementById("kelas").innerText = siswa.kelas;
             document.getElementById("jk").innerText = (siswa.jk === "L") ? "LAKI-LAKI" : "PEREMPUAN";
             document.getElementById("cabor").innerText = siswa.cabor;
-            document.getElementById("tpt_lahir").innerText = siswa.tpt_lahir;
-            document.getElementById("tgl_lahir").innerText = siswa.tgl_lahir;
+            document.getElementById("tpt_lahir").innerText = siswa.tpt_lahir+", "+siswa.tgl_lahir;
+            //document.getElementById("tgl_lahir").innerText = siswa.tgl_lahir;
             document.getElementById("nama_ortu").innerText = siswa.nama_ortu;
 
             // Logika menampilkan foto berdasarkan NISN
