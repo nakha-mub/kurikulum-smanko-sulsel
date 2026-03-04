@@ -96,7 +96,7 @@
 
         .info-table td {
             padding: 12px 5px;
-            border-bottom: 1px solid #f1f5f9;
+            border-bottom: 0px solid #f1f5f9;
             font-size: 0.95rem;
         }
 
@@ -130,12 +130,30 @@
         .btn-logout { background-color: #f1f5f9; color: #475569; }
         .btn-logout:hover { background-color: #e2e8f0; }
 
+        /* Footer */
         footer {
             background-color: #1e293b;
             color: #cbd5e1;
-            padding: 20px;
+            padding: 30px 20px;
             text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-info {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 15px;
             font-size: 0.8rem;
+            opacity: 0.8;
         }
 
         /* Responsive: Foto pindah ke atas tabel pada layar kecil */
@@ -170,7 +188,7 @@
                         <tr><td class="label">NIS / NISN</td><td class="value" id="nisn">-</td></tr>
                         <tr><td class="label">Kelas</td><td class="value" id="kelas">-</td></tr>
                         <tr><td class="label">Jenis Kelamin</td><td class="value" id="jk">-</td></tr>
-                        <tr><td class="label">Jenis Kelamin</td><td class="value" id="nama_ortu">-</td></tr>
+                        <tr><td class="label">Nama Orang Tua</td><td class="value" id="nama_ortu">-</td></tr>
                         <tr><td class="label">Cabang Olahraga</td><td class="value" id="cabor">-</td></tr>
                     </table>
                 </div>
@@ -223,7 +241,7 @@
             
             // Jika foto tidak ditemukan, gunakan gambar default
             fotoEl.onerror = function() {
-                this.src = "assets/img/default-user.png";
+                this.src = "assets/img/default-user.jpg";
             };
         }
 
