@@ -126,8 +126,8 @@
 
         /* Footer */
         footer {
-            background-color: var(--primary-color);
-            color: white;
+            background-color: #1e293b;
+            color: #cbd5e1;
             padding: 30px 20px;
             text-align: center;
             font-size: 0.9rem;
@@ -215,7 +215,7 @@
                 localStorage.setItem("siswa", JSON.stringify(siswa));
                 window.location.href = "dashboard.html";
             } else {
-                errorElement.innerText = "NISN atau Password tidak ditemukan.";
+                errorElement.innerText = "NISN atau Password tidak ditemukan. \n Hubungi nomor ini (085299425352 - Naufal Khalil)";
                 // Memberikan efek visual merah pada input saat salah
                 nisnInput.style.borderColor = "var(--accent-color)";
                 passwordInput.style.borderColor = "var(--accent-color)";
