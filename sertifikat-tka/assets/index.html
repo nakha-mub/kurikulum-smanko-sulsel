@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Akses Dilarang | SMANKO</title>
+  <title>Akses Dilarang | SMANKO SULSEL</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -36,18 +36,28 @@
     h1 { font-size: 2.5rem; margin-bottom: 10px; color: #1e3a8a; }
     p { color: #64748b; margin-bottom: 30px; line-height: 1.6; }
 
-    .btn-home {
+    /* Container tombol agar bisa rapi */
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn {
       display: inline-block;
       padding: 12px 30px;
-      background: #1e3a8a;
-      color: white;
       text-decoration: none;
       border-radius: 8px;
       font-weight: 600;
       transition: background 0.3s;
     }
 
+    .btn-home { background: #1e3a8a; color: white; }
     .btn-home:hover { background: #172554; }
+
+    /* Style untuk tombol kembali ke atas */
+    .btn-back { background: #e2e8f0; color: #475569; }
+    .btn-back:hover { background: #cbd5e1; }
 
     footer { margin-top: 30px; font-size: 0.8rem; color: #94a3b8; }
   </style>
@@ -58,7 +68,12 @@
     <div class="icon-error">🚫</div>
     <h1>403 Forbidden</h1>
     <p>Maaf, Anda tidak memiliki izin untuk mengakses direktori ini. Direktori ini bukan untuk akses publik. Halaman ini hanya bisa diakses oleh admin dan dilindungi oleh sistem keamanan SMANKO SULSEL.</p>
-    <a href="index.html" class="btn-home">Kembali ke Beranda</a>
+    
+    <div class="button-group">
+      <a href="#" onclick="history.back(); return false;" class="btn btn-back">← Kembali ke Direktori Atas</a>
+      
+      <a href="../" class="btn btn-home">Kembali ke Beranda</a>
+    </div>
     
     <footer>
       &copy; 2026 SMAN Khusus Keberbakatan Olahraga Sulsel
