@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pengumuman Kelulusan | SMAN Khusus Keberbakatan Olahraga Sulsel</title>
+	<link rel="icon" type="image/png" href="assets/img/Logo SMANKO fix (bg putih).png">
+  <style>
+    /* Reset & Dasar */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { 
+		font-family: 'Segoe UI', sans-serif; 
+		padding: 20px; /* Kurangi sedikit padding agar di HP ada sisa ruang */
+		background: url('assets/img/background.jpg') center/cover; 
+		min-height: 100vh; 
+		display: flex; 
+		justify-content: center; 
+		align-items: center; 
+		/*overflow: hidden;*/ /* Mencegah scroll pada body */
+	  }
+
+    /* Container Utama */
+    .login-container {
+      /*background: white;*/
+      width: 900px;
+      height: 500px;
+      display: flex;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    /* Sisi Kiri (Informasi) */
+    .left-panel {
+      flex: 1;
+      /* Nilai '0.9' adalah tingkat opasitas (0.0 transparan hingga 1.0 solid) */
+      background: linear-gradient(135deg, rgba(30, 58, 138, 0.8), rgba(59, 130, 246, 0.8));
+      color: white;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      /* Tambahkan backdrop-filter untuk efek kaca (glassmorphism) */
+      backdrop-filter: blur(5px);
+    }
+
+    /* Sisi Kanan (Form) */
+    .right-panel {
+	  background: white;
+      flex: 1;
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Styling Elemen */
+    h2 { margin-bottom: 10px; }
+    .input-group { margin-bottom: 20px; width: 100%; }
+    input { 
+      width: 100%; padding: 12px; margin-top: 5px; 
+      border: 1px solid #ccc; border-radius: 8px; 
+    }
+    button { 
+      width: 100%; padding: 12px; background: #1e3a8a; 
+      color: white; border: none; border-radius: 8px; cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover { background: #172554; }
+    .logo { width: 80px; margin-bottom: 10px; }
+	
+	/* Media Query untuk Layar HP (lebar maksimal 768px) */
+	@media (max-width: 768px) {
+	  .login-container {
+		flex-direction: column; /* Mengubah posisi menjadi bertumpuk */
+		width: 95%;             /* Memenuhi lebar layar */
+		height: auto;           /* Menyesuaikan konten */
+		border-radius: 10px;
+	  }
+
+	  .left-panel {
+		padding: 30px;
+		text-align: center;
+	  }
+
+	  .right-panel {
+		padding: 30px;
+	  }
+	  
+	  
+	}
+	
+	/* Container untuk bingkai bulat */
+    .logo-frame {
+		width: 85px;         /* Ukuran diameter lingkaran */
+		height: 85px;        /* Ukuran diameter lingkaran */
+		border-radius: 50%;   /* Membuat bulat sempurna */
+		border: 2px solid #f0f0f0; /* Border tipis di luar */
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: white;
+		box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Bayangan lembut */
+		padding: 0px;        /* Jarak antara gambar dan border */
+		margin-bottom: 10px;
+	  }
+
+	  .logo-frame img {
+		width: 90%;           /* Ukuran gambar di dalam lingkaran */
+		height: 90%;
+		object-fit: contain;  /* Gambar tidak terpotong */
+	  }
+	  
+	  #error {
+		color: var(--accent-color);
+		font-size: 0.85rem;
+		margin-top: 15px;
+		min-height: 20px;
+	  }
+		
+	
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <div class="left-panel">
+      <h3>SMAN Khusus Keberbakatan Olahraga</h3>
+      <p>Provinsi Sulawesi Selatan</p>
+      <h1 style="margin: 20px 0;">Pengumuman Kelulusan <br> Peserta Didik Kelas XII</h1>
+      <p>Website ini adalah media untuk memeriksa kelulusan peserta didik SMANKO SULSEL Tahun Pelajaran 2025/2026.</p><br>
+	  <p><small>Silahkan Masukkan NISN (Nomor Induk Siswa Nasional) pada bagian username dan password</small></p>
+    </div>
+    
+    <div class="right-panel">
+	  
+	  <div class="logo-container">
+		  <div class="logo-frame">
+			<img src="assets/img/Logo SMANKO fix (bg putih).png" alt="Logo SMANKO">
+		  </div>
+		</div>
+	  
+      <h3 style="margin-bottom: 5px;">SMANKO SULSEL</h3>
+      <p style="margin-bottom: 30px; color: gray;">Silahkan Periksa Kelulusan Anda</p>
+      
+      <div class="input-group">
+        <label>Nomor Induk Siswa Nasional (NISN) *</label>
+        <input type="text" id="nisn" placeholder="Contoh: 0012345678" />
+      </div>
+      
+      <div class="input-group">
+        <label>Password *</label>
+        <input type="password" id="password"  placeholder="Gunakan NISN sebagai password" />
+      </div>
+      
+      <button onclick="login()">Memeriksa di Sistem =></button>
+      <p id="error" style="color: red; margin-top: 15px; text-align: center;"></p>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script>
+    function login() {
+      const nisn = document.getElementById("nisn").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const siswa = students.find(s => s.nisn === nisn);
+      
+      if (siswa && password === siswa.nisn) {
+        localStorage.setItem("siswa", JSON.stringify(siswa));
+        window.location.href = "dashboard.html";
+      } else {
+		if (nisn && password == "") {
+			document.getElementById("error").innerText = "NISN atau Password masih kosong";
+		} else {
+			document.getElementById("error").innerText = "NISN atau Password tidak ditemukan. \n Hubungi nomor ini (085299425352 - Naufal Khalil)";
+		}
+      }
+    }
+  </script>
+</body>
+</html>
