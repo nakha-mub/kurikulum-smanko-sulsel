@@ -3,98 +3,68 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pengumuman Kelulusan</title>
+  <title>Pengumuman Kelulusan | SMANKO</title>
   <style>
-    /* 1. Kunci scroll pada seluruh halaman */
-	  body { 
-		font-family: 'Segoe UI', sans-serif; 
-		padding: 20px; /* Kurangi sedikit padding agar di HP ada sisa ruang */
-		background: url('assets/img/background.jpg') center/cover; 
-		min-height: 100vh; 
-		display: flex; 
-		justify-content: center; 
-		align-items: center; 
-		overflow: hidden; /* Mencegah scroll pada body */
-	  }
-
-	  /* 2. Batasi tinggi card agar tidak meluap */
-	  .card { 
-		max-width: 500px; 
-		width: 100%; 
-		max-height: 90vh; /* Maksimal 90% tinggi layar */
-		padding: 25px; 
-		background: white; 
-		border-radius: 20px; 
-		box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-		display: flex;
-		flex-direction: column; /* Agar isi card bisa diatur dengan flex */
-		overflow: hidden; /* Sembunyikan konten yang meluap dari card */
-	  }
-
-	  /* 3. Sesuaikan elemen dalam card agar mengecil jika perlu */
-	  .header-section { margin-bottom: 15px; padding-bottom: 15px; }
-	  
-	  .info-table { margin-bottom: 15px; }
-	  .info-table td { padding: 6px 5px; }
-
-	  /* Tambahan untuk HP: Jika layar sangat kecil, kecilkan logo dan foto */
-	  @media (max-height: 600px) {
-		.photo-container { width: 80px; height: 100px; }
-		.logo-frame { width: 50px; height: 50px; }
-		h2 { font-size: 1rem; }
-		.card { padding: 15px; }
-	  }
-
-    /* Header Baru (Foto + Logo + Judul) */
-    .header-section {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 15px;
-        margin-bottom: 25px;
-        padding-bottom: 20px;
-        border-bottom: 2px solid #f0f0f0;
+    /* ... (CSS Anda sebelumnya tetap sama) ... */
+    body { 
+      font-family: 'Segoe UI', sans-serif; 
+      padding: 20px; 
+      background: url('assets/img/background.jpg') center/cover; 
+      min-height: 100vh; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      overflow: hidden; 
     }
 
-    .photo-container {
-        width: 100px;
-        height: 130px;
-        border: 2px solid #cbd5e1;
-        border-radius: 8px;
-        overflow: hidden;
-        flex-shrink: 0;
+    .card { 
+      max-width: 500px; 
+      width: 100%; 
+      padding: 25px; 
+      background: white; 
+      border-radius: 20px; 
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
     }
+
+    /* Tampilan Menunggu (Countdown) */
+    #waiting-content {
+      text-align: center;
+      padding: 20px;
+    }
+    .timer-icon { font-size: 50px; margin-bottom: 15px; display: block; }
+    .waiting-title { color: #1e3a8a; font-size: 1.4rem; margin-bottom: 10px; font-weight: bold; }
+    .waiting-text { color: #64748b; font-size: 0.95rem; line-height: 1.5; }
+    .time-badge { 
+      background: #f1f5f9; 
+      color: #1e3a8a; 
+      padding: 5px 15px; 
+      border-radius: 50px; 
+      font-weight: bold; 
+      display: inline-block; 
+      margin-top: 15px; 
+    }
+
+    /* Header, Table, etc (Sembunyikan dulu) */
+    .header-section, .info-table, #status, .btn-group {
+      display: none; 
+    }
+
+    /* CSS Header Section Anda */
+    .header-section { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 2px solid #f0f0f0; }
+    .photo-container { width: 100px; height: 130px; border: 2px solid #cbd5e1; border-radius: 8px; overflow: hidden; flex-shrink: 0; }
     .photo-container img { width: 100%; height: 100%; object-fit: cover; }
-
     .brand-section { display: flex; flex-direction: column; align-items: center; flex-grow: 1; }
-    .logo-frame { 
-		width: 60px;         /* Ukuran diameter lingkaran */
-		height: 60px;        /* Ukuran diameter lingkaran */
-		border-radius: 50%;   /* Membuat bulat sempurna */
-		border: 2px solid #f0f0f0; /* Border tipis di luar */
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		background-color: white;
-		box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Bayangan lembut */
-		padding: 0px;        /* Jarak antara gambar dan border */
-		margin-bottom: 10px; 
-	}
-    .logo-frame img { 
-		width: 80%; 
-		height: 80%; 
-		object-fit: contain; 
-	}
-	
-    h2 { font-size: 1.2rem; color: #1e3a8a; margin: 0; }
-	h3 { font-size: 0.8rem; color: #1e3a8a; margin: 0; text-align: center; }
-
-    /* Tabel & Button */
+    .logo-frame { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #f0f0f0; display: flex; justify-content: center; align-items: center; background-color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 10px; }
+    .logo-frame img { width: 80%; height: 80%; object-fit: contain; }
+    h2 { font-size: 1.1rem; color: #1e3a8a; margin: 0; text-align: center; }
+    h3 { font-size: 0.75rem; color: #1e3a8a; margin: 0; text-align: center; }
     .info-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
     .info-table td { padding: 8px 5px; font-size: 0.9rem; }
-    .label { color: #64748b; font-weight: 500; width: 40%; }
+    .label { color: #64748b; font-weight: 500; width: 45%; }
     .value { color: #333; font-weight: 600; }
-    .status-badge { display: block; text-align: center; padding: 12px; border-radius: 8px; font-weight: bold; margin-bottom: 20px; }
+    .status-badge { text-align: center; padding: 12px; border-radius: 8px; font-weight: bold; margin-bottom: 20px; }
     .lulus { background: #1e3a8a; color: white; }
     .tidak-lulus { background: #D40808; color: white; }
     .btn-group { display: flex; flex-direction: column; gap: 10px; }
@@ -106,7 +76,9 @@
 <body>
 
   <div class="card">
-    <div class="header-section">
+    
+
+    <div class="header-section" id="real-header">
         <div class="photo-container">
             <img id="foto-siswa" src="assets/img/default-user.jpg" alt="Foto Siswa">
         </div>
@@ -114,50 +86,85 @@
             <div class="logo-frame">
                 <img src="assets/img/Logo SMANKO fix (bg putih).png" alt="Logo">
             </div>
-            <h2>HASIL KELULUSAN PESERTA DIDIK</h2>
-			<h3>SMAN KHUSUS KEBERBAKATAN OLAHRAGA <br>PROVINSI SULAWESI SELATAN</h3>
+            <h2>HASIL KELULUSAN</h2>
+            <h3>SMAN KHUSUS KEBERBAKATAN OLAHRAGA PROVINSI SULSEL</h3>
         </div>
     </div>
+	
+	<div id="waiting-content">
+      <span class="timer-icon">🕒</span>
+      <div class="waiting-title">Belum Waktunya</div>
+      <p class="waiting-text">
+        Hasil Pengumuman Kelulusan Peserta Didik Kelas XII <br>
+        SMANKO Sulawesi Selatan baru dapat diakses pada:
+      </p>
+      <div class="time-badge">Pukul 20:00 WITA</div>
+    </div>
     
-    <table class="info-table">
+    <table class="info-table" id="real-table">
         <tr><td class="label">NAMA LENGKAP</td><td class="value" id="nama">-</td></tr>
         <tr><td class="label">NIS / NISN</td><td class="value" id="nisn">-</td></tr>
-		<tr><td class="label">JENIS KELAMIN</td><td class="value" id="jk">-</td></tr>
+        <tr><td class="label">JENIS KELAMIN</td><td class="value" id="jk">-</td></tr>
         <tr><td class="label">KELAS</td><td class="value" id="kelas">-</td></tr>
         <tr><td class="label">CABANG OLAHRAGA</td><td class="value" id="cabor">-</td></tr>
     </table>
 
-    <div id="status" class="status-badge">Memuat status...</div>
+    <div id="status" class="status-badge"></div>
 
-    <div class="btn-group">
-      <!--<button class="btn-download" onclick="downloadPDF()">Download Sertifikat</button>-->
+    <div class="btn-group" id="real-buttons" style="text-align: center;">
       <button class="btn-logout" onclick="logout()">KEMBALI</button>
     </div>
   </div>
 
   <script>
-    const siswa = JSON.parse(localStorage.getItem("siswa"));
-    if (!siswa) { window.location.href = "index.html"; } 
-    else {
-        document.getElementById("nama").innerText = siswa.nama;
-        document.getElementById("nisn").innerText = `${siswa.nis} / ${siswa.nisn}`;
-        document.getElementById("kelas").innerText = siswa.kelas;
-        document.getElementById("cabor").innerText = siswa.cabor;
-		document.getElementById("jk").innerText = (siswa.jk === "L") ? "LAKI-LAKI" : "PEREMPUAN";
-		//document.getElementById("tpt_lahir").innerText = siswa.tpt_lahir+", "+siswa.tgl_lahir;
-		//document.getElementById("tgl_lahir").innerText = siswa.tgl_lahir;
-		//document.getElementById("nama_ortu").innerText = siswa.nama_ortu;
-        
-        const fotoEl = document.getElementById("foto-siswa");
-        fotoEl.src = `assets/img/foto-siswa/${siswa.nisn}.jpg`;
-        fotoEl.onerror = function() { this.src = "assets/img/default-user.jpg"; };
-        
-        const statusEl = document.getElementById("status");
-        statusEl.innerText = `STATUS: ${siswa.status}`;
-        statusEl.className = `status-badge ${siswa.status === "LULUS" ? "lulus" : "tidak-lulus"}`;
+    function checkAccessTime() {
+      const now = new Date();
+      
+      // Ambil waktu lokal dan sesuaikan ke WITA (UTC+8)
+      const witaTime = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Makassar"}));
+      const hours = witaTime.getHours();
+
+      // CEK: Jika sudah jam 20 atau lebih (20:00 - 23:59)
+      if (hours >= 20) {
+        document.getElementById('waiting-content').style.display = 'none';
+        document.getElementById('real-header').style.display = 'flex';
+        document.getElementById('real-table').style.display = 'table';
+        document.getElementById('status').style.display = 'block';
+        document.getElementById('real-buttons').style.display = 'flex'; // Gunakan flex agar mengikuti style .btn-group
+		loadData();
+      }
     }
-    function logout() { localStorage.removeItem("siswa"); window.location.href = "index.html"; }
-    function downloadPDF() { /* fungsi download tetap sama */ }
+
+    function loadData() {
+      const siswa = JSON.parse(localStorage.getItem("siswa"));
+      if (!siswa) { window.location.href = "index.html"; return; }
+      
+      document.getElementById("nama").innerText = siswa.nama;
+      document.getElementById("nisn").innerText = `${siswa.nis} / ${siswa.nisn}`;
+      document.getElementById("kelas").innerText = siswa.kelas;
+      document.getElementById("cabor").innerText = siswa.cabor;
+      document.getElementById("jk").innerText = (siswa.jk === "L") ? "LAKI-LAKI" : "PEREMPUAN";
+      
+      const fotoEl = document.getElementById("foto-siswa");
+      fotoEl.src = `assets/img/foto-siswa/${siswa.nisn}.jpg`;
+      fotoEl.onerror = function() { this.src = "assets/img/default-user.jpg"; };
+      
+      const statusEl = document.getElementById("status");
+      statusEl.innerText = `STATUS: ${siswa.status}`;
+      statusEl.className = `status-badge ${siswa.status === "LULUS" ? "lulus" : "tidak-lulus"}`;
+      document.title = `${siswa.nama} | Pengumuman Kelulusan`;
+    }
+
+    function logout() { 
+      localStorage.removeItem("siswa"); 
+      window.location.href = "index.html"; 
+    }
+
+    // Jalankan pengecekan saat halaman dibuka
+    checkAccessTime();
+    
+    // Opsional: Cek setiap 1 menit jika user menunggu di halaman tersebut
+    setInterval(checkAccessTime, 60000);
   </script>
 </body>
 </html>
