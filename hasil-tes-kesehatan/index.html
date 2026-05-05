@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasil Tes Kesehatan SPMB Tahun 2026 SMANKO SULSEL</title>
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #3b82f6;
+            --accent-color: #ef4444;
+            --bg-color: #f8fafc;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        /* PERUBAHAN HEADER: Menggunakan Flexbox untuk menata Logo dan Teks */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            gap: 20px; /* Jarak antara logo dan teks */
+        }
+
+        .header-logo {
+            width: 80px; /* Ukuran logo */
+            height: auto;
+        }
+
+        .header-text {
+            text-align: left; /* Teks rata kiri di sebelah logo */
+        }
+
+        .header h1 { color: var(--primary-color); margin: 0; font-size: 1.5rem; line-height: 1.2; }
+        .header p { color: #64748b; margin: 5px 0 0; font-weight: 500; }
+
+        .search-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 30px;
+            align-items: center;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        input {
+            padding: 12px;
+            width: 100%;
+            max-width: 400px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 12px 25px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button:hover { background-color: var(--secondary-color); }
+
+        .result-card {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .section-title {
+            background: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 20px 0 10px;
+            font-weight: bold;
+        }
+
+        .grid-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .info-item {
+            padding: 10px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .info-label {
+            display: block;
+            font-size: 0.8rem;
+            color: #64748b;
+            text-transform: uppercase;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 1rem;
+        }
+
+        #error-msg {
+            color: var(--accent-color);
+            text-align: center;
+            display: none;
+            font-weight: bold;
+        }
+
+        /* Responsif untuk HP */
+        @media (max-width: 600px) {
+            .header { flex-direction: column; text-align: center; }
+            .header-text { text-align: center; }
+            .grid-info { grid-template-columns: 1fr; }
+            .input-group { flex-direction: column; align-items: center; }
+            input { width: 90%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <img src="URL_LOGO_ANDA_DISINI" alt="Logo SMANKO" class="header-logo">
+        <div class="header-text" style="text-align: center;">
+            <h1>HASIL PEMERIKSAAN KESEHATAN</h1>
+            <p>Seleksi Penerimaan Murid Baru (SPMB) Tahun 2026 SMANKO SULSEL</p>
+        </div>
+    </div>
+
+    <div class="search-box">
+        <div class="input-group">
+            <input type="text" id="searchInput" placeholder="Masukkan NISN atau Nama Lengkap">
+            <button onclick="cariData()">Cari Data</button>
+        </div>
+        <small style="color: #64748b;">*Gunakan NISN untuk hasil yang lebih akurat</small>
+    </div>
+
+    <p id="error-msg">Data tidak ditemukan! Pastikan NISN atau Nama sudah benar.</p>
+
+    <div id="result" class="result-card">
+        <div class="section-title">IDENTITAS PESERTA</div>
+        <div class="grid-info">
+            <div class="info-item"><span class="info-label">Nama Pendaftar</span><span class="info-value" id="res-nama"></span></div>
+            <div class="info-item"><span class="info-label">NISN</span><span class="info-value" id="res-nisn"></span></div>
+            <div class="info-item"><span class="info-label">Nomor Tes</span><span class="info-value" id="res-notes"></span></div>
+            <div class="info-item"><span class="info-label">Cabang Olahraga</span><span class="info-value" id="res-cabor"></span></div>
+            <div class="info-item"><span class="info-label">Jenis Kelamin</span><span class="info-value" id="res-jk"></span></div>
+            <div class="info-item"><span class="info-label">Tempat, Tanggal Lahir</span><span class="info-value" id="res-ttl"></span></div>
+            <div class="info-item"><span class="info-label">Asal Sekolah</span><span class="info-value" id="res-sekolah"></span></div>
+        </div>
+
+        <div class="section-title">HASIL FISIK & VITAL</div>
+        <div class="grid-info">
+            <div class="info-item"><span class="info-label">Berat Badan (BB)</span><span class="info-value" id="res-bb"></span></div>
+            <div class="info-item"><span class="info-label">Tinggi Badan (TB)</span><span class="info-value" id="res-tb"></span></div>
+            <div class="info-item"><span class="info-label">Saturasi Oksigen</span><span class="info-value" id="res-saturasi"></span></div>
+            <div class="info-item"><span class="info-label">Tensi (Tekanan Darah)</span><span class="info-value" id="res-tensi"></span></div>
+        </div>
+
+        <div class="section-title">DIAGNOSA MEDIS</div>
+        <div class="grid-info">
+            <div class="info-item"><span class="info-label">Kondisi Mata</span><span class="info-value" id="res-mata"></span></div>
+            <div class="info-item"><span class="info-label">Pemeriksaan Fisik</span><span class="info-value" id="res-fisik"></span></div>
+            <div class="info-item"><span class="info-label">Varises</span><span class="info-value" id="res-varises"></span></div>
+        </div>
+    </div>
+</div>
+
+<script src="data_tes_kesehatan.js"></script>
+<script>
+    // Pastikan fungsi cariData() Anda tetap ada di sini
+    function cariData() {
+        const input = document.getElementById('searchInput').value.trim().toUpperCase();
+        const resultDiv = document.getElementById('result');
+        const errorMsg = document.getElementById('error-msg');
+        
+        // Asumsi dataPeserta ada di dalam data_tes_kesehatan.js
+        const peserta = dataPeserta.find(d => 
+            d.nisn === input || d.nama.toUpperCase().includes(input)
+        );
+
+        if (peserta && input !== "") {
+            errorMsg.style.display = 'none';
+            resultDiv.style.display = 'block';
+            document.getElementById('res-nama').innerText = peserta.nama;
+            document.getElementById('res-nisn').innerText = peserta.nisn;
+            document.getElementById('res-notes').innerText = peserta.noTes;
+            document.getElementById('res-cabor').innerText = peserta.cabor;
+            document.getElementById('res-jk').innerText = peserta.jk;
+            document.getElementById('res-ttl').innerText = peserta.ttl;
+            document.getElementById('res-sekolah').innerText = peserta.sekolah;
+            document.getElementById('res-bb').innerText = peserta.bb;
+            document.getElementById('res-tb').innerText = peserta.tb;
+            document.getElementById('res-saturasi').innerText = peserta.saturasi;
+            document.getElementById('res-tensi').innerText = peserta.tensi;
+            document.getElementById('res-mata').innerText = peserta.mata;
+            document.getElementById('res-fisik').innerText = peserta.fisik;
+            document.getElementById('res-varises').innerText = peserta.varises;
+        } else {
+            resultDiv.style.display = 'none';
+            errorMsg.style.display = 'block';
+        }
+    }
+</script>
+</body>
+</html>
