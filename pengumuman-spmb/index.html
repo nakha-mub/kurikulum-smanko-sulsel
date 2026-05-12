@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengumuman Kelulusan SPMB 2026 SMANKO SULSEL</title>
+	<link rel="icon" type="image/png" href="Logo SMANKO fix (bg putih).png">
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #3b82f6;
+            --accent-success: #10b981;
+            --accent-fail: #ef4444;
+            --bg-color: #f8fafc;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			/* Ganti 'pattern.png' dengan nama file gambar Anda */
+            background-image: url('bg-repeat.png');
+
+            /* Jenis Pengulangan: */
+            background-repeat: repeat; /* Mengulang horizontal dan vertikal (default) */
+            
+            /* Properti Tambahan (Opsional): */
+            background-position: center; /* Memulai gambar dari tengah */
+            background-attachment: fixed; /* Background tidak ikut bergeser saat di-scroll */
+            
+			background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            gap: 20px;
+        }
+
+        .header-logo {
+            width: 80px;
+            height: auto;
+        }
+
+        .header h1 { color: var(--primary-color); margin: 0; font-size: 1.5rem; line-height: 1.2; text-align: center; }
+        .header p { color: #64748b; margin: 5px 0 0; font-weight: 500; text-align: center; }
+
+        .search-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 30px;
+            align-items: center;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        input {
+            padding: 12px;
+            width: 100%;
+            max-width: 400px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 12px 25px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button:hover { background-color: var(--secondary-color); }
+
+        .result-card {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .status-banner {
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .status-lulus { background-color: var(--accent-success); }
+        .status-tidak-lulus { background-color: var(--accent-fail); }
+
+        .section-title {
+            background: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 20px 0 10px;
+            font-weight: bold;
+        }
+
+        .grid-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .info-item {
+            padding: 10px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .info-label {
+            display: block;
+            font-size: 0.8rem;
+            color: #64748b;
+            text-transform: uppercase;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 1rem;
+        }
+
+        #error-msg {
+            color: var(--accent-fail);
+            text-align: center;
+            display: none;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .header { flex-direction: column; }
+            .grid-info { grid-template-columns: 1fr; }
+            .input-group { flex-direction: column; align-items: center; }
+            input { width: 90%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <img src="Logo SMANKO fix (bg putih).png" alt="Logo SMANKO" class="header-logo">
+        <div class="header-text">
+            <h1>PENGUMUMAN AKHIR KELULUSAN</h1>
+			<h1><small>SISTEM PENERIMAAN MURID BARU (SPMB) TAHUN 2026</small></h1>
+            <p>SMAN KHUSUS KEBERBAKATAN OLAHRAGA PROVINSI SULAWESI SELATAN</p>
+        </div>
+    </div>
+
+    <div class="search-box">
+		<label>Silahkan memasukkan NISN atau Nama Lengkap yang terdaftar saat melakukan pendaftaran Online</label>
+        <div class="input-group">
+            <input type="text" id="searchInput" placeholder="Masukkan NISN atau Nama Lengkap">
+            <button onclick="cariData()">Cek Pengumuman</button>
+        </div>
+        <small style="color: #64748b;">*Gunakan NISN untuk hasil yang lebih akurat</small>
+    </div>
+
+    <p id="error-msg">Data tidak ditemukan! Mohon periksa kembali NISN atau Nama Anda.</p>
+
+    <div id="result" class="result-card">
+        <div id="status-banner" class="status-banner"></div>
+        
+        <div class="section-title">PROFIL PENDAFTAR</div>
+        <div class="grid-info">
+            <div class="info-item"><span class="info-label">Nama Lengkap</span><span class="info-value" id="res-nama"></span></div>
+            <div class="info-item"><span class="info-label">NISN</span><span class="info-value" id="res-nisn"></span></div>
+            <div class="info-item"><span class="info-label">Nomor Tes</span><span class="info-value" id="res-notes"></span></div>
+			<div class="info-item"><span class="info-label">Jenis Kelamin</span><span class="info-value" id="res-jk"></span></div>
+			<div class="info-item"><span class="info-label">Tempat, Tanggal Lahir</span><span class="info-value" id="res-ttl"></span></div>
+            <div class="info-item"><span class="info-label">Cabang Olahraga</span><span class="info-value" id="res-cabor"></span></div>
+            <div class="info-item"><span class="info-label">Asal Sekolah</span><span class="info-value" id="res-sekolah"></span></div>
+            <div class="info-item"><span class="info-label">Asal Daerah</span><span class="info-value" id="res-daerah"></span></div>
+        </div>
+
+        <div id="wawancara-section">
+            <div class="section-title">JADWAL DAFTAR ULANG & WAWANCARA</div>
+            <div class="grid-info">
+                <div class="info-item"><span class="info-label">Hari</span><span class="info-value" id="res-hari"></span></div>
+                <div class="info-item"><span class="info-label">Sesi</span><span class="info-value" id="res-sesi"></span></div>
+            </div>
+            <p style="font-size: 0.9rem; color: #64748b; margin-top: 10px;">*Silakan datang sesuai jadwal (Hari dan Sesi) yang telah ditentukan dengan membawa dokumen persyaratan: <br>
+			1. Kartu Kontrol/Kartu Tes<br>
+			2. Bukti Formulir Pendaftarandan<br>
+			3. Materai Rp.10000 2 Lembar<br>
+			4. Pas Foto 3x4 memakai seragam sekolah/SMP<br>
+			5. Membawa berkas verifikasi yang belum lengkap saat jadwal Pendaftaran dan Verifikasi <b>bagi yang belum</b>.</p>
+        </div>
+    </div>
+</div>
+
+<script src="data-lulus-spmb2026.js"></script>
+<script>
+
+
+
+</script>
+</body>
+</html>
