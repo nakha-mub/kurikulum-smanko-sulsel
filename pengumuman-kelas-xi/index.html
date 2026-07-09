@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cek Peminatan Siswa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="icon" type="image/png" href="assets/img/Logo SMANKO fix (bg putih).png">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7f6;
+        }
+        .search-container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .result-container {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            max-width: 900px; /* Diperlebar agar cukup untuk tabel dan denah */
+            margin: 30px auto 0 auto;
+            display: none;
+        }
+        .mapel-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .badge-subject {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            color: #0d6efd;
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 8px 16px;
+            border: 1px solid #90caf9;
+            transition: all 0.2s;
+        }
+        .badge-subject:hover {
+            transform: scale(1.05);
+            background: #0d6efd;
+            color: white;
+        }
+        /* Style Tambahan untuk Gambar Denah */
+        .denah-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#"><i class="bi bi-mortarboard-fill me-2"></i>Portal Informasi Siswa</a>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold text-secondary">Cek Data Akademik & Peminatan</h2>
+            <p class="text-muted">Masukkan NIS untuk melihat rincian kelas, mata pelajaran pilihan, dan denah sekolah.</p>
+        </div>
+
+        <div class="search-container">
+            <form id="searchForm" onsubmit="prosesCariEksternal(event)">
+                <div class="mb-2">
+                    <label for="nisInput" class="form-label fw-bold text-secondary">Nomor Induk Siswa (NIS)</label>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text bg-white"><i class="bi bi-card-text text-muted"></i></span>
+                        <input type="text" id="nisInput" class="form-control" placeholder="Contoh: 1001" required>
+                        <button class="btn btn-primary" type="submit" id="btnCari">
+                            <span id="btnText">Cari Data</span>
+                            <span id="btnSpinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div id="messageBox" class="alert d-none mt-3" role="alert"></div>
+        </div>
+
+        <div id="resultBox" class="result-container">
+            <h4 class="fw-bold text-primary mb-4 border-bottom pb-2">
+                <i class="bi bi-person-check-fill me-2"></i>Rincian Data Siswa
+            </h4>
+            
+            <div class="row g-4">
+                <div class="col-md-6 border-end-md">
+                    <div class="row g-3 fs-6">
+                        <div class="col-sm-4 text-muted fw-bold">Nama Lengkap</div>
+                        <div class="col-sm-8 mb-2 text-dark fw-semibold" id="resNama">-</div>
+                        
+                        <div class="col-sm-4 text-muted fw-bold">Kelas</div>
+                        <div class="col-sm-8 mb-2"><span class="badge bg-secondary fs-6" id="resKelas">-</span></div>
+                        
+                        <div class="col-sm-4 text-muted fw-bold">Wali Kelas</div>
+                        <div class="col-sm-8 mb-2 text-dark" id="resWali">-</div>
+                        
+                        <div class="col-sm-4 text-muted fw-bold">Cabang Olahraga</div>
+                        <div class="col-sm-8 mb-2 text-dark"><i class="bi bi-trophy-fill text-warning me-2"></i><span id="resCabor">-</span></div>
+                        
+                        <div class="col-sm-4 text-muted fw-bold">Mapel Pilihan</div>
+                        <div class="col-sm-8 mapel-group" id="resMapel">-</div> 
+                    </div>
+                </div>
+
+                <div class="col-md-6 text-center">
+                    <h6 class="fw-bold text-secondary mb-3 text-start"><i class="bi bi-map-fill me-2"></i>Denah Lokasi Sekolah</h6>
+                    
+                    <img src="assets/img/Denah SMANKO.jpg" id="resDenah" class="denah-img" alt="Denah Sekolah">
+                    
+                    <p class="text-muted small mt-2">Gunakan denah ini untuk menemukan lokasi ruang kelas Anda.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Ganti dengan URL Web App Apps Script milik Anda sendiri
+        const API_URL = "https://script.google.com/macros/s/AKfycbyJt58turuGPHdXvnBj3EbIbCcndhKhes6lh3sq7pDyvY4u5g_nNkyNCoPhNonZZ32BNQ/exec"; 
+
+        function prosesCariEksternal(event) {
+            event.preventDefault(); 
+            
+            const nis = document.getElementById('nisInput').value.trim();
+            const messageBox = document.getElementById('messageBox');
+            const resultBox = document.getElementById('resultBox');
+            const btnText = document.getElementById('btnText');
+            const btnSpinner = document.getElementById('btnSpinner');
+            const btnCari = document.getElementById('btnCari');
+
+            btnText.textContent = "Memuat...";
+            btnSpinner.classList.remove('d-none');
+            btnCari.disabled = true;
+            messageBox.classList.add('d-none');
+            resultBox.style.display = 'none';
+
+            fetch(`${API_URL}?nis=${nis}`)
+                .then(response => response.json())
+                .then(res => {
+                    btnText.textContent = "Cari Data";
+                    btnSpinner.classList.add('d-none');
+                    btnCari.disabled = false;
+
+                    if (res.status === "success") {
+                        document.getElementById('resNama').innerText = res.data.nama || "-";
+                        document.getElementById('resKelas').innerText = res.data.kelas || "-";
+                        document.getElementById('resWali').innerText = res.data.waliKelas || "-";
+                        document.getElementById('resCabor').innerText = res.data.olahraga || "-";
+                        
+                        // Render daftar mapel pilihan
+                        const mapelContainer = document.getElementById('resMapel');
+                        mapelContainer.innerHTML = '';
+                        
+                        if (res.data.mapelPilihan && res.data.mapelPilihan.length > 0) {
+                            res.data.mapelPilihan.forEach(mapel => {
+                                mapelContainer.innerHTML += `<span class="badge rounded-pill badge-subject"><i class="bi bi-book-half me-1"></i>${mapel}</span>`;
+                            });
+                        } else {
+                            mapelContainer.innerHTML = '<span class="text-muted">-</span>';
+                        }
+
+                        // JIKA DENAH SEKOLAH BERBEDA-BEDA PER KELAS, ANDA BISA MENGOSTUMISASINYA DI SINI:
+                        // Contoh statis jika denah sama untuk semua:
+                        // document.getElementById('resDenah').src = "URL_DENAH_SEKOLAH_ANDA";
+
+                        resultBox.style.display = 'block'; 
+                    } else {
+                        messageBox.className = "alert alert-danger mt-3";
+                        messageBox.innerText = res.message;
+                        messageBox.classList.remove('d-none');
+                    }
+                })
+                .catch(error => {
+                    btnText.textContent = "Cari Data";
+                    btnSpinner.classList.add('d-none');
+                    btnCari.disabled = false;
+                    messageBox.className = "alert alert-danger mt-3";
+                    messageBox.innerText = "Error mengambil data dari Google Sheets.";
+                    messageBox.classList.remove('d-none');
+                });
+        }
+    </script>
+</body>
+</html>
