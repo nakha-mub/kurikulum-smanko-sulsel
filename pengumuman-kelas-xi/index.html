@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cek Peminatan Siswa</title>
+    <title>Cek Penempatan Kelas XI Tahun Pelajaran 2026/2027</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
@@ -57,6 +57,9 @@
             border: 1px solid #dee2e6;
             box-shadow: 0 2px 6px rgba(0,0,0,0.05);
         }
+		.form-control {
+			
+		}
     </style>
 </head>
 <body>
@@ -69,7 +72,7 @@
 
     <div class="container my-5">
         <div class="text-center mb-4">
-            <h2 class="fw-bold text-secondary">Cek Data Akademik & Peminatan</h2>
+            <h2 class="fw-bold text-secondary">Cek Penempatan Kelas XI</h2>
             <p class="text-muted">Masukkan NIS untuk melihat rincian kelas, mata pelajaran pilihan, dan denah sekolah.</p>
         </div>
 
@@ -79,7 +82,7 @@
                     <label for="nisInput" class="form-label fw-bold text-secondary">Nomor Induk Siswa (NIS)</label>
                     <div class="input-group input-group-lg">
                         <span class="input-group-text bg-white"><i class="bi bi-card-text text-muted"></i></span>
-                        <input type="text" id="nisInput" class="form-control" placeholder="Contoh: 1001" required>
+                        <input type="text" id="nisInput" class="form-control" placeholder="Cth:25260011" required>
                         <button class="btn btn-primary" type="submit" id="btnCari">
                             <span id="btnText">Cari Data</span>
                             <span id="btnSpinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
@@ -103,6 +106,11 @@
                         
                         <div class="col-sm-4 text-muted fw-bold">Kelas</div>
                         <div class="col-sm-8 mb-2"><span class="badge bg-secondary fs-6" id="resKelas">-</span></div>
+                        
+						<div class="col-sm-12 text-muted fw-bold">Link WA Grup Kelas <i class="bi bi-arrow-down-circle-fill"></i></div>
+                        <div class="col-sm-12 mb-2">
+							<small><a href="#" id="resLinkGrup" >-</a></small>
+						</div>
                         
                         <div class="col-sm-4 text-muted fw-bold">Wali Kelas</div>
                         <div class="col-sm-8 mb-2 text-dark" id="resWali">-</div>
@@ -158,6 +166,8 @@
                         document.getElementById('resKelas').innerText = res.data.kelas || "-";
                         document.getElementById('resWali').innerText = res.data.waliKelas || "-";
                         document.getElementById('resCabor').innerText = res.data.olahraga || "-";
+						document.getElementById('resLinkGrup').innerText = res.data.linkgrup || "-";
+						document.getElementById('resLinkGrup').href = res.data.linkgrup || "-";
                         
                         // Render daftar mapel pilihan
                         const mapelContainer = document.getElementById('resMapel');
