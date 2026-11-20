@@ -294,7 +294,7 @@
       // Otomatis diarahkan ke "267-S1/index.html" (atau ubah ke "/index_2.html" jika nama filenya index_2.html)
       const isExternal = /^https?:\/\//i.test(url);
       if (!isExternal && !/\.html(\?.*)?$/i.test(url)) {
-        url = url.replace(/\/+$/, '') + '/index.html';
+        url = url.replace(/\/+$/, '') + '/';
       }
       return url;
     }
