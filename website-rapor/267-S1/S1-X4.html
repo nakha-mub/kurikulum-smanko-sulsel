@@ -1,0 +1,3100 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kelas ... [T.P. | Semester ?]</title>
+  <link rel="icon" type="image/png" href="assets/img/Logo SMANKO fix (bg putih).png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --primary-color: #0f4c81;
+      --secondary-color: #1b6ca8;
+      --bg-light: #f4f7fb;
+    }
+    body {
+      background-color: var(--bg-light);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: #1e293b;
+    }
+    .navbar-custom {
+      position: sticky;
+      top: 0;
+      z-index: 1030;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    }
+    .card-modern {
+      border: none;
+      border-radius: 14px;
+      box-shadow: 0 4px 16px rgba(15, 76, 129, 0.06);
+      background: #ffffff;
+    }
+    .school-banner {
+      background: linear-gradient(135deg, #0f4c81 0%, #1e6091 100%);
+      color: #ffffff;
+      border-radius: 14px;
+    }
+    .info-label {
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #64748b;
+      font-weight: 600;
+    }
+    .info-value {
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .mapel-row {
+      transition: all 0.2s ease;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 12px 16px;
+      background: #fff;
+    }
+    .mapel-row:hover {
+      border-color: var(--secondary-color);
+      background: #f8fbff;
+      transform: translateY(-1px);
+    }
+    .badge-status-done {
+      background-color: #dcfce7;
+      color: #15803d;
+      border: 1px solid #86efac;
+    }
+    .badge-status-progress {
+      background-color: #fef9c3;
+      color: #a16207;
+      border: 1px solid #fde047;
+    }
+    .badge-status-empty {
+      background-color: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #fca5a5;
+    }
+    .table-sticky-header thead th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background-color: #0f4c81;
+      color: #ffffff;
+      font-size: 0.82rem;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+    .table-grades {
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+    .table-grades thead {
+      position: sticky;
+      top: 0;
+      z-index: 3;
+    }
+    .table-grades thead th {
+      background-color: #1e3a8a;
+      color: #fff;
+      font-size: 0.78rem;
+      text-align: center;
+      vertical-align: middle;
+      border-top: 1px solid #3b5998;
+      border-bottom: 1px solid #3b5998;
+      border-right: 1px solid #3b5998;
+    }
+    .table-grades thead tr:first-child th:first-child {
+      border-left: 1px solid #3b5998;
+    }
+    .sticky-col-name {
+      position: sticky;
+      left: 0;
+      background-color: #ffffff;
+      z-index: 2;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.04);
+    }
+    .table-grades thead th.sticky-col-name {
+      background-color: #1e3a8a !important;
+      color: #ffffff !important;
+      z-index: 4;
+    }
+    .loading-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(3px);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .input-nilai {
+      width: 78px;
+      text-align: center;
+      font-weight: 600;
+    }
+    .select-tp-flag {
+      width: 66px;
+      font-size: 0.82rem;
+      padding: 0.25rem 0.35rem;
+    }
+    .rekap-nilai-red {
+      background-color: #fee2e2 !important;
+      color: #991b1b !important;
+      font-weight: 700;
+    }
+    .rekap-nilai-empty {
+      background-color: #e2e8f0 !important;
+      color: #64748b !important;
+    }
+    .rekap-nilai-normal {
+      background-color: #ffffff !important;
+      color: #0f172a;
+      font-weight: 600;
+    }
+    .table-rekap {
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+    .table-rekap thead {
+      position: sticky;
+      top: 0;
+      z-index: 3;
+    }
+    .table-rekap thead th {
+      background-color: #0f4c81;
+      color: #ffffff;
+      font-size: 0.78rem;
+      text-align: center;
+      vertical-align: middle;
+      border-top: 1px solid #1e6091;
+      border-bottom: 1px solid #1e6091;
+      border-right: 1px solid #1e6091;
+    }
+    .table-rekap thead th.sticky-col-name {
+      background-color: #0f4c81 !important;
+      color: #ffffff !important;
+      z-index: 4;
+    }
+
+    /* ===================================================================== */
+    /* STYLING HALAMAN CETAK UKURAN KERTAS A4 (BIODATA & NILAI RAPOR)         */
+    /* ===================================================================== */
+    .a4-preview-wrapper {
+      background: #cbd5e1;
+      padding: 24px 12px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+    .a4-page {
+      width: 210mm;
+      min-height: 297mm;
+      background: #ffffff;
+      color: #000000;
+      padding: 15mm 18mm 14mm 18mm;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+      position: relative;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 10.5pt;
+      line-height: 1.35;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+    .a4-watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 135mm;
+      height: 150mm;
+      opacity: 0.12;
+      pointer-events: none;
+      z-index: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .a4-content {
+      position: relative;
+      z-index: 1;
+      flex-grow: 1;
+    }
+    .a4-footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid #475569;
+      padding-top: 4px;
+      margin-top: 8px;
+      font-size: 8pt;
+      color: #334155;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .rapor-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9.2pt;
+    }
+    .rapor-table th, .rapor-table td {
+      border: 1px solid #000000;
+      padding: 4px 6px;
+      vertical-align: middle;
+    }
+    .rapor-table th {
+      background-color: #d9d9d9 !important;
+      font-weight: bold;
+      text-align: center;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .biodata-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 10.5pt;
+    }
+    .biodata-table td {
+      padding: 3.5px 4px;
+      vertical-align: top;
+    }
+    .foto-box-3x4 {
+      width: 30mm;
+      height: 40mm;
+      border: 1px solid #000000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 9pt;
+      line-height: 1.3;
+    }
+
+    /* Container khusus cetak Rekap A4 (tersembunyi di layar, tampil saat print mode rekap) */
+    #printRekapA4Container {
+      display: none;
+    }
+
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 0;
+      }
+      body {
+        background: #ffffff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .navbar-custom,
+      #viewDashboard,
+      #viewMapel,
+      #viewWaliKelas,
+      #viewRekap,
+      #printToolbarCard,
+      .no-print {
+        display: none !important;
+      }
+      .container-fluid {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+      body:not(.printing-rekap) #viewCetakRapor {
+        display: block !important;
+      }
+      body.printing-rekap #viewCetakRapor {
+        display: none !important;
+      }
+      body.printing-rekap #printRekapA4Container {
+        display: block !important;
+        width: 285mm !important;
+        height: 198mm !important;
+        max-height: 198mm !important;
+        overflow: hidden !important;
+        padding: 4mm 6mm !important;
+        box-sizing: border-box !important;
+      }
+      .a4-preview-wrapper {
+        background: none !important;
+        padding: 0 !important;
+        gap: 0 !important;
+        display: block !important;
+      }
+      .a4-page {
+        width: 210mm !important;
+        height: 297mm !important;
+        min-height: 297mm !important;
+        max-height: 297mm !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        page-break-after: always;
+        break-after: page;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .a4-page:last-child {
+        page-break-after: auto;
+        break-after: auto;
+      }
+      .rekap-print-table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        font-family: Arial, Helvetica, sans-serif !important;
+        font-size: 6.5pt !important;
+        line-height: 1.15 !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      .rekap-print-table th,
+      .rekap-print-table td {
+        border: 1px solid #334155 !important;
+        padding: 2px 2.5px !important;
+        vertical-align: middle !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .rekap-print-table th {
+        background-color: #0f4c81 !important;
+        color: #ffffff !important;
+        font-weight: bold !important;
+        text-align: center !important;
+      }
+      .rekap-print-table .rekap-nilai-red {
+        background-color: #fee2e2 !important;
+        color: #991b1b !important;
+        font-weight: 700 !important;
+      }
+      .rekap-print-table .rekap-nilai-empty {
+        background-color: #e2e8f0 !important;
+        color: #64748b !important;
+      }
+      .rekap-print-table .rekap-nilai-normal {
+        background-color: #ffffff !important;
+        color: #0f172a !important;
+        font-weight: 600 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loading Overlay -->
+  <div id="loadingOverlay" class="loading-overlay">
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status"></div>
+    <p id="loadingText" class="mt-3 fw-semibold text-primary">Menghubungkan ke API Google Apps Script...</p>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-dark navbar-custom py-3 mb-4">
+    <div class="container-fluid px-4">
+      <span class="navbar-brand fw-bold d-flex align-items-center gap-2 mb-0">
+        <i class="bi bi-journal-check fs-4"></i>
+        <span id="navSchoolTitle">SMANKO SULSEL</span>
+      </span>
+      <div class="d-flex align-items-center gap-3 flex-wrap">
+        <div class="text-white small text-end d-none d-md-block">
+          <div class="fw-bold" id="navUserName">-</div>
+          <div class="opacity-75" style="font-size: 0.75rem;" id="navUserInfo">-</div>
+        </div>
+        <div class="d-flex gap-2">
+          <a href="index.html" target="_self" class="btn btn-outline-light btn-sm fw-semibold">
+            <i class="bi bi-house-door me-1"></i> Home
+          </a>
+          <button id="btnBackDashboard" class="btn btn-light btn-sm fw-semibold d-none" onclick="kembaliKeDashboard()">
+            <i class="bi bi-arrow-left me-1"></i> Kembali ke Dashboard Kelas
+          </button>
+          <button type="button" class="btn btn-danger btn-sm fw-semibold" onclick="logoutPortal()">
+            <i class="bi bi-box-arrow-right me-1"></i> Keluar
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid px-4 pb-5">
+
+    <!-- ===================================================================== -->
+    <!-- HALAMAN 1: DASHBOARD UTAMA                                            -->
+    <!-- ===================================================================== -->
+    <div id="viewDashboard">
+
+      <!-- Banner Header Sekolah (Sumber: Sheet "Data Sekolah") -->
+      <div class="school-banner p-4 mb-4 shadow-sm">
+        <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+          <div>
+            <span class="badge bg-white text-primary fw-semibold mb-2">
+              <i class="bi bi-bank2 me-1"></i> Profil Satuan Pendidikan (Sheet: Data Sekolah)
+            </span>
+            <h3 class="fw-bold mb-1" id="dispNamaSekolah">-</h3>
+            <p class="mb-2 opacity-90 small" id="dispAlamatLengkapSekolah">
+              <i class="bi bi-geo-alt-fill me-1"></i> -
+            </p>
+            <div class="d-flex flex-wrap gap-3 small opacity-90">
+              <span><i class="bi bi-upc-scan me-1"></i> NPSN: <strong id="dispNpsn">-</strong></span>
+              <span id="wrapNss" class="d-none"><i class="bi bi-hash me-1"></i> NSS: <strong id="dispNss">-</strong></span>
+              <span><i class="bi bi-globe me-1"></i> <span id="dispWebsite">-</span></span>
+              <span><i class="bi bi-envelope me-1"></i> <span id="dispEmail">-</span></span>
+            </div>
+          </div>
+          <div class="d-flex flex-column align-items-md-end gap-2">
+            <button class="btn btn-light btn-sm fw-semibold text-primary" onclick="loadDashboard()">
+              <i class="bi bi-arrow-clockwise me-1"></i> Segarkan Data
+            </button>
+            <div class="bg-white bg-opacity-10 rounded-3 px-3 py-2 text-md-end small">
+              <div class="opacity-75">Tempat / Tanggal Rapor</div>
+              <div class="fw-bold" id="dispTempatTanggalRapor">-</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid Data Sekolah, Kelas, Wali Kelas & Kepala Sekolah -->
+      <div class="card card-modern p-4 mb-4">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+          <h5 class="fw-bold text-primary mb-0">
+            <i class="bi bi-card-heading me-2"></i>Data Akademik, Wali Kelas & Kepala Sekolah
+          </h5>
+          <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDetailSekolah">
+            <i class="bi bi-list-ul me-1"></i> Lihat Rincian Lengkap Sheet "Data Sekolah"
+          </button>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-6 col-md-4 col-lg-2">
+            <div class="p-3 rounded-3 bg-light h-100">
+              <div class="info-label">Kelas / Fase</div>
+              <div class="info-value"><span id="dispKelas">-</span> <span class="badge bg-primary ms-1" id="dispFase">-</span></div>
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-2">
+            <div class="p-3 rounded-3 bg-light h-100">
+              <div class="info-label">Semester</div>
+              <div class="info-value" id="dispSemester">-</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-2">
+            <div class="p-3 rounded-3 bg-light h-100">
+              <div class="info-label">Tahun Ajaran</div>
+              <div class="info-value" id="dispTahunAjaran">-</div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="p-3 rounded-3 bg-light h-100 border-start border-primary border-4">
+              <div class="info-label">Wali Kelas</div>
+              <div class="info-value" id="dispWaliKelas">-</div>
+              <div class="small text-muted fw-semibold mt-1" id="dispNipWaliKelas">NIP. -</div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="p-3 rounded-3 bg-light h-100 border-start border-success border-4">
+              <div class="info-label">Kepala Sekolah</div>
+              <div class="info-value" id="dispKepalaSekolah">-</div>
+              <div class="small text-muted fw-semibold mt-1" id="dispNipKepalaSekolah">NIP. -</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Menu Navigasi Fitur: Menu Khusus Wali Kelas & Hasil Rekap Nilai -->
+        <div class="mt-4 pt-3 border-top d-flex flex-wrap justify-content-between align-items-center gap-3">
+          <div class="d-flex flex-wrap gap-2">
+            <button type="button" id="btnMenuWaliKelas" class="btn btn-warning fw-semibold text-dark shadow-sm" onclick="bukaHalamanWaliKelas()">
+              <i class="bi bi-person-workspace me-1"></i> Menu Khusus Wali Kelas (Kehadiran & Ekskul)
+            </button>
+            <button type="button" id="btnMenuRekapNilai" class="btn btn-info fw-semibold text-white shadow-sm" onclick="bukaHalamanRekap()">
+              <i class="bi bi-grid-3x3-gap-fill me-1"></i> Hasil Rekap Nilai (Sheet "Rekap")
+            </button>
+            <button type="button" id="btnMenuCetakBiodata" class="btn btn-success fw-semibold shadow-sm" onclick="bukaHalamanCetak('biodata')">
+              <i class="bi bi-person-vcard me-1"></i> Cetak Halaman Biodata (A4)
+            </button>
+            <button type="button" id="btnMenuCetakRapor" class="btn btn-primary fw-semibold shadow-sm" onclick="bukaHalamanCetak('rapor')">
+              <i class="bi bi-printer-fill me-1"></i> Cetak Nilai Rapor (A4)
+            </button>
+          </div>
+          <div id="waliKelasAccessBadge" class="small text-muted"></div>
+        </div>
+
+        <!-- Tabel Collapsible Seluruh Baris Sheet "Data Sekolah" -->
+        <div class="collapse mt-3" id="collapseDetailSekolah">
+          <div class="table-responsive">
+            <table class="table table-bordered table-sm mb-0 bg-white">
+              <thead class="table-light">
+                <tr>
+                  <th style="width: 35%;">Keterangan (Sheet Data Sekolah)</th>
+                  <th>Isi Data</th>
+                </tr>
+              </thead>
+              <tbody id="tbodyDetailDataSekolah"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <!-- Kolom Kiri: Daftar Button Mata Pelajaran + Status Pengisian -->
+        <div class="col-lg-5">
+          <div class="card card-modern p-4 h-100">
+            <h5 class="fw-bold text-primary mb-1">
+              <i class="bi bi-book-half me-2"></i>Input Nilai Mata Pelajaran
+            </h5>
+            <p class="text-muted small mb-3" id="mapelAccessInfoText">
+              Pilih mata pelajaran di bawah ini. Akses pengisian Tujuan Pembelajaran & Nilai diverifikasi otomatis sesuai <strong>NIP akun login</strong> Anda.
+            </p>
+            <div id="mapelButtonContainer" class="d-flex flex-column gap-2"></div>
+          </div>
+        </div>
+
+        <!-- Kolom Kanan: Tabel Data Siswa (Sheet "DataSiswa") -->
+        <div class="col-lg-7">
+          <div class="card card-modern p-4 h-100">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+              <div>
+                <h5 class="fw-bold text-primary mb-0">
+                  <i class="bi bi-people-fill me-2"></i>Data Siswa (<span id="totalSiswaCount">0</span> Peserta Didik)
+                </h5>
+                <small class="text-muted">Sumber: Sheet "DataSiswa"</small>
+              </div>
+              <div class="input-group input-group-sm" style="max-width: 260px;">
+                <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                <input type="text" id="searchSiswaInput" class="form-control" placeholder="Cari nama / NIS / cabor..." onkeyup="filterTabelSiswa()" />
+              </div>
+            </div>
+
+            <div class="table-responsive" style="max-height: 680px;">
+              <table class="table table-bordered table-hover table-sm table-sticky-header align-middle mb-0">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>NIS</th>
+                    <th>NISN</th>
+                    <th>Nama Peserta Didik</th>
+                    <th>L/P</th>
+                    <th>Cabor</th>
+                    <th>Tempat, Tgl Lahir</th>
+                    <th>Agama</th>
+                    <th>Pendidikan Sebelumnya</th>
+                    <th>Alamat Peserta Didik</th>
+                    <th>Nama Ayah</th>
+                    <th>Nama Ibu</th>
+                    <th>Pekerjaan Ayah</th>
+                    <th>Pekerjaan Ibu</th>
+                    <th>Alamat Orang Tua</th>
+                    <th>Nama Wali</th>
+                    <th>No. Telp</th>
+                    <th>S</th>
+                    <th>I</th>
+                    <th>A</th>
+                    <th class="text-center">Cetak (A4)</th>
+                  </tr>
+                </thead>
+                <tbody id="tbodyDataSiswa"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- HALAMAN 2: FORM TUJUAN PEMBELAJARAN & INPUT NILAI MATA PELAJARAN       -->
+    <!-- ===================================================================== -->
+    <div id="viewMapel" class="d-none">
+      <div class="card card-modern p-4 mb-4">
+        <div class="row align-items-center g-3">
+          <div class="col-md-8">
+            <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+              <span class="badge bg-primary" id="mapelBadgeKelas">Kelas -</span>
+              <span class="badge bg-info text-dark d-none" id="mapelBadgeKurikulum">
+                <i class="bi bi-shield-check me-1"></i>Akses Kurikulum
+              </span>
+            </div>
+            <h4 class="fw-bold text-dark mb-1" id="mapelJudul">-</h4>
+            <div class="text-muted small">
+              <i class="bi bi-person-badge me-1"></i> Guru Pengampu: <strong id="mapelNamaGuru">-</strong>
+              &nbsp;|&nbsp; NIP: <strong id="mapelNipGuru">-</strong>
+              &nbsp;|&nbsp; KKTP: <strong id="mapelKktp">80</strong>
+            </div>
+          </div>
+          <div class="col-md-4 text-md-end">
+            <div class="btn-group" role="group">
+              <button type="button" id="tabBtnTp" class="btn btn-primary fw-semibold" onclick="switchMapelStep('tp')">
+                1. Tujuan Pembelajaran
+              </button>
+              <button type="button" id="tabBtnNilai" class="btn btn-outline-primary fw-semibold" onclick="switchMapelStep('nilai')">
+                2. Input Nilai Siswa
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 1: INPUT TUJUAN PEMBELAJARAN -->
+      <div id="sectionTujuanPembelajaran" class="card card-modern p-4 mb-4">
+        <div class="mb-3">
+          <h5 class="fw-bold text-primary mb-1">
+            <i class="bi bi-list-check me-2"></i>Tahap 1: Input Tujuan Pembelajaran (TP)
+          </h5>
+          <p class="text-muted small mb-0">
+            Isi Tujuan Pembelajaran (maksimal 10 TP) yang akan langsung tersimpan ke sheet mata pelajaran di Spreadsheet. Setelah disimpan, halaman penginputan nilai akan ditampilkan.
+          </p>
+        </div>
+
+        <div id="tpInputsContainer" class="row g-3 mb-4"></div>
+
+        <div class="d-flex justify-content-end gap-2">
+          <button type="button" class="btn btn-primary px-4 fw-semibold" onclick="simpanTujuanPembelajaran()">
+            <i class="bi bi-cloud-arrow-up me-1"></i> Simpan Tujuan Pembelajaran & Lanjut ke Input Nilai
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 2: TABEL PENGINPUTAN NILAI SESUAI SHEET MATA PELAJARAN -->
+      <div id="sectionInputNilai" class="card card-modern p-4 d-none">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+          <div>
+            <h5 class="fw-bold text-primary mb-1">
+              <i class="bi bi-table me-2"></i>Tahap 2: Penginputan Nilai Rapor & Ketercapaian TP
+            </h5>
+            <p class="text-muted small mb-0">
+              Catatan: Pilih <strong>KKTP = 1</strong> (Mencapai) atau <strong>0</strong> (Tidak Mencapai), dan <strong>Tampil = 1</strong> (Tampilkan di Rapor) atau <strong>0</strong> (Tidak Ditampilkan).
+            </p>
+          </div>
+          <div class="d-flex gap-2">
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="switchMapelStep('tp')">
+              <i class="bi bi-pencil-square me-1"></i> Ubah Tujuan Pembelajaran
+            </button>
+            <button type="button" class="btn btn-success fw-semibold" onclick="simpanSemuaNilai()">
+              <i class="bi bi-save me-1"></i> Simpan Semua Nilai ke Spreadsheet
+            </button>
+          </div>
+        </div>
+
+        <div id="activeTpSummaryBox" class="alert alert-info py-2 px-3 small mb-3"></div>
+
+        <div class="table-responsive" style="max-height: 62vh; min-height: 360px;">
+          <table class="table table-bordered table-hover table-sm table-grades align-middle mb-0" id="tabelNilaiMapel">
+            <thead id="theadNilaiMapel"></thead>
+            <tbody id="tbodyNilaiMapel"></tbody>
+          </table>
+        </div>
+
+        <div class="d-flex justify-content-end mt-4">
+          <button type="button" class="btn btn-success btn-lg px-4 fw-semibold" onclick="simpanSemuaNilai()">
+            <i class="bi bi-check-circle me-2"></i> Simpan Nilai ke Spreadsheet
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- HALAMAN 3: MENU KHUSUS WALI KELAS (KEHADIRAN & EKSTRAKURIKULER)       -->
+    <!-- ===================================================================== -->
+    <div id="viewWaliKelas" class="d-none">
+      <div class="card card-modern p-4 mb-4">
+        <div class="row align-items-center g-3">
+          <div class="col-md-7">
+            <span class="badge bg-warning text-dark fw-semibold mb-2">
+              <i class="bi bi-person-workspace me-1"></i> Ruang Kerja Wali Kelas
+            </span>
+            <h4 class="fw-bold text-dark mb-1" id="wkJudulKelas">Menu Khusus Wali Kelas</h4>
+            <div class="text-muted small">
+              <i class="bi bi-person-badge me-1"></i> Wali Kelas: <strong id="wkNamaWali">-</strong>
+              &nbsp;|&nbsp; NIP: <strong id="wkNipWali">-</strong>
+            </div>
+          </div>
+          <div class="col-md-5 text-md-end">
+            <div class="btn-group flex-wrap" role="group">
+              <button type="button" id="tabBtnWkKehadiran" class="btn btn-primary fw-semibold" onclick="switchWaliKelasTab('kehadiran')">
+                <i class="bi bi-calendar-check me-1"></i> 1. Daftar Kehadiran
+              </button>
+              <button type="button" id="tabBtnWkEkskul" class="btn btn-outline-primary fw-semibold" onclick="switchWaliKelasTab('ekskul')">
+                <i class="bi bi-trophy me-1"></i> 2. Ekstrakurikuler Siswa
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB WALI KELAS 1: DAFTAR KEHADIRAN (SHEET "DataSiswa" / "Data Siswa") -->
+      <div id="sectionWkKehadiran" class="card card-modern p-4 mb-4">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+          <div>
+            <h5 class="fw-bold text-primary mb-1">
+              <i class="bi bi-calendar2-check-fill me-2"></i>Input Daftar Kehadiran Peserta Didik
+            </h5>
+            <p class="text-muted small mb-0">
+              Data kehadiran <strong>Sakit (S)</strong>, <strong>Izin (I)</strong>, dan <strong>Tanpa Keterangan / Alpha (A)</strong> akan langsung tersimpan ke kolom Kehadiran pada sheet <strong>"DataSiswa"</strong>.
+            </p>
+          </div>
+          <button type="button" class="btn btn-success fw-semibold" onclick="simpanKehadiranSiswa()">
+            <i class="bi bi-save me-1"></i> Simpan Daftar Kehadiran
+          </button>
+        </div>
+
+        <div class="table-responsive" style="max-height: 62vh; min-height: 360px;">
+          <table class="table table-bordered table-hover table-sm table-grades align-middle mb-0">
+            <thead>
+              <tr>
+                <th style="width: 55px;">No</th>
+                <th style="width: 110px;">NIS</th>
+                <th style="width: 130px;">NISN</th>
+                <th class="sticky-col-name">Nama Peserta Didik</th>
+                <th style="width: 60px;">L/P</th>
+                <th>Cabor</th>
+                <th style="width: 110px;">Sakit (S)</th>
+                <th style="width: 110px;">Izin (I)</th>
+                <th style="width: 110px;">Alpha (A)</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyWkKehadiran"></tbody>
+          </table>
+        </div>
+
+        <div class="d-flex justify-content-end mt-4">
+          <button type="button" class="btn btn-success btn-lg px-4 fw-semibold" onclick="simpanKehadiranSiswa()">
+            <i class="bi bi-check-circle me-2"></i> Simpan Daftar Kehadiran ke Spreadsheet
+          </button>
+        </div>
+      </div>
+
+      <!-- TAB WALI KELAS 2: EKSTRAKURIKULER & DESKRIPSI -->
+      <div id="sectionWkEkskul" class="d-none">
+        <!-- Langkah A: Master Daftar Ekstrakurikuler (Sheet "Ekstrakurikuler" cell B3:B7) -->
+        <div class="card card-modern p-4 mb-4">
+          <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+            <div>
+              <h5 class="fw-bold text-primary mb-1">
+                <i class="bi bi-list-ul me-2"></i>Langkah 1: Pengaturan Daftar Ekstrakurikuler Kelas
+              </h5>
+              <p class="text-muted small mb-0">
+                Isi terlebih dahulu daftar nama ekstrakurikuler (maksimal 5 pilihan, disimpan ke sheet <strong>"Ekstrakurikuler"</strong> pada cell <strong>B3:B7</strong>) agar muncul sebagai pilihan dropdown pada tabel siswa di bawah.
+              </p>
+            </div>
+            <div class="d-flex gap-2">
+              <button type="button" id="btnTambahMasterEkskul" class="btn btn-outline-primary btn-sm fw-semibold" onclick="tambahBarisMasterEkskul()">
+                <i class="bi bi-plus-circle me-1"></i> Tambah Ekstrakurikuler
+              </button>
+              <button type="button" class="btn btn-primary btn-sm fw-semibold" onclick="simpanMasterEkskul()">
+                <i class="bi bi-cloud-arrow-up me-1"></i> Simpan Daftar Ekskul
+              </button>
+            </div>
+          </div>
+
+          <div class="table-responsive" style="max-width: 600px;">
+            <table class="table table-bordered table-sm align-middle mb-0 bg-white">
+              <thead class="table-light">
+                <tr>
+                  <th style="width: 60px;" class="text-center">No</th>
+                  <th>Nama Ekstrakurikuler</th>
+                  <th style="width: 80px;" class="text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="tbodyMasterEkskul"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Langkah B: Pengisian Ekstrakurikuler Masing-Masing Siswa (Sheet "Ekstrakurikuler" kolom F sampai U) -->
+        <div class="card card-modern p-4">
+          <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+            <div>
+              <h5 class="fw-bold text-primary mb-1">
+                <i class="bi bi-person-lines-fill me-2"></i>Langkah 2: Input Ekstrakurikuler & Deskripsi Per Peserta Didik
+              </h5>
+              <p class="text-muted small mb-0">
+                Pilih nama ekstrakurikuler dari daftar di atas dan isi deskripsinya pada kolom <strong>L sampai U</strong> (kolom <strong>F sampai K</strong> hanya menampilkan data peserta didik dan tidak diedit).
+              </p>
+            </div>
+            <button type="button" class="btn btn-success fw-semibold" onclick="simpanEkskulSiswa()">
+              <i class="bi bi-save me-1"></i> Simpan Ekstrakurikuler Siswa
+            </button>
+          </div>
+
+          <div id="alertMasterEkskulKosong" class="alert alert-warning py-2 px-3 small d-none">
+            <i class="bi bi-exclamation-triangle-fill me-1"></i> Daftar ekstrakurikuler masih kosong. Silakan isi dan simpan <strong>Langkah 1: Pengaturan Daftar Ekstrakurikuler Kelas</strong> terlebih dahulu sebelum memilih ekstrakurikuler siswa.
+          </div>
+
+          <div class="table-responsive" style="max-height: 62vh; min-height: 360px;">
+            <table class="table table-bordered table-hover table-sm table-grades align-middle mb-0" id="tabelWkEkskulSiswa">
+              <thead id="theadWkEkskulSiswa"></thead>
+              <tbody id="tbodyWkEkskulSiswa"></tbody>
+            </table>
+          </div>
+
+          <div class="d-flex justify-content-end mt-4">
+            <button type="button" class="btn btn-success btn-lg px-4 fw-semibold" onclick="simpanEkskulSiswa()">
+              <i class="bi bi-check-circle me-2"></i> Simpan Ekstrakurikuler Siswa ke Spreadsheet
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- HALAMAN 4: HASIL REKAP NILAI SEMUA MATA PELAJARAN (SHEET "Rekap")     -->
+    <!-- ===================================================================== -->
+    <div id="viewRekap" class="d-none">
+      <div class="card card-modern p-4 mb-4">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+          <div>
+            <span class="badge bg-info text-white fw-semibold mb-2">
+              <i class="bi bi-table me-1"></i> Sumber: Sheet "Rekap"
+            </span>
+            <h4 class="fw-bold text-dark mb-1" id="rekapJudulKelas">Hasil Rekap Nilai Semua Mata Pelajaran</h4>
+            <p class="text-muted small mb-0">
+              Menampilkan rekapitulasi nilai seluruh peserta didik dari semua mata pelajaran.
+            </p>
+          </div>
+          <div class="d-flex flex-wrap align-items-center gap-2">
+            <div class="input-group input-group-sm" style="width: 240px;">
+              <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+              <input type="text" id="searchRekapInput" class="form-control" placeholder="Cari nama / NIS siswa..." onkeyup="filterTabelRekap()" />
+            </div>
+            <button type="button" class="btn btn-primary btn-sm fw-semibold" onclick="loadRekapNilai()">
+              <i class="bi bi-arrow-clockwise me-1"></i> Muat Ulang Rekap
+            </button>
+            <button type="button" class="btn btn-success btn-sm fw-semibold" onclick="cetakTabelRekapA4()">
+              <i class="bi bi-printer-fill me-1"></i> Cetak Rekap (A4)
+            </button>
+          </div>
+        </div>
+
+        <!-- Legenda Warna Nilai -->
+        <div class="d-flex flex-wrap align-items-center gap-3 mt-3 pt-3 border-top small">
+          <span class="fw-semibold text-muted">Keterangan Warna Sel Nilai:</span>
+          <span class="d-inline-flex align-items-center gap-1">
+            <span class="border rounded px-2 py-1 rekap-nilai-red">&lt; 80</span>
+            <span>Nilai di bawah 80 (Perlu Perhatian)</span>
+          </span>
+          <span class="d-inline-flex align-items-center gap-1">
+            <span class="border rounded px-2 py-1 rekap-nilai-empty">Kosong</span>
+            <span>Nilai belum diisi / kosong</span>
+          </span>
+          <span class="d-inline-flex align-items-center gap-1">
+            <span class="border rounded px-2 py-1 rekap-nilai-normal">&ge; 80</span>
+            <span>Nilai mencapai / melampaui 80</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="card card-modern p-4">
+        <div class="table-responsive" style="max-height: 65vh; min-height: 380px;">
+          <table class="table table-bordered table-hover table-sm table-rekap align-middle mb-0" id="tabelRekapNilai">
+            <thead id="theadRekapNilai"></thead>
+            <tbody id="tbodyRekapNilai"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ===================================================================== -->
+    <!-- HALAMAN 5: HALAMAN CETAK A4 (BIODATA & NILAI RAPOR)                   -->
+    <!-- ===================================================================== -->
+    <div id="viewCetakRapor" class="d-none">
+      <div id="printToolbarCard" class="card card-modern p-4 mb-4 no-print">
+        <div class="row align-items-center g-3">
+          <div class="col-lg-5">
+            <span class="badge bg-success mb-2"><i class="bi bi-printer me-1"></i> Pratinjau Cetak Kertas A4 (210mm x 297mm)</span>
+            <h4 class="fw-bold text-dark mb-1" id="judulHalamanCetak">Cetak Dokumen Rapor Peserta Didik</h4>
+            <p class="text-muted small mb-0">Pilih peserta didik dan jenis cetakan, lalu klik tombol <strong>Cetak Sekarang (A4)</strong>.</p>
+          </div>
+          <div class="col-lg-7">
+            <div class="row g-2 align-items-end justify-content-lg-end">
+              <div class="col-md-5">
+                <label class="form-label small fw-semibold mb-1">Pilih Peserta Didik:</label>
+                <select id="selectSiswaCetak" class="form-select form-select-sm" onchange="onChangeSiswaCetak()"></select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label small fw-semibold mb-1">Jenis Cetakan:</label>
+                <div class="btn-group w-100" role="group">
+                  <button type="button" id="btnModeCetakBiodata" class="btn btn-sm btn-outline-success fw-semibold" onclick="switchModeCetak('biodata')">
+                    1. Biodata
+                  </button>
+                  <button type="button" id="btnModeCetakRapor" class="btn btn-sm btn-primary fw-semibold" onclick="switchModeCetak('rapor')">
+                    2. Nilai Rapor
+                  </button>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <button type="button" class="btn btn-sm btn-dark fw-semibold w-100" onclick="cetakBiodataAtauRaporA4()">
+                  <i class="bi bi-printer-fill me-1"></i> Cetak Sekarang (A4)
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Area Lembar Kertas A4 -->
+      <div id="a4PagesContainer" class="a4-preview-wrapper"></div>
+    </div>
+
+  </div>
+
+  <!-- Area Cetak Khusus Tabel Rekap Nilai Ukuran A4 -->
+  <div id="printRekapA4Container"></div>
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // =========================================================================
+    // KONFIGURASI URL WEB APP APPS SCRIPT KELAS & SESSION LOGIN
+    // =========================================================================
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwsKb2BhhklE5KNeHSEySMJ0Q3XXMFr-qAAWyeme18IeDh3NF5jzNbyPp_XYaLuq_-E/exec';
+    const SESSION_STORAGE_KEY = 'PORTAL_ERAPOR_USER_SESSION';
+
+    let dashboardCache = null;
+    let selectedMapelName = '';
+    let currentMapelState = null;
+    let waliKelasState = {
+      masterEkskul: [],
+      siswaEkskul: [],
+      fuHeaders: []
+    };
+    let rekapCache = null;
+
+    function getApiUrl() {
+      return APPS_SCRIPT_URL;
+    }
+
+    function getUserSession() {
+      try {
+        const raw = sessionStorage.getItem(SESSION_STORAGE_KEY);
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          const statusFromKey = sessionStorage.getItem('PORTAL_ERAPOR_USER_STATUS');
+          parsed.status = String(parsed.status || parsed.kurikulum || parsed.role || parsed.jabatan || statusFromKey || '').trim();
+          parsed.loginStatus = parsed.loginStatus || 'AUTHENTICATED';
+        }
+        return parsed;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function clearUserSession() {
+      sessionStorage.removeItem(SESSION_STORAGE_KEY);
+      sessionStorage.removeItem('PORTAL_ERAPOR_USER_STATUS');
+    }
+
+    function logoutPortal() {
+      clearUserSession();
+      window.location.href = 'index.html';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedSession = getUserSession();
+      if (!savedSession || !savedSession.username || savedSession.loginStatus !== 'AUTHENTICATED') {
+        clearUserSession();
+        window.location.href = 'index.html';
+        return;
+      }
+
+      document.getElementById('navUserName').textContent = savedSession.namaGuru || savedSession.username;
+      const infoParts = ['NIP: ' + (savedSession.nip || '-')];
+      const statusVal = String(savedSession.status || savedSession.kurikulum || savedSession.role || savedSession.jabatan || '').trim();
+      if (statusVal && statusVal.toLowerCase().includes('kurikulum')) {
+        infoParts.push('Status: ' + statusVal);
+      }
+      if (savedSession.waliKelas && savedSession.waliKelas !== savedSession.nip) {
+        infoParts.push('Wali Kelas: ' + savedSession.waliKelas);
+      }
+      document.getElementById('navUserInfo').textContent = infoParts.join(' | ');
+
+      loadDashboard();
+    });
+
+    function showLoading(text) {
+      document.getElementById('loadingText').textContent = text || 'Memproses data...';
+      document.getElementById('loadingOverlay').classList.remove('d-none');
+    }
+
+    function hideLoading() {
+      document.getElementById('loadingOverlay').classList.add('d-none');
+    }
+
+    // =========================================================================
+    // KOMUNIKASI FETCH API KE APPS SCRIPT EKSTERNAL
+    // =========================================================================
+    async function apiGetDashboard() {
+      const url = `${getApiUrl()}?action=getDashboard`;
+      const response = await fetch(url, { method: 'GET', redirect: 'follow' });
+      const json = await response.json();
+      if (json.status === 'error') throw new Error(json.message);
+      return json.data;
+    }
+
+    async function apiPost(payload) {
+      const response = await fetch(getApiUrl(), {
+        method: 'POST',
+        redirect: 'follow',
+        headers: {
+          'Content-Type': 'text/plain;charset=utf-8'
+        },
+        body: JSON.stringify(payload)
+      });
+      return await response.json();
+    }
+
+    // =========================================================================
+    // 1. MEMUAT DATA DASHBOARD
+    // =========================================================================
+    async function loadDashboard() {
+      raporDetailCache = {};
+      isAllRaporLoaded = false;
+      showLoading('Mengambil data sekolah, kelas, siswa, dan status nilai dari Spreadsheet...');
+      try {
+        const res = await apiGetDashboard();
+        dashboardCache = res;
+        renderDashboard(res);
+      } catch (err) {
+        alert('Gagal memuat data dari Apps Script: ' + err.message + '\nPastikan URL Web App (/exec) sudah benar dan akses diset ke "Anyone".');
+      } finally {
+        hideLoading();
+      }
+    }
+
+    function renderDashboard(data) {
+      const sek = data.dataSekolah || {};
+      const id = data.identitas || {};
+
+      const namaSekolah = sek.namaSekolah || id.namaSekolah || '-';
+      document.getElementById('navSchoolTitle').textContent = 'SMANKO SULSEL';
+      document.getElementById('dispNamaSekolah').textContent = namaSekolah;
+
+      // Rangkuman alamat lengkap sekolah dari sheet "Data Sekolah"
+      const alamatParts = [
+        sek.alamatSekolah,
+        sek.desaKelurahan ? 'Kel. ' + sek.desaKelurahan : '',
+        sek.kecamatan ? 'Kec. ' + sek.kecamatan : '',
+        sek.kabupatenKota,
+        sek.provinsi,
+        sek.kodePos ? 'Kode Pos ' + sek.kodePos : ''
+      ].filter(Boolean);
+      document.getElementById('dispAlamatLengkapSekolah').innerHTML =
+        `<i class="bi bi-geo-alt-fill me-1"></i> ${escapeHtml(alamatParts.join(', ') || '-')}`;
+
+      document.getElementById('dispNpsn').textContent = sek.npsn || '-';
+      if (sek.nss) {
+        document.getElementById('wrapNss').classList.remove('d-none');
+        document.getElementById('dispNss').textContent = sek.nss;
+      } else {
+        document.getElementById('wrapNss').classList.add('d-none');
+      }
+      document.getElementById('dispWebsite').textContent = sek.website || '-';
+      document.getElementById('dispEmail').textContent = sek.email || '-';
+      document.getElementById('dispTempatTanggalRapor').textContent = sek.tempatTanggalRapor || '-';
+
+      // Kartu Data Akademik & Pimpinan
+      const kelasVal = sek.kelas || id.kelas || '-';
+      const semesterVal = sek.semester || id.semester || '-';
+      const tahunAjaranVal = sek.tahunAjaran || id.tahunPelajaran || '-';
+
+      document.getElementById('dispKelas').textContent = kelasVal;
+      document.getElementById('dispFase').textContent = sek.fase ? 'Fase ' + sek.fase : '-';
+      document.getElementById('dispSemester').textContent = semesterVal;
+      document.getElementById('dispTahunAjaran').textContent = tahunAjaranVal;
+
+      // Perbarui tag <title> secara dinamis sesuai nama kelas, tahun pelajaran, dan semester
+      const tahunTitle = String(tahunAjaranVal).replace(/\//g, '\\');
+      document.title = `Kelas ${kelasVal} [T.P. ${tahunTitle} | Semester ${semesterVal}]`;
+
+      document.getElementById('dispWaliKelas').textContent = sek.namaWaliKelas || id.waliKelas || '-';
+      document.getElementById('dispNipWaliKelas').textContent = 'NIP. ' + (sek.nipWaliKelas || id.nipWaliKelas || '-');
+      document.getElementById('dispKepalaSekolah').textContent = sek.namaKepalaSekolah || '-';
+      document.getElementById('dispNipKepalaSekolah').textContent = 'NIP. ' + (sek.nipKepalaSekolah || '-');
+
+      // Render tabel rincian seluruh baris dari sheet "Data Sekolah"
+      const tbodySekolah = document.getElementById('tbodyDetailDataSekolah');
+      tbodySekolah.innerHTML = '';
+      if (Array.isArray(sek.rawRows)) {
+        sek.rawRows.forEach(item => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td class="fw-semibold text-muted">${escapeHtml(item.label)}</td>
+            <td class="fw-semibold">${escapeHtml(item.value || '-')}</td>
+          `;
+          tbodySekolah.appendChild(tr);
+        });
+      }
+
+      // Render Daftar Mata Pelajaran
+      const mapelContainer = document.getElementById('mapelButtonContainer');
+      mapelContainer.innerHTML = '';
+
+      const isKurikulumUser = isAuthorizedKurikulum();
+      const mapelInfoText = document.getElementById('mapelAccessInfoText');
+      if (mapelInfoText) {
+        if (isKurikulumUser) {
+          mapelInfoText.innerHTML = `<span class="badge bg-info-subtle text-info-emphasis border border-info-subtle mb-1"><i class="bi bi-shield-check me-1"></i>Status Kurikulum Aktif</span><br>Anda memiliki akses penuh untuk menginput dan mengelola Tujuan Pembelajaran &amp; Nilai pada <strong>seluruh mata pelajaran</strong>.`;
+        } else {
+          mapelInfoText.innerHTML = `Pilih mata pelajaran di bawah ini. Akses pengisian Tujuan Pembelajaran &amp; Nilai diverifikasi otomatis sesuai <strong>NIP akun login</strong> Anda.`;
+        }
+      }
+
+      data.mapelList.forEach((m, index) => {
+        let badgeClass = 'badge-status-empty';
+        let iconHtml = '<i class="bi bi-x-circle me-1"></i>';
+        if (m.status === 'Sudah Diisi') {
+          badgeClass = 'badge-status-done';
+          iconHtml = '<i class="bi bi-check-circle-fill me-1"></i>';
+        } else if (m.status === 'Sementara') {
+          badgeClass = 'badge-status-progress';
+          iconHtml = '<i class="bi bi-hourglass-split me-1"></i>';
+        }
+
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'mapel-row d-flex justify-content-between align-items-center gap-2';
+        itemDiv.innerHTML = `
+          <div class="flex-grow-1">
+            <button type="button" class="btn btn-primary btn-sm text-start fw-semibold w-100"
+              onclick="bukaModalNip('${escapeQuotes(m.namaMapel)}')">
+              ${index + 1}. ${escapeHtml(m.namaMapel)}
+            </button>
+            <div class="small text-muted mt-1">
+              <i class="bi bi-person me-1"></i>${escapeHtml(m.namaGuru)}
+            </div>
+          </div>
+          <div class="text-end" style="min-width: 145px;">
+            <span class="badge rounded-pill px-2 py-1 ${badgeClass}">
+              ${iconHtml}${escapeHtml(m.status)}
+            </span>
+            <div class="small text-muted mt-1" style="font-size: 0.72rem;">
+              ${m.terisi}/${m.totalSiswa} siswa • ${m.jumlahTp} TP
+            </div>
+          </div>
+        `;
+        mapelContainer.appendChild(itemDiv);
+      });
+
+      renderTabelSiswa(data.siswa);
+      updateWaliKelasAccessUI(data);
+      prefetchAllRaporData();
+    }
+
+    function isAuthorizedWaliKelas(data) {
+      const session = getUserSession();
+      if (!session) return false;
+      const sek = (data && data.dataSekolah) || {};
+      const id = (data && data.identitas) || {};
+      const nipWaliSheet = String(sek.nipWaliKelas || id.nipWaliKelas || '').replace(/\s+/g, '').trim();
+      const nipSession = String(session.nip || session.username || '').replace(/\s+/g, '').trim();
+      const waliKelasFlag = String(session.waliKelas || '').trim().toUpperCase();
+      const kelasSheet = String(sek.kelas || id.kelas || '').trim().toUpperCase();
+
+      if (nipWaliSheet && nipSession && nipWaliSheet === nipSession) return true;
+      if (waliKelasFlag && kelasSheet && waliKelasFlag === kelasSheet) return true;
+      return false;
+    }
+
+    function isAuthorizedKurikulum() {
+      const session = getUserSession();
+      if (!session) return false;
+      const statusFlag = String(
+        session.status ||
+        session.kurikulum ||
+        session.role ||
+        session.jabatan ||
+        sessionStorage.getItem('PORTAL_ERAPOR_USER_STATUS') ||
+        ''
+      ).trim().toUpperCase();
+      return statusFlag.includes('KURIKULUM');
+    }
+
+    function isAuthorizedCetak(data) {
+      return isAuthorizedWaliKelas(data) || isAuthorizedKurikulum();
+    }
+
+    function updateWaliKelasAccessUI(data) {
+      const sek = (data && data.dataSekolah) || {};
+      const id = (data && data.identitas) || {};
+      const namaWali = sek.namaWaliKelas || id.waliKelas || '-';
+      const badgeEl = document.getElementById('waliKelasAccessBadge');
+      const btnWk = document.getElementById('btnMenuWaliKelas');
+      const btnBio = document.getElementById('btnMenuCetakBiodata');
+      const btnRap = document.getElementById('btnMenuCetakRapor');
+
+      const canAccessWk = isAuthorizedWaliKelas(data);
+      const canAccessCetak = isAuthorizedCetak(data);
+
+      if (canAccessWk) {
+        btnWk.className = 'btn btn-warning fw-semibold text-dark shadow-sm';
+        if (isAuthorizedKurikulum()) {
+          badgeEl.innerHTML = `<span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1"><i class="bi bi-check-circle-fill me-1"></i>Wali Kelas (${escapeHtml(namaWali)}) &amp; Status Kurikulum Aktif</span>`;
+        } else {
+          badgeEl.innerHTML = `<span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1"><i class="bi bi-check-circle-fill me-1"></i>Terverifikasi sebagai Wali Kelas (${escapeHtml(namaWali)})</span>`;
+        }
+      } else {
+        btnWk.className = 'btn btn-secondary fw-semibold text-white shadow-sm opacity-75';
+        if (isAuthorizedKurikulum()) {
+          badgeEl.innerHTML = `<span class="badge bg-info-subtle text-info-emphasis border border-info-subtle px-2 py-1"><i class="bi bi-shield-check me-1"></i>Status Kurikulum: Akses Input Nilai Semua Mapel &amp; Cetak Rapor Aktif</span>`;
+        } else {
+          badgeEl.innerHTML = `<span class="text-muted"><i class="bi bi-lock-fill me-1"></i>Menu Wali Kelas khusus untuk: <strong>${escapeHtml(namaWali)}</strong></span>`;
+        }
+      }
+
+      if (canAccessCetak) {
+        btnBio.className = 'btn btn-success fw-semibold shadow-sm';
+        btnRap.className = 'btn btn-primary fw-semibold shadow-sm';
+      } else {
+        btnBio.className = 'btn btn-secondary fw-semibold shadow-sm opacity-75';
+        btnRap.className = 'btn btn-secondary fw-semibold shadow-sm opacity-75';
+      }
+    }
+
+    function renderTabelSiswa(siswaList) {
+      document.getElementById('totalSiswaCount').textContent = siswaList.length;
+      const tbody = document.getElementById('tbodyDataSiswa');
+      tbody.innerHTML = '';
+
+      siswaList.forEach(s => {
+        const ttl = [s.tempatLahir, s.tanggalLahir].filter(Boolean).join(', ') || '-';
+        const alamatOrtu = [s.jalan, s.kelurahan, s.kecamatan, s.kabKota, s.provinsi].filter(Boolean).join(', ') || '-';
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="text-center">${escapeHtml(s.no)}</td>
+          <td>${escapeHtml(s.nis)}</td>
+          <td>${escapeHtml(s.nisn)}</td>
+          <td class="fw-semibold text-nowrap">${escapeHtml(s.nama)}</td>
+          <td class="text-center">${escapeHtml(s.lp)}</td>
+          <td class="text-nowrap">${escapeHtml(s.cabor)}</td>
+          <td class="text-nowrap">${escapeHtml(ttl)}</td>
+          <td>${escapeHtml(s.agama || '-')}</td>
+          <td>${escapeHtml(s.pendidikanSebelumnya || '-')}</td>
+          <td>${escapeHtml(s.alamatSiswa || '-')}</td>
+          <td>${escapeHtml(s.namaAyah || '-')}</td>
+          <td>${escapeHtml(s.namaIbu || '-')}</td>
+          <td>${escapeHtml(s.pekerjaanAyah || '-')}</td>
+          <td>${escapeHtml(s.pekerjaanIbu || '-')}</td>
+          <td>${escapeHtml(alamatOrtu)}</td>
+          <td>${escapeHtml(s.namaWali || '-')}</td>
+          <td>${escapeHtml(s.noTelp || '-')}</td>
+          <td class="text-center">${escapeHtml(s.sakit || '0')}</td>
+          <td class="text-center">${escapeHtml(s.izin || '0')}</td>
+          <td class="text-center">${escapeHtml(s.alpha || '0')}</td>
+          <td class="text-center text-nowrap">
+            <div class="btn-group btn-group-sm">
+              <button type="button" class="btn ${isAuthorizedCetak(dashboardCache) ? 'btn-outline-success' : 'btn-outline-secondary opacity-75'}" title="Cetak Biodata A4" onclick="bukaHalamanCetak('biodata', '${escapeQuotes(s.nis || s.nama)}')">
+                <i class="bi bi-person-vcard"></i> Biodata
+              </button>
+              <button type="button" class="btn ${isAuthorizedCetak(dashboardCache) ? 'btn-outline-primary' : 'btn-outline-secondary opacity-75'}" title="Cetak Nilai Rapor A4" onclick="bukaHalamanCetak('rapor', '${escapeQuotes(s.nis || s.nama)}')">
+                <i class="bi bi-printer"></i> Rapor
+              </button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterTabelSiswa() {
+      if (!dashboardCache) return;
+      const q = document.getElementById('searchSiswaInput').value.toLowerCase().trim();
+      const filtered = dashboardCache.siswa.filter(s =>
+        s.nama.toLowerCase().includes(q) ||
+        s.nis.toLowerCase().includes(q) ||
+        s.nisn.toLowerCase().includes(q) ||
+        s.cabor.toLowerCase().includes(q)
+      );
+      renderTabelSiswa(filtered);
+    }
+
+    // =========================================================================
+    // 2. VERIFIKASI NIP GURU & STATUS KURIKULUM BERDASARKAN SESSION LOGIN
+    // =========================================================================
+    async function bukaModalNip(namaMapel) {
+      selectedMapelName = namaMapel;
+      const session = getUserSession();
+
+      if (!session || !session.username) {
+        alert('Sesi login telah berakhir. Silakan login kembali.');
+        window.location.href = 'index.html';
+        return;
+      }
+
+      const isKurikulum = isAuthorizedKurikulum();
+      const nipSession = String(session.nip || session.username || '').trim();
+      if (!isKurikulum && (!nipSession || nipSession === '-')) {
+        alert('Akun login Anda tidak memiliki data NIP yang valid untuk diverifikasi.');
+        return;
+      }
+
+      const loadingMsg = isKurikulum
+        ? 'Memverifikasi akses Status Kurikulum untuk mata pelajaran ' + selectedMapelName + '...'
+        : 'Memverifikasi NIP sesi login (' + nipSession + ') untuk mata pelajaran ' + selectedMapelName + '...';
+
+      showLoading(loadingMsg);
+      try {
+        const res = await apiPost({
+          action: 'verifyTeacher',
+          namaMapel: selectedMapelName,
+          nip: nipSession,
+          status: isKurikulum ? 'Kurikulum' : (session.status || ''),
+          isKurikulum: isKurikulum
+        });
+
+        if (!res.success) {
+          alert('Akses Ditolak: ' + (res.message || 'NIP akun login Anda tidak terdaftar sebagai guru pengampu mata pelajaran ' + selectedMapelName + '.'));
+          return;
+        }
+
+        res.accessedByKurikulum = isKurikulum;
+        currentMapelState = res;
+        bukaHalamanMapel(res);
+      } catch (err) {
+        alert('Terjadi kesalahan jaringan/API: ' + err.message);
+      } finally {
+        hideLoading();
+      }
+    }
+
+    // =========================================================================
+    // 3. HALAMAN MATA PELAJARAN (TUJUAN PEMBELAJARAN & TABEL NILAI)
+    // =========================================================================
+    function bukaHalamanMapel(data) {
+      document.getElementById('viewDashboard').classList.add('d-none');
+      document.getElementById('viewMapel').classList.remove('d-none');
+      document.getElementById('btnBackDashboard').classList.remove('d-none');
+
+      document.getElementById('mapelBadgeKelas').textContent = 'Kelas ' + data.meta.kelas;
+      const badgeKur = document.getElementById('mapelBadgeKurikulum');
+      if (badgeKur) {
+        if (data.accessedByKurikulum || isAuthorizedKurikulum()) {
+          badgeKur.classList.remove('d-none');
+        } else {
+          badgeKur.classList.add('d-none');
+        }
+      }
+      document.getElementById('mapelJudul').textContent = data.meta.namaMapel;
+      document.getElementById('mapelNamaGuru').textContent = data.meta.namaGuru;
+      document.getElementById('mapelNipGuru').textContent = data.meta.nipGuru;
+      document.getElementById('mapelKktp').textContent = data.meta.kktpNilai;
+
+      const tpContainer = document.getElementById('tpInputsContainer');
+      tpContainer.innerHTML = '';
+      data.tps.forEach((tp, idx) => {
+        const col = document.createElement('div');
+        col.className = 'col-md-6';
+        col.innerHTML = `
+          <label class="form-label fw-semibold small mb-1">Tujuan Pembelajaran ${tp.no}</label>
+          <textarea id="tpInput_${idx}" class="form-control form-control-sm" rows="2"
+            placeholder="Tulis deskripsi Tujuan Pembelajaran ke-${tp.no}...">${escapeHtml(tp.deskripsi)}</textarea>
+        `;
+        tpContainer.appendChild(col);
+      });
+
+      const hasAnyTp = data.tps.some(tp => tp.deskripsi && tp.deskripsi.trim() !== '');
+      if (hasAnyTp) {
+        renderTabelNilaiMapel(data);
+        switchMapelStep('nilai');
+      } else {
+        switchMapelStep('tp');
+      }
+    }
+
+    function switchMapelStep(step) {
+      const secTp = document.getElementById('sectionTujuanPembelajaran');
+      const secNilai = document.getElementById('sectionInputNilai');
+      const btnTp = document.getElementById('tabBtnTp');
+      const btnNilai = document.getElementById('tabBtnNilai');
+
+      if (step === 'tp') {
+        secTp.classList.remove('d-none');
+        secNilai.classList.add('d-none');
+        btnTp.className = 'btn btn-primary fw-semibold';
+        btnNilai.className = 'btn btn-outline-primary fw-semibold';
+      } else {
+        const hasAnyTp = currentMapelState.tps.some(tp => tp.deskripsi && tp.deskripsi.trim() !== '');
+        if (!hasAnyTp) {
+          alert('Harap isi dan simpan minimal 1 Tujuan Pembelajaran terlebih dahulu sebelum menginput nilai.');
+          return;
+        }
+        renderTabelNilaiMapel(currentMapelState);
+        secTp.classList.add('d-none');
+        secNilai.classList.remove('d-none');
+        btnTp.className = 'btn btn-outline-primary fw-semibold';
+        btnNilai.className = 'btn btn-primary fw-semibold';
+      }
+    }
+
+    async function simpanTujuanPembelajaran() {
+      const updatedTps = [];
+      for (let i = 0; i < 10; i++) {
+        const val = document.getElementById('tpInput_' + i).value.trim();
+        updatedTps.push({ no: i + 1, deskripsi: val });
+      }
+
+      const hasAny = updatedTps.some(t => t.deskripsi !== '');
+      if (!hasAny) {
+        alert('Silakan isi minimal satu Tujuan Pembelajaran terlebih dahulu.');
+        return;
+      }
+
+      const session = getUserSession() || {};
+      const isKurikulum = isAuthorizedKurikulum();
+      const nipToSend = isKurikulum
+        ? String(session.nip || currentMapelState.meta.nipGuru || '').trim()
+        : currentMapelState.meta.nipGuru;
+
+      showLoading('Menyimpan Tujuan Pembelajaran ke Spreadsheet...');
+      try {
+        const res = await apiPost({
+          action: 'saveTP',
+          namaMapel: currentMapelState.meta.namaMapel,
+          nip: nipToSend,
+          status: isKurikulum ? 'Kurikulum' : (session.status || ''),
+          isKurikulum: isKurikulum,
+          tps: updatedTps
+        });
+
+        if (res.status === 'error' || res.success === false) {
+          throw new Error(res.message);
+        }
+
+        res.accessedByKurikulum = isKurikulum;
+        currentMapelState = res;
+        renderTabelNilaiMapel(res);
+        switchMapelStep('nilai');
+      } catch (err) {
+        alert('Gagal menyimpan Tujuan Pembelajaran: ' + err.message);
+      } finally {
+        hideLoading();
+      }
+    }
+
+    function renderTabelNilaiMapel(data) {
+      const activeTps = data.tps.filter(tp => tp.deskripsi && tp.deskripsi.trim() !== '');
+
+      const summaryBox = document.getElementById('activeTpSummaryBox');
+      summaryBox.innerHTML = '<strong>Daftar Tujuan Pembelajaran Aktif:</strong><ul class="mb-0 mt-1">' +
+        activeTps.map(tp => `<li><strong>TP ${tp.no}:</strong> ${escapeHtml(tp.deskripsi)}</li>`).join('') +
+        '</ul>';
+
+      const thead = document.getElementById('theadNilaiMapel');
+      let row1 = `
+        <tr>
+          <th rowspan="2">No</th>
+          <th rowspan="2">NIS</th>
+          <th rowspan="2">NISN</th>
+          <th rowspan="2" class="sticky-col-name">Nama Peserta Didik</th>
+          <th rowspan="2">JK</th>
+          <th rowspan="2">Cabor</th>
+          <th rowspan="2">Nilai Rapor<br>(0 - 100)</th>
+      `;
+      let row2 = `<tr>`;
+
+      activeTps.forEach(tp => {
+        row1 += `<th colspan="2" title="${escapeHtml(tp.deskripsi)}">TP ${tp.no}</th>`;
+        row2 += `<th>KKTP<br>(1/0)</th><th>Tampil<br>(1/0)</th>`;
+      });
+      row1 += `</tr>`;
+      row2 += `</tr>`;
+      thead.innerHTML = row1 + row2;
+
+      const tbody = document.getElementById('tbodyNilaiMapel');
+      tbody.innerHTML = '';
+
+      data.students.forEach((st, sIdx) => {
+        let trHtml = `
+          <td class="text-center">${escapeHtml(st.no)}</td>
+          <td class="text-center">${escapeHtml(st.nis)}</td>
+          <td class="text-center">${escapeHtml(st.nisn)}</td>
+          <td class="fw-semibold text-nowrap sticky-col-name">${escapeHtml(st.nama)}</td>
+          <td class="text-center">${escapeHtml(st.jk)}</td>
+          <td class="text-nowrap small">${escapeHtml(st.cabor)}</td>
+          <td class="text-center">
+            <input type="number" min="0" max="100" class="form-control form-control-sm input-nilai mx-auto"
+              id="nilai_${sIdx}" value="${escapeHtml(st.nilaiRapor)}" placeholder="0-100" />
+          </td>
+        `;
+
+        activeTps.forEach(tp => {
+          const tpIdx = tp.no - 1;
+          const valObj = st.tpValues[tpIdx] || { kktp: '', tampil: '' };
+          trHtml += `
+            <td class="text-center">
+              <select class="form-select form-select-sm select-tp-flag mx-auto" id="kktp_${sIdx}_${tpIdx}">
+                <option value="" ${valObj.kktp === '' ? 'selected' : ''}>-</option>
+                <option value="1" ${valObj.kktp === '1' ? 'selected' : ''}>1</option>
+                <option value="0" ${valObj.kktp === '0' ? 'selected' : ''}>0</option>
+              </select>
+            </td>
+            <td class="text-center">
+              <select class="form-select form-select-sm select-tp-flag mx-auto" id="tampil_${sIdx}_${tpIdx}">
+                <option value="" ${valObj.tampil === '' ? 'selected' : ''}>-</option>
+                <option value="1" ${valObj.tampil === '1' ? 'selected' : ''}>1</option>
+                <option value="0" ${valObj.tampil === '0' ? 'selected' : ''}>0</option>
+              </select>
+            </td>
+          `;
+        });
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = trHtml;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function simpanSemuaNilai() {
+      const activeTps = currentMapelState.tps.filter(tp => tp.deskripsi && tp.deskripsi.trim() !== '');
+      const payload = currentMapelState.students.map((st, sIdx) => {
+        const nilaiVal = document.getElementById('nilai_' + sIdx).value.trim();
+        const updatedTpValues = [...st.tpValues];
+
+        activeTps.forEach(tp => {
+          const tpIdx = tp.no - 1;
+          const kktpVal = document.getElementById(`kktp_${sIdx}_${tpIdx}`).value;
+          const tampilVal = document.getElementById(`tampil_${sIdx}_${tpIdx}`).value;
+          updatedTpValues[tpIdx] = { kktp: kktpVal, tampil: tampilVal };
+        });
+
+        return {
+          rowIndex: st.rowIndex,
+          nilaiRapor: nilaiVal,
+          tpValues: updatedTpValues
+        };
+      });
+
+      const session = getUserSession() || {};
+      const isKurikulum = isAuthorizedKurikulum();
+      const nipToSend = isKurikulum
+        ? String(session.nip || currentMapelState.meta.nipGuru || '').trim()
+        : currentMapelState.meta.nipGuru;
+
+      showLoading('Menyimpan nilai seluruh peserta didik ke Spreadsheet...');
+      try {
+        const res = await apiPost({
+          action: 'saveNilai',
+          namaMapel: currentMapelState.meta.namaMapel,
+          nip: nipToSend,
+          status: isKurikulum ? 'Kurikulum' : (session.status || ''),
+          isKurikulum: isKurikulum,
+          students: payload
+        });
+        if (res.status === 'error' || res.success === false) {
+          throw new Error(res.message);
+        }
+        alert(res.message);
+      } catch (err) {
+        alert('Gagal menyimpan nilai: ' + err.message);
+      } finally {
+        hideLoading();
+      }
+    }
+
+    function sembunyikanSemuaHalaman() {
+      document.getElementById('viewDashboard').classList.add('d-none');
+      document.getElementById('viewMapel').classList.add('d-none');
+      document.getElementById('viewWaliKelas').classList.add('d-none');
+      document.getElementById('viewRekap').classList.add('d-none');
+      const vCetak = document.getElementById('viewCetakRapor');
+      if (vCetak) vCetak.classList.add('d-none');
+    }
+
+    function kembaliKeDashboard() {
+      sembunyikanSemuaHalaman();
+      document.getElementById('btnBackDashboard').classList.add('d-none');
+      document.getElementById('viewDashboard').classList.remove('d-none');
+      loadDashboard();
+    }
+
+    // =========================================================================
+    // 4. MENU KHUSUS WALI KELAS (KEHADIRAN & EKSTRAKURIKULER)
+    // =========================================================================
+    async function bukaHalamanWaliKelas() {
+      if (!dashboardCache) {
+        alert('Data dashboard belum dimuat. Silakan tunggu atau segarkan halaman.');
+        return;
+      }
+
+      if (!isAuthorizedWaliKelas(dashboardCache)) {
+        const sek = dashboardCache.dataSekolah || {};
+        const id = dashboardCache.identitas || {};
+        const namaWali = sek.namaWaliKelas || id.waliKelas || '-';
+        const nipWali = sek.nipWaliKelas || id.nipWaliKelas || '-';
+        alert(`Akses Ditolak: Menu ini hanya dapat diakses oleh Wali Kelas terdaftar (${namaWali} - NIP. ${nipWali}).`);
+        return;
+      }
+
+      const sek = dashboardCache.dataSekolah || {};
+      const id = dashboardCache.identitas || {};
+      const session = getUserSession() || {};
+
+      document.getElementById('wkJudulKelas').textContent = 'Menu Khusus Wali Kelas - Kelas ' + (sek.kelas || id.kelas || '-');
+      document.getElementById('wkNamaWali').textContent = sek.namaWaliKelas || id.waliKelas || session.namaGuru || '-';
+      document.getElementById('wkNipWali').textContent = sek.nipWaliKelas || id.nipWaliKelas || session.nip || '-';
+
+      sembunyikanSemuaHalaman();
+      document.getElementById('viewWaliKelas').classList.remove('d-none');
+      document.getElementById('btnBackDashboard').classList.remove('d-none');
+
+      renderTabelWkKehadiran(dashboardCache.siswa || []);
+      await loadDataEkskulWaliKelas();
+      switchWaliKelasTab('kehadiran');
+    }
+
+    function switchWaliKelasTab(tab) {
+      const secKehadiran = document.getElementById('sectionWkKehadiran');
+      const secEkskul = document.getElementById('sectionWkEkskul');
+      const btnKehadiran = document.getElementById('tabBtnWkKehadiran');
+      const btnEkskul = document.getElementById('tabBtnWkEkskul');
+
+      if (tab === 'kehadiran') {
+        secKehadiran.classList.remove('d-none');
+        secEkskul.classList.add('d-none');
+        btnKehadiran.className = 'btn btn-primary fw-semibold';
+        btnEkskul.className = 'btn btn-outline-primary fw-semibold';
+      } else {
+        secKehadiran.classList.add('d-none');
+        secEkskul.classList.remove('d-none');
+        btnKehadiran.className = 'btn btn-outline-primary fw-semibold';
+        btnEkskul.className = 'btn btn-primary fw-semibold';
+        renderMasterEkskulTable();
+        renderTabelWkEkskulSiswa();
+      }
+    }
+
+    function renderTabelWkKehadiran(siswaList) {
+      const tbody = document.getElementById('tbodyWkKehadiran');
+      tbody.innerHTML = '';
+
+      siswaList.forEach((s, idx) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="text-center">${escapeHtml(s.no || (idx + 1))}</td>
+          <td class="text-center">${escapeHtml(s.nis)}</td>
+          <td class="text-center">${escapeHtml(s.nisn)}</td>
+          <td class="fw-semibold text-nowrap sticky-col-name">${escapeHtml(s.nama)}</td>
+          <td class="text-center">${escapeHtml(s.lp)}</td>
+          <td class="text-nowrap small">${escapeHtml(s.cabor || '-')}</td>
+          <td class="text-center">
+            <input type="number" min="0" class="form-control form-control-sm input-nilai mx-auto"
+              id="wk_sakit_${idx}" value="${escapeHtml(s.sakit !== '' && s.sakit !== undefined ? s.sakit : '0')}" />
+          </td>
+          <td class="text-center">
+            <input type="number" min="0" class="form-control form-control-sm input-nilai mx-auto"
+              id="wk_izin_${idx}" value="${escapeHtml(s.izin !== '' && s.izin !== undefined ? s.izin : '0')}" />
+          </td>
+          <td class="text-center">
+            <input type="number" min="0" class="form-control form-control-sm input-nilai mx-auto"
+              id="wk_alpha_${idx}" value="${escapeHtml(s.alpha !== '' && s.alpha !== undefined ? s.alpha : '0')}" />
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function simpanKehadiranSiswa() {
+      const siswaList = (dashboardCache && dashboardCache.siswa) || [];
+      const session = getUserSession() || {};
+      const nipSession = String(session.nip || session.username || '').trim();
+
+      const payloadSiswa = siswaList.map((s, idx) => ({
+        no: s.no || (idx + 1),
+        nis: s.nis,
+        nisn: s.nisn,
+        nama: s.nama,
+        rowIndex: s.rowIndex || (idx + 2),
+        sakit: document.getElementById(`wk_sakit_${idx}`).value.trim() || '0',
+        izin: document.getElementById(`wk_izin_${idx}`).value.trim() || '0',
+        alpha: document.getElementById(`wk_alpha_${idx}`).value.trim() || '0'
+      }));
+
+      showLoading('Menyimpan daftar kehadiran ke sheet "DataSiswa"...');
+      try {
+        const res = await apiPost({
+          action: 'saveKehadiran',
+          nip: nipSession,
+          siswa: payloadSiswa
+        });
+        if (res.status === 'error' || res.success === false) {
+          throw new Error(res.message || 'Gagal menyimpan data kehadiran.');
+        }
+        // Perbarui cache lokal agar langsung sinkron
+        payloadSiswa.forEach((p, idx) => {
+          if (dashboardCache.siswa[idx]) {
+            dashboardCache.siswa[idx].sakit = p.sakit;
+            dashboardCache.siswa[idx].izin = p.izin;
+            dashboardCache.siswa[idx].alpha = p.alpha;
+          }
+        });
+        alert(res.message || 'Daftar kehadiran peserta didik berhasil disimpan ke sheet "DataSiswa".');
+      } catch (err) {
+        alert('Gagal menyimpan daftar kehadiran: ' + err.message);
+      } finally {
+        hideLoading();
+      }
+    }
+
+    async function loadDataEkskulWaliKelas() {
+      const session = getUserSession() || {};
+      const nipSession = String(session.nip || session.username || '').trim();
+      showLoading('Memuat daftar ekstrakurikuler & data ekskul peserta didik...');
+      try {
+        const url = `${getApiUrl()}?action=getWaliKelasEkskul&nip=${encodeURIComponent(nipSession)}`;
+        const response = await fetch(url, { method: 'GET', redirect: 'follow' });
+        const json = await response.json();
+        if (json.status === 'error' || json.success === false) {
+          throw new Error(json.message || 'Gagal memuat data ekstrakurikuler.');
+        }
+        const data = json.data || json;
+        waliKelasState.masterEkskul = Array.isArray(data.masterEkskul) ? data.masterEkskul : [];
+        waliKelasState.siswaEkskul = Array.isArray(data.siswaEkskul) ? data.siswaEkskul : [];
+        waliKelasState.fuHeaders = Array.isArray(data.fuHeaders) ? data.fuHeaders : [];
+        waliKelasState.ekskulStartOffset = typeof data.ekskulStartOffset === 'number' ? data.ekskulStartOffset : null;
+      } catch (err) {
+        waliKelasState.masterEkskul = waliKelasState.masterEkskul || [];
+        waliKelasState.siswaEkskul = ((dashboardCache && dashboardCache.siswa) || []).map((s, idx) => ({
+          rowIndex: idx + 4,
+          no: s.no || (idx + 1),
+          nis: s.nis,
+          nisn: s.nisn,
+          nama: s.nama,
+          lp: s.lp || '',
+          cabor: s.cabor || '',
+          fuValues: Array(16).fill('')
+        }));
+      } finally {
+        hideLoading();
+      }
+    }
+
+    function renderMasterEkskulTable() {
+      const tbody = document.getElementById('tbodyMasterEkskul');
+      const btnTambah = document.getElementById('btnTambahMasterEkskul');
+      tbody.innerHTML = '';
+
+      if (btnTambah) {
+        btnTambah.disabled = waliKelasState.masterEkskul.length >= 5;
+      }
+
+      if (waliKelasState.masterEkskul.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="3" class="text-center text-muted py-3 small">
+              Belum ada daftar ekstrakurikuler. Klik tombol <strong>"Tambah Ekstrakurikuler"</strong> untuk menambahkan (maksimal 5).
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      waliKelasState.masterEkskul.forEach((item, idx) => {
+        const namaVal = typeof item === 'string' ? item : (item.nama || '');
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="text-center fw-semibold">${idx + 1}</td>
+          <td>
+            <input type="text" class="form-control form-control-sm" id="master_ekskul_nama_${idx}"
+              value="${escapeHtml(namaVal)}" placeholder="Contoh: Pramuka, Futsal, Paskibra..."
+              onchange="updateMasterEkskulLocal(${idx}, this.value)" />
+          </td>
+          <td class="text-center">
+            <button type="button" class="btn btn-outline-danger btn-sm" onclick="hapusBarisMasterEkskul(${idx})" title="Hapus">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function updateMasterEkskulLocal(idx, val) {
+      if (waliKelasState.masterEkskul[idx] !== undefined) {
+        waliKelasState.masterEkskul[idx] = { nama: val.trim() };
+      }
+    }
+
+    function tambahBarisMasterEkskul() {
+      if (waliKelasState.masterEkskul.length >= 5) {
+        alert('Maksimal 5 daftar ekstrakurikuler.');
+        return;
+      }
+      waliKelasState.masterEkskul.push({ nama: '' });
+      renderMasterEkskulTable();
+    }
+
+    function hapusBarisMasterEkskul(idx) {
+      waliKelasState.masterEkskul.splice(idx, 1);
+      renderMasterEkskulTable();
+      renderTabelWkEkskulSiswa();
+    }
+
+    async function simpanMasterEkskul() {
+      const cleanedList = [];
+      waliKelasState.masterEkskul.forEach((_, idx) => {
+        if (cleanedList.length >= 5) return;
+        const namaEl = document.getElementById(`master_ekskul_nama_${idx}`);
+        const nama = namaEl ? namaEl.value.trim() : '';
+        if (nama) {
+          cleanedList.push({ nama });
+        }
+      });
+
+      if (cleanedList.length === 0) {
+        alert('Harap isi minimal 1 nama ekstrakurikuler terlebih dahulu.');
+        return;
+      }
+
+      const session = getUserSession() || {};
+      const nipSession = String(session.nip || session.username || '').trim();
+
+      showLoading('Menyimpan daftar ekstrakurikuler ke sheet "Ekstrakurikuler"...');
+      try {
+        const res = await apiPost({
+          action: 'saveMasterEkskul',
+          nip: nipSession,
+          masterEkskul: cleanedList
+        });
+        if (res.status === 'error' || res.success === false) {
+          throw new Error(res.message || 'Gagal menyimpan daftar ekstrakurikuler.');
+        }
+        waliKelasState.masterEkskul = cleanedList;
+        renderMasterEkskulTable();
+        renderTabelWkEkskulSiswa();
+        alert(res.message || 'Daftar ekstrakurikuler berhasil disimpan ke sheet "Ekstrakurikuler".');
+      } catch (err) {
+        alert('Gagal menyimpan daftar ekstrakurikuler: ' + err.message);
+      } finally {
+        hideLoading();
+      }
+    }
+
+    function buildEkskulSelectOptions(selectedValue) {
+      let html = `<option value="">-- Pilih Ekstrakurikuler --</option>`;
+      waliKelasState.masterEkskul.forEach(item => {
+        const nama = typeof item === 'string' ? item : (item.nama || '');
+        if (!nama) return;
+        const isSel = String(selectedValue || '').trim().toLowerCase() === String(nama).trim().toLowerCase();
+        html += `<option value="${escapeHtml(nama)}" ${isSel ? 'selected' : ''}>${escapeHtml(nama)}</option>`;
+      });
+      return html;
+    }
+
+    function onSelectEkskulSiswaChange(sIdx, slotNum) {
+      const selectEl = document.getElementById(`siswa_ekskul_${sIdx}_${slotNum}`);
+      const descEl = document.getElementById(`siswa_desc_${sIdx}_${slotNum}`);
+      if (!selectEl || !descEl) return;
+
+      if (!selectEl.value) {
+        descEl.value = '';
+      }
+    }
+
+    function renderTabelWkEkskulSiswa() {
+      const alertBox = document.getElementById('alertMasterEkskulKosong');
+      const hasMaster = waliKelasState.masterEkskul.some(m => m.nama && m.nama.trim() !== '');
+      if (!hasMaster) {
+        alertBox.classList.remove('d-none');
+      } else {
+        alertBox.classList.add('d-none');
+      }
+
+      // Kolom F sampai K (6 kolom: index 0..5 pada fuValues) HANYA ditampilkan (read-only, tidak diedit/input).
+      // Kolom L sampai U (10 kolom: index 6..15 pada fuValues = 5 pasang Ekstrakurikuler & Deskripsi) adalah yang diinput/diedit.
+      const fuHeaders = Array.isArray(waliKelasState.fuHeaders) ? waliKelasState.fuHeaders : [];
+      const defaultReadOnlyHeaders = ['No', 'NIS', 'NISN', 'Nama Peserta Didik', 'L/P', 'Cabor'];
+      const defaultInputHeaders = [
+        'Ekstrakurikuler 1', 'Deskripsi 1',
+        'Ekstrakurikuler 2', 'Deskripsi 2',
+        'Ekstrakurikuler 3', 'Deskripsi 3',
+        'Ekstrakurikuler 4', 'Deskripsi 4',
+        'Ekstrakurikuler 5', 'Deskripsi 5'
+      ];
+
+      const numSlots = 5; // Kolom L..U = 10 kolom (5 pasang Ekstrakurikuler & Deskripsi)
+      waliKelasState.ekskulStartOffset = 6;
+      waliKelasState.numSlots = numSlots;
+
+      const thead = document.getElementById('theadWkEkskulSiswa');
+      let headHtml = `
+        <tr>
+          <th style="width: 50px;">${escapeHtml(fuHeaders[0] || defaultReadOnlyHeaders[0])}</th>
+          <th style="width: 105px;">${escapeHtml(fuHeaders[1] || defaultReadOnlyHeaders[1])}</th>
+          <th style="width: 120px;">${escapeHtml(fuHeaders[2] || defaultReadOnlyHeaders[2])}</th>
+          <th class="sticky-col-name">${escapeHtml(fuHeaders[3] || defaultReadOnlyHeaders[3])}</th>
+          <th style="width: 60px;">${escapeHtml(fuHeaders[4] || defaultReadOnlyHeaders[4])}</th>
+          <th style="min-width: 150px;">${escapeHtml(fuHeaders[5] || defaultReadOnlyHeaders[5])}</th>
+      `;
+      for (let c = 0; c < 10; c++) {
+        const hdrFromSheet = fuHeaders[6 + c];
+        const label = hdrFromSheet || defaultInputHeaders[c];
+        const minW = (c % 2 === 0) ? '210px' : '240px';
+        headHtml += `<th style="min-width: ${minW};">${escapeHtml(label)}</th>`;
+      }
+      headHtml += `</tr>`;
+      thead.innerHTML = headHtml;
+
+      const baseSiswa = (dashboardCache && dashboardCache.siswa) || [];
+      const siswaList = (waliKelasState.siswaEkskul && waliKelasState.siswaEkskul.length > 0)
+        ? waliKelasState.siswaEkskul
+        : baseSiswa.map((s, idx) => ({
+            rowIndex: idx + 4,
+            no: s.no || (idx + 1),
+            nis: s.nis,
+            nisn: s.nisn,
+            nama: s.nama,
+            lp: s.lp || '',
+            cabor: s.cabor || '',
+            fuValues: [
+              String(s.no || (idx + 1)),
+              String(s.nis || ''),
+              String(s.nisn || ''),
+              String(s.nama || ''),
+              String(s.lp || ''),
+              String(s.cabor || ''),
+              ...Array(10).fill('')
+            ]
+          }));
+
+      const tbody = document.getElementById('tbodyWkEkskulSiswa');
+      tbody.innerHTML = '';
+      const disabledAttr = hasMaster ? '' : 'disabled';
+
+      siswaList.forEach((s, idx) => {
+        const fu = Array.isArray(s.fuValues) ? s.fuValues : Array(16).fill('');
+        const matchBase = baseSiswa.find(b => (s.nis && b.nis === s.nis) || (s.nama && b.nama === s.nama)) || {};
+
+        // Kolom F..K (index 0..5): hanya menampilkan data, tidak diedit
+        const colF = fu[0] || s.no || matchBase.no || (idx + 1);
+        const colG = fu[1] || s.nis || matchBase.nis || '-';
+        const colH = fu[2] || s.nisn || matchBase.nisn || '-';
+        const colI = fu[3] || s.nama || matchBase.nama || '-';
+        const colJ = fu[4] || s.lp || matchBase.lp || '-';
+        const colK = fu[5] || s.cabor || matchBase.cabor || '-';
+
+        let rowHtml = `
+          <td class="text-center bg-light">${escapeHtml(colF)}</td>
+          <td class="text-center bg-light">${escapeHtml(colG)}</td>
+          <td class="text-center bg-light">${escapeHtml(colH)}</td>
+          <td class="fw-semibold text-nowrap sticky-col-name">${escapeHtml(colI)}</td>
+          <td class="text-center bg-light">${escapeHtml(colJ)}</td>
+          <td class="text-nowrap small bg-light">${escapeHtml(colK)}</td>
+        `;
+
+        // Kolom L..U (index 6..15): area input (dropdown ekstrakurikuler & textarea deskripsi)
+        for (let slot = 0; slot < numSlots; slot++) {
+          const ekskulColIdx = 6 + (slot * 2);
+          const descColIdx = 6 + (slot * 2) + 1;
+          const ekskulVal = fu[ekskulColIdx] || '';
+          const descVal = fu[descColIdx] || '';
+
+          rowHtml += `
+            <td>
+              <select class="form-select form-select-sm" id="siswa_ekskul_${idx}_${slot}" ${disabledAttr}
+                onchange="onSelectEkskulSiswaChange(${idx}, ${slot})">
+                ${buildEkskulSelectOptions(ekskulVal)}
+              </select>
+            </td>
+            <td>
+              <textarea class="form-control form-control-sm" rows="2" id="siswa_desc_${idx}_${slot}" ${disabledAttr}
+                placeholder="Deskripsi...">${escapeHtml(descVal)}</textarea>
+            </td>
+          `;
+        }
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = rowHtml;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function simpanEkskulSiswa() {
+      const hasMaster = waliKelasState.masterEkskul.some(m => m.nama && m.nama.trim() !== '');
+      if (!hasMaster) {
+        alert('Silakan isi dan simpan terlebih dahulu daftar ekstrakurikuler pada Langkah 1 sebelum menyimpan data siswa.');
+        return;
+      }
+
+      const baseSiswa = (dashboardCache && dashboardCache.siswa) || [];
+      const siswaList = (waliKelasState.siswaEkskul && waliKelasState.siswaEkskul.length > 0)
+        ? waliKelasState.siswaEkskul
+        : baseSiswa;
+
+      const session = getUserSession() || {};
+      const nipSession = String(session.nip || session.username || '').trim();
+      const numSlots = 5;
+
+      const payload = siswaList.map((s, idx) => {
+        const matchBase = baseSiswa.find(b => (s.nis && b.nis === s.nis) || (s.nama && b.nama === s.nama)) || {};
+        const existingFu = Array.isArray(s.fuValues) ? [...s.fuValues] : Array(16).fill('');
+        while (existingFu.length < 16) existingFu.push('');
+
+        // Hanya mengambil nilai input dari kolom L sampai U (index 6..15 -> 10 kolom)
+        const luValues = [];
+        for (let slot = 0; slot < numSlots; slot++) {
+          const ekskulEl = document.getElementById(`siswa_ekskul_${idx}_${slot}`);
+          const descEl = document.getElementById(`siswa_desc_${idx}_${slot}`);
+          const ekskulVal = ekskulEl ? ekskulEl.value.trim() : '';
+          const descVal = descEl ? descEl.value.trim() : '';
+          existingFu[6 + (slot * 2)] = ekskulVal;
+          existingFu[6 + (slot * 2) + 1] = descVal;
+          luValues.push(ekskulVal, descVal);
+        }
+
+        return {
+          rowIndex: s.rowIndex || (idx + 4),
+          no: existingFu[0] || s.no || matchBase.no || (idx + 1),
+          nis: existingFu[1] || s.nis || matchBase.nis || '',
+          nisn: existingFu[2] || s.nisn || matchBase.nisn || '',
+          nama: existingFu[3] || s.nama || matchBase.nama || '',
+          lp: existingFu[4] || s.lp || matchBase.lp || '',
+          cabor: existingFu[5] || s.cabor || matchBase.cabor || '',
+          fuValues: existingFu,
+          luValues: luValues
+        };
+      });
+
+      showLoading('Menyimpan data ekstrakurikuler peserta didik ke sheet "Ekstrakurikuler" (kolom L:U)...');
+      try {
+        const res = await apiPost({
+          action: 'saveEkskulSiswa',
+          nip: nipSession,
+          siswaEkskul: payload
+        });
+        if (res.status === 'error' || res.success === false) {
+          throw new Error(res.message || 'Gagal menyimpan data ekstrakurikuler siswa.');
+        }
+        waliKelasState.siswaEkskul = payload;
+        alert(res.message || 'Data ekstrakurikuler peserta didik berhasil disimpan ke sheet "Ekstrakurikuler" kolom L sampai U.');
+      } catch (err) {
+        alert('Gagal menyimpan ekstrakurikuler siswa: ' + err.message);
+      } finally {
+        hideLoading();
+      }
+    }
+
+    // =========================================================================
+    // 5. HASIL REKAP NILAI SEMUA MATA PELAJARAN (SHEET "Rekap")
+    // =========================================================================
+    async function bukaHalamanRekap() {
+      sembunyikanSemuaHalaman();
+      document.getElementById('viewRekap').classList.remove('d-none');
+      document.getElementById('btnBackDashboard').classList.remove('d-none');
+
+      const sek = (dashboardCache && dashboardCache.dataSekolah) || {};
+      const id = (dashboardCache && dashboardCache.identitas) || {};
+      document.getElementById('rekapJudulKelas').textContent =
+        'Hasil Rekap Nilai Semua Mata Pelajaran - Kelas ' + (sek.kelas || id.kelas || '-');
+
+      await loadRekapNilai();
+    }
+
+    async function loadRekapNilai() {
+      showLoading('Mengambil data rekap nilai semua mata pelajaran dari sheet "Rekap"...');
+      try {
+        const url = `${getApiUrl()}?action=getRekap`;
+        const response = await fetch(url, { method: 'GET', redirect: 'follow' });
+        const json = await response.json();
+        if (json.status === 'error' || json.success === false) {
+          throw new Error(json.message || 'Gagal memuat sheet Rekap.');
+        }
+        rekapCache = json.data || json;
+        renderTabelRekap(rekapCache);
+      } catch (err) {
+        alert('Gagal memuat data rekap nilai dari sheet "Rekap": ' + err.message);
+      } finally {
+        hideLoading();
+      }
+    }
+
+    function getRekapCellClass(rawVal) {
+      if (rawVal === null || rawVal === undefined || String(rawVal).trim() === '') {
+        return 'rekap-nilai-empty';
+      }
+      const num = Number(String(rawVal).replace(',', '.'));
+      if (!isNaN(num)) {
+        if (num < 80) return 'rekap-nilai-red';
+        return 'rekap-nilai-normal';
+      }
+      return 'rekap-nilai-normal';
+    }
+
+    function renderTabelRekap(data) {
+      const thead = document.getElementById('theadRekapNilai');
+      const tbody = document.getElementById('tbodyRekapNilai');
+      thead.innerHTML = '';
+      tbody.innerHTML = '';
+
+      if (!data) return;
+
+      // Mendukung format { headers: [...], rows: [...] } ataupun { mapelHeaders: [...], students: [...] }
+      const headers = Array.isArray(data.headers) ? data.headers : [];
+      const rows = Array.isArray(data.rows) ? data.rows : [];
+      const keyword = (document.getElementById('searchRekapInput').value || '').toLowerCase().trim();
+
+      if (headers.length > 0) {
+        const trHead = document.createElement('tr');
+        headers.forEach((h, colIdx) => {
+          const th = document.createElement('th');
+          th.textContent = h;
+          if (colIdx === 3 || String(h).toLowerCase().includes('nama')) {
+            th.classList.add('sticky-col-name');
+          }
+          trHead.appendChild(th);
+        });
+        thead.appendChild(trHead);
+
+        const filteredRows = rows.filter(r => {
+          if (!keyword) return true;
+          return r.some(cell => String(cell || '').toLowerCase().includes(keyword));
+        });
+
+        filteredRows.forEach(r => {
+          const tr = document.createElement('tr');
+          r.forEach((cellVal, colIdx) => {
+            const td = document.createElement('td');
+            const headerLabel = String(headers[colIdx] || '').toLowerCase();
+            const isIdentityCol =
+              colIdx <= 5 ||
+              ['no', 'nis', 'nisn', 'nama', 'jk', 'l/p', 'cabor', 'peringkat', 'rank', 'keterangan'].some(k => headerLabel === k || headerLabel.includes('nama peserta'));
+
+            if (isIdentityCol) {
+              td.textContent = cellVal !== null && cellVal !== undefined && String(cellVal).trim() !== '' ? cellVal : '-';
+              if (colIdx === 3 || headerLabel.includes('nama')) {
+                td.className = 'fw-semibold text-nowrap sticky-col-name';
+              } else if (headerLabel.includes('cabor')) {
+                td.className = 'text-nowrap small';
+              } else {
+                td.className = 'text-center';
+              }
+            } else {
+              const strVal = cellVal !== null && cellVal !== undefined ? String(cellVal).trim() : '';
+              td.textContent = strVal !== '' ? strVal : '-';
+              td.className = 'text-center ' + getRekapCellClass(strVal);
+            }
+            tr.appendChild(td);
+          });
+          tbody.appendChild(tr);
+        });
+      }
+    }
+
+    function filterTabelRekap() {
+      if (rekapCache) {
+        renderTabelRekap(rekapCache);
+      }
+    }
+
+    function cetakBiodataAtauRaporA4() {
+      document.body.classList.remove('printing-rekap');
+      const rekapContainer = document.getElementById('printRekapA4Container');
+      if (rekapContainer) rekapContainer.innerHTML = '';
+      window.print();
+    }
+
+    function cetakTabelRekapA4() {
+      if (!rekapCache || !Array.isArray(rekapCache.headers) || rekapCache.headers.length === 0) {
+        alert('Data rekap nilai belum tersedia untuk dicetak.');
+        return;
+      }
+
+      const sek = (dashboardCache && dashboardCache.dataSekolah) || {};
+      const id = (dashboardCache && dashboardCache.identitas) || {};
+      const namaSekolah = sek.namaSekolah || id.namaSekolah || 'SMAN Khusus Keberbakatan Olahraga Prov. Sulawesi Selatan';
+      const kelas = sek.kelas || id.kelas || '-';
+      const fase = sek.fase || '-';
+      const semester = sek.semester || id.semester || '-';
+      const tahunAjaran = sek.tahunAjaran || id.tahunPelajaran || '-';
+
+      const headers = rekapCache.headers;
+      const rows = Array.isArray(rekapCache.rows) ? rekapCache.rows : [];
+      const keyword = (document.getElementById('searchRekapInput').value || '').toLowerCase().trim();
+      const filteredRows = rows.filter(r => {
+        if (!keyword) return true;
+        return r.some(cell => String(cell || '').toLowerCase().includes(keyword));
+      });
+
+      const hiddenCols = new Set();
+      headers.forEach((h, idx) => {
+        const lbl = String(h || '').trim().toLowerCase();
+        if (['nis', 'nisn', 'jk', 'l/p', 'cabor', 'cabang olahraga'].includes(lbl)) {
+          hiddenCols.add(idx);
+        }
+      });
+
+      let theadHtml = '<tr>';
+      headers.forEach((h, idx) => {
+        if (hiddenCols.has(idx)) return;
+        theadHtml += `<th>${escapeHtml(h)}</th>`;
+      });
+      theadHtml += '</tr>';
+
+      let tbodyHtml = '';
+      filteredRows.forEach(r => {
+        tbodyHtml += '<tr>';
+        r.forEach((cellVal, colIdx) => {
+          if (hiddenCols.has(colIdx)) return;
+          const headerLabel = String(headers[colIdx] || '').toLowerCase();
+          const isIdentityCol =
+            colIdx <= 5 ||
+            ['no', 'nis', 'nisn', 'nama', 'jk', 'l/p', 'cabor', 'peringkat', 'rank', 'keterangan'].some(
+              k => headerLabel === k || headerLabel.includes('nama peserta')
+            );
+
+          if (isIdentityCol) {
+            const disp = cellVal !== null && cellVal !== undefined && String(cellVal).trim() !== '' ? cellVal : '-';
+            const alignClass = (colIdx === 3 || headerLabel.includes('nama'))
+              ? 'text-start fw-semibold text-nowrap'
+              : (headerLabel.includes('cabor') ? 'text-start text-nowrap' : 'text-center');
+            tbodyHtml += `<td class="${alignClass}">${escapeHtml(disp)}</td>`;
+          } else {
+            const strVal = cellVal !== null && cellVal !== undefined ? String(cellVal).trim() : '';
+            const disp = strVal !== '' ? strVal : '-';
+            const colorClass = getRekapCellClass(strVal);
+            tbodyHtml += `<td class="text-center ${colorClass}">${escapeHtml(disp)}</td>`;
+          }
+        });
+        tbodyHtml += '</tr>';
+      });
+
+      // Penyesuaian skala otomatis agar seluruh baris selalu muat pas dalam 1 lembar A4 (tanpa meluber ke halaman 2)
+      const rowCount = filteredRows.length;
+      const zoomScale = rowCount > 36 ? 0.72 : (rowCount > 30 ? 0.80 : (rowCount > 24 ? 0.88 : 1));
+
+      const printContainer = document.getElementById('printRekapA4Container');
+      printContainer.innerHTML = `
+        <style id="dynamicRekapPageStyle">
+          @media print {
+            @page {
+              size: A4 landscape;
+              margin: 5mm 6mm;
+            }
+          }
+        </style>
+        <div style="font-family: Arial, Helvetica, sans-serif; color: #000; zoom: ${zoomScale};">
+          <div style="text-align: center; margin-bottom: 5px; border-bottom: 1.5px solid #0f4c81; padding-bottom: 4px;">
+            <div style="font-size: 11pt; font-weight: bold; text-transform: uppercase;">REKAPITULASI NILAI RAPOR PESERTA DIDIK</div>
+            <div style="font-size: 9.5pt; font-weight: bold;">${escapeHtml(namaSekolah)}</div>
+            <div style="font-size: 8pt; margin-top: 1px;">
+              Kelas: <strong>${escapeHtml(kelas)}</strong> &nbsp;|&nbsp;
+              Fase: <strong>${escapeHtml(fase)}</strong> &nbsp;|&nbsp;
+              Semester: <strong>${escapeHtml(semester)}</strong> &nbsp;|&nbsp;
+              Tahun Pelajaran: <strong>${escapeHtml(tahunAjaran)}</strong>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 4px; font-size: 7pt; display: flex; gap: 12px; align-items: center;">
+            <span><strong>Keterangan Warna Nilai:</strong></span>
+            <span><span style="display:inline-block;width:10px;height:9px;background:#fee2e2;border:1px solid #991b1b;vertical-align:middle;margin-right:3px;"></span> &lt; 80 (Di bawah KKTP)</span>
+            <span><span style="display:inline-block;width:10px;height:9px;background:#e2e8f0;border:1px solid #64748b;vertical-align:middle;margin-right:3px;"></span> Kosong / Belum Diisi</span>
+            <span><span style="display:inline-block;width:10px;height:9px;background:#ffffff;border:1px solid #334155;vertical-align:middle;margin-right:3px;"></span> &ge; 80 (Tuntas)</span>
+          </div>
+
+          <table class="rekap-print-table">
+            <thead>${theadHtml}</thead>
+            <tbody>${tbodyHtml}</tbody>
+          </table>
+        </div>
+      `;
+
+      document.body.classList.add('printing-rekap');
+      const cleanupPrintRekap = () => {
+        document.body.classList.remove('printing-rekap');
+        printContainer.innerHTML = '';
+        window.removeEventListener('afterprint', cleanupPrintRekap);
+      };
+      window.addEventListener('afterprint', cleanupPrintRekap);
+      window.print();
+    }
+
+
+    // =========================================================================
+    // 6. HALAMAN CETAK A4: BIODATA PESERTA DIDIK & NILAI RAPOR INTRAKURIKULER
+    // =========================================================================
+    let currentPrintMode = 'biodata'; // 'biodata' atau 'rapor'
+    let raporDetailCache = {};
+
+    // Konfigurasi path file gambar logo (sesuaikan nama file gambar di folder Anda)
+    const LOGO_TUT_WURI_SRC = 'logo-tutwuri.png';
+    const LOGO_SEKOLAH_SRC = 'logo-sekolah.png';
+    const LOGO_PROVINSI_SRC = 'logo-provinsi.png';
+    const LOGO_KURIKULUM_MERDEKA_SRC = 'logo-kurikulum-merdeka.png';
+
+    function getWatermarkSvgHtml() {
+      return `
+        <div class="a4-watermark">
+          <img src="assets/img/Logo SMANKO fix (bg putih).png" alt="Watermark Logo Sekolah"
+            style="width: 100%; height: 100%; " />
+        </div>
+      `;
+    }
+
+    function getTutWuriSvgHtml() {
+      return `
+        <img src="assets/img/tut wuri handayani.png" alt="Logo Tut Wuri Handayani"
+          style="width: 175px; height: 185px; object-fit: contain;" />
+      `;
+    }
+
+    function getSchoolCrestSvgHtml() {
+      return `
+        <img src="assets/img/Logo SMANKO fix (bg putih).png" alt="Logo SMA Negeri Khusus Keberbakatan Olahraga Prov. Sulawesi Selatan"
+          style="width: 155px; height: 155px; object-fit: contain;" />
+      `;
+    }
+
+    async function bukaHalamanCetak(mode, siswaKey) {
+      if (!dashboardCache || !Array.isArray(dashboardCache.siswa) || dashboardCache.siswa.length === 0) {
+        alert('Data peserta didik belum tersedia.');
+        return;
+      }
+
+      if (!isAuthorizedCetak(dashboardCache)) {
+        const sek = dashboardCache.dataSekolah || {};
+        const id = dashboardCache.identitas || {};
+        const namaWali = sek.namaWaliKelas || id.waliKelas || '-';
+        const kelasNama = sek.kelas || id.kelas || '-';
+        alert(`Akses Ditolak: Menu Cetak Halaman Biodata dan Nilai Rapor hanya dapat diakses oleh Wali Kelas ${kelasNama} (${namaWali}) atau akun dengan status Kurikulum.`);
+        return;
+      }
+
+      sembunyikanSemuaHalaman();
+      document.getElementById('viewCetakRapor').classList.remove('d-none');
+      document.getElementById('btnBackDashboard').classList.remove('d-none');
+
+      const sel = document.getElementById('selectSiswaCetak');
+      sel.innerHTML = '';
+      dashboardCache.siswa.forEach((s, idx) => {
+        const opt = document.createElement('option');
+        opt.value = String(idx);
+        opt.textContent = `${s.no || (idx + 1)}. ${s.nama} (${s.nis || '-'})`;
+        sel.appendChild(opt);
+      });
+
+      if (siswaKey) {
+        const foundIdx = dashboardCache.siswa.findIndex(s =>
+          String(s.nis || '').trim() === String(siswaKey).trim() ||
+          String(s.nama || '').trim().toLowerCase() === String(siswaKey).trim().toLowerCase()
+        );
+        if (foundIdx !== -1) sel.value = String(foundIdx);
+      }
+
+      await switchModeCetak(mode || 'biodata');
+    }
+
+    async function switchModeCetak(mode) {
+      currentPrintMode = mode;
+      const btnBio = document.getElementById('btnModeCetakBiodata');
+      const btnRap = document.getElementById('btnModeCetakRapor');
+      const judul = document.getElementById('judulHalamanCetak');
+
+      if (mode === 'biodata') {
+        btnBio.className = 'btn btn-sm btn-success fw-semibold';
+        btnRap.className = 'btn btn-sm btn-outline-primary fw-semibold';
+        judul.textContent = 'Pratinjau Cetak Halaman Biodata (Ukuran A4 - 3 Halaman)';
+      } else {
+        btnBio.className = 'btn btn-sm btn-outline-success fw-semibold';
+        btnRap.className = 'btn btn-sm btn-primary fw-semibold';
+        judul.textContent = 'Pratinjau Cetak Halaman Nilai Rapor Intrakurikuler (Ukuran A4 - 3 Halaman)';
+      }
+
+      await onChangeSiswaCetak();
+    }
+
+    async function onChangeSiswaCetak() {
+      const idx = Number(document.getElementById('selectSiswaCetak').value || 0);
+      const siswa = (dashboardCache && dashboardCache.siswa && dashboardCache.siswa[idx]) || null;
+      if (!siswa) return;
+
+      if (currentPrintMode === 'biodata') {
+        renderCetakBiodataA4(siswa);
+      } else {
+        await renderCetakNilaiRaporA4(siswa);
+      }
+    }
+
+    function formatJenisKelaminPanjang(lp) {
+      const v = String(lp || '').trim().toUpperCase();
+      if (v === 'L' || v === 'LAKI-LAKI') return 'Laki-Laki';
+      if (v === 'P' || v === 'PEREMPUAN') return 'Perempuan';
+      return lp || '-';
+    }
+
+    function renderCetakBiodataA4(siswa) {
+      const sek = (dashboardCache && dashboardCache.dataSekolah) || {};
+      const id = (dashboardCache && dashboardCache.identitas) || {};
+      const container = document.getElementById('a4PagesContainer');
+
+      const namaSiswa = siswa.nama || '-';
+      const nisNisn = `${siswa.nis || '-'} / ${siswa.nisn || '-'}`;
+      const ttl = [siswa.tempatLahir, siswa.tanggalLahir].filter(Boolean).join(', ') || '-';
+      const jk = formatJenisKelaminPanjang(siswa.lp);
+      const agama = siswa.agama || '-';
+      const pendSebelum = siswa.pendidikanSebelumnya || '-';
+      const alamatSiswa = siswa.alamatSiswa || '-';
+
+      const namaAyah = siswa.namaAyah || '-';
+      const namaIbu = siswa.namaIbu || '-';
+      const pekAyah = siswa.pekerjaanAyah || '-';
+      const pekIbu = siswa.pekerjaanIbu || '-';
+
+      const jalan = siswa.jalan || '-';
+      const kelurahan = siswa.kelurahan || '-';
+      const kecamatan = siswa.kecamatan || '-';
+      const kabKota = siswa.kabKota || '-';
+      const provinsi = siswa.provinsi || '-';
+
+      const namaWali = siswa.namaWali || '_';
+      const pekWali = siswa.pekerjaanWali || '_';
+      const alamatWali = siswa.alamatWali || '_';
+
+      const namaSekolah = sek.namaSekolah || id.namaSekolah || 'SMAN Khusus Keberbakatan Olahraga Prov. Sulawesi Selatan';
+      const npsn = sek.npsn || '-';
+      const alamatSekolah = sek.alamatSekolah || '-';
+      const kodePos = sek.kodePos || '-';
+      const desaSekolah = sek.desaKelurahan || '-';
+      const kecSekolah = sek.kecamatan || '-';
+      const kabSekolah = sek.kabupatenKota || '-';
+      const provSekolah = sek.provinsi || '-';
+      const website = sek.website || '-';
+      const email = sek.email || '-';
+
+      const kepalaSekolah = sek.namaKepalaSekolah || 'A. Syamsualam, S.Pd., M.Si.';
+      const nipKepsek = sek.nipKepalaSekolah || '19801220 200904 1 001';
+      const tempatTanggalTitimangsa = sek.tempatTanggalBiodata || sek.tempatTanggalRapor || 'Makassar, 21 Juli 2025';
+
+      // HALAMAN 1 BIODATA: SAMPUL RAPOR PESERTA DIDIK
+      const page1Html = `
+        <div class="a4-page">
+          ${getWatermarkSvgHtml()}
+          <div class="a4-content d-flex flex-column justify-content-between align-items-center text-center py-4">
+            <div class="mt-2"><br>
+              ${getTutWuriSvgHtml()}
+              <h2 class="fw-bold mt-4 mb-2" style="font-size: 21pt; letter-spacing: 0.5px;">RAPOR</h2>
+              <h3 class="fw-bold mb-2" style="font-size: 20pt;">PESERTA DIDIK</h3>
+              <h3 class="fw-bold mb-1" style="font-size: 19pt;">SEKOLAH MENENGAH ATAS</h3>
+              <h3 class="fw-bold" style="font-size: 18pt;">(SMA)</h3>
+            </div>
+
+            <!--<div class="my-3">
+              ${getSchoolCrestSvgHtml()}
+            </div>-->
+
+            <div class="w-100" style="max-width: 145mm;">
+              <div class="fw-bold mb-1" style="font-size: 11pt;">Nama Peserta Didik :</div>
+              <div class="border border-dark py-2 px-3 fw-bold text-uppercase mb-3" style="font-size: 15pt;">
+                ${escapeHtml(namaSiswa)}
+              </div>
+
+              <div class="fw-bold mb-1" style="font-size: 11pt;">NIS / NISN :</div>
+              <div class="border border-dark py-2 px-3 fw-bold mb-4" style="font-size: 14pt;">
+                ${escapeHtml(nisNisn)}
+              </div>
+            </div>
+
+            <div class="mb-2 fw-bold" style="font-size: 14pt; line-height: 1.4;">
+              <div>KEMENTERIAN PENDIDIKAN DAN KEBUDAYAAN</div>
+              <div>REPUBLIK INDONESIA</div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // HALAMAN 2 BIODATA: PROFIL SEKOLAH
+      const page2Html = `
+        <div class="a4-page">
+          ${getWatermarkSvgHtml()}
+          <div class="a4-content pt-3">
+            <div class="text-center mb-5">
+              <h3 class="fw-bold mb-1" style="font-size: 15pt;">RAPOR</h3>
+              <h3 class="fw-bold mb-1" style="font-size: 14pt;">PESERTA DIDIK</h3>
+              <h3 class="fw-bold" style="font-size: 14pt;">SEKOLAH MENENGAH ATAS (SMA)</h3>
+            </div>
+
+            <table class="biodata-table mt-4" style="font-size: 11pt; line-height: 1.8;">
+              <tr>
+                <td style="width: 34%;">Nama Sekolah</td>
+                <td style="width: 3%;">:</td>
+                <td class="fw-semibold">${escapeHtml(namaSekolah)}</td>
+              </tr>
+              <tr>
+                <td>NPSN</td>
+                <td>:</td>
+                <td>${escapeHtml(npsn)}</td>
+              </tr>
+              <tr>
+                <td>Alamat Sekolah</td>
+                <td>:</td>
+                <td>${escapeHtml(alamatSekolah)}</td>
+              </tr>
+              <tr>
+                <td>Kode Pos</td>
+                <td>:</td>
+                <td>${escapeHtml(kodePos)}</td>
+              </tr>
+              <tr>
+                <td>Desa/Kelurahan</td>
+                <td>:</td>
+                <td>${escapeHtml(desaSekolah)}</td>
+              </tr>
+              <tr>
+                <td>Kecamatan</td>
+                <td>:</td>
+                <td>${escapeHtml(kecSekolah)}</td>
+              </tr>
+              <tr>
+                <td>Kabupaten / Kota</td>
+                <td>:</td>
+                <td>${escapeHtml(kabSekolah)}</td>
+              </tr>
+              <tr>
+                <td>Provinsi</td>
+                <td>:</td>
+                <td>${escapeHtml(provSekolah)}</td>
+              </tr>
+              <tr>
+                <td>Website</td>
+                <td>:</td>
+                <td>${escapeHtml(website)}</td>
+              </tr>
+              <tr>
+                <td>E-mail</td>
+                <td>:</td>
+                <td>${escapeHtml(email)}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      `;
+
+      // HALAMAN 3 BIODATA: IDENTITAS PESERTA DIDIK
+      const page3Html = `
+        <div class="a4-page">
+          ${getWatermarkSvgHtml()}
+          <div class="a4-content">
+            <div class="text-center mb-3">
+              <h4 class="fw-bold text-uppercase" style="font-size: 15pt;">IDENTITAS PESERTA DIDIK</h4><br>
+            </div>
+
+            <table class="biodata-table">
+              <tr>
+                <td style="width: 35%;">Nama Peserta Didik</td>
+                <td style="width: 3%;">:</td>
+                <td class="fw-bold text-uppercase">${escapeHtml(namaSiswa)}</td>
+              </tr>
+              <tr>
+                <td>NIS / NISN</td>
+                <td>:</td>
+                <td>${escapeHtml(nisNisn)}</td>
+              </tr>
+              <tr>
+                <td>Tempat, Tanggal Lahir</td>
+                <td>:</td>
+                <td>${escapeHtml(ttl)}</td>
+              </tr>
+              <tr>
+                <td>Jenis Kelamin</td>
+                <td>:</td>
+                <td>${escapeHtml(jk)}</td>
+              </tr>
+              <tr>
+                <td>Agama</td>
+                <td>:</td>
+                <td>${escapeHtml(agama)}</td>
+              </tr>
+              <tr>
+                <td>Pendidikan sebelumnya</td>
+                <td>:</td>
+                <td>${escapeHtml(pendSebelum)}</td>
+              </tr>
+              <tr>
+                <td>Alamat Peserta Didik</td>
+                <td>:</td>
+                <td>${escapeHtml(alamatSiswa)}</td>
+              </tr>
+              <tr><td colspan="3" style="height: 6px;"></td></tr>
+              <tr>
+                <td class="fw-semibold">Nama Orang Tua</td>
+                <td>:</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td class="ps-3">Ayah</td>
+                <td>:</td>
+                <td>${escapeHtml(namaAyah)}</td>
+              </tr>
+              <tr>
+                <td class="ps-3">Ibu</td>
+                <td>:</td>
+                <td>${escapeHtml(namaIbu)}</td>
+              </tr>
+              <tr><td colspan="3" style="height: 6px;"></td></tr>
+              <tr>
+                <td class="fw-semibold">Pekerjaan Orang Tua</td>
+                <td>:</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td class="ps-3">Ayah</td>
+                <td>:</td>
+                <td>${escapeHtml(pekAyah)}</td>
+              </tr>
+              <tr>
+                <td class="ps-3">Ibu</td>
+                <td>:</td>
+                <td>${escapeHtml(pekIbu)}</td>
+              </tr>
+              <tr><td colspan="3" style="height: 6px;"></td></tr>
+              <tr>
+                <td class="fw-semibold">Alamat Orang Tua</td>
+                <td>:</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td class="ps-3">Jalan</td>
+                <td>:</td>
+                <td>${escapeHtml(jalan)}</td>
+              </tr>
+              <tr>
+                <td class="ps-3">Kelurahan/Desa</td>
+                <td>:</td>
+                <td>${escapeHtml(kelurahan)}</td>
+              </tr>
+              <tr>
+                <td class="ps-3">Kecamatan</td>
+                <td>:</td>
+                <td>${escapeHtml(kecamatan)}</td>
+              </tr>
+              <tr>
+                <td class="ps-3">Kabupaten / Kota</td>
+                <td>:</td>
+                <td>${escapeHtml(kabKota)}</td>
+              </tr>
+              <tr>
+                <td class="ps-3">Provinsi</td>
+                <td>:</td>
+                <td>${escapeHtml(provinsi)}</td>
+              </tr>
+              <tr><td colspan="3" style="height: 6px;"></td></tr>
+              <tr>
+                <td class="fw-semibold">Wali Peserta Didik</td>
+                <td>:</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td class="ps-3">Nama</td>
+                <td>:</td>
+                <td>${escapeHtml(namaWali)}</td>
+              </tr>
+              <tr>
+                <td class="ps-3">Pekerjaan</td>
+                <td>:</td>
+                <td>${escapeHtml(pekWali)}</td>
+              </tr>
+              <tr>
+                <td class="ps-3">Alamat</td>
+                <td>:</td>
+                <td>${escapeHtml(alamatWali)}</td>
+              </tr>
+            </table>
+
+            <div class="d-flex justify-content-end align-items-start mt-4 pt-2 pe-3" style="gap: 20mm;">
+              <div>
+                <div class="foto-box-3x4">
+                  <span>Ukuran Foto</span>
+                  <span>Siswa</span>
+                  <span class="fw-bold">3x4</span>
+                  <span class="mt-2" style="font-size: 7.5pt;">Pakaian Sekolah</span>
+                </div>
+              </div>
+              <div style="min-width: 72mm; font-size: 10pt;">
+                <div style="padding-bottom: 10px;">${escapeHtml(tempatTanggalTitimangsa)}</div>
+                <div>Kepala Sekolah,</div>
+                <div style="height: 20mm;"></div>
+                <div class="fw-bold text-decoration-underline">${escapeHtml(kepalaSekolah)}</div>
+                <div>NIP. ${escapeHtml(nipKepsek)}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      container.innerHTML = page1Html + page2Html + page3Html;
+    }
+
+    let isAllRaporLoaded = false;
+    let allRaporFetchPromise = null;
+
+    async function prefetchAllRaporData() {
+      if (isAllRaporLoaded) return;
+      if (allRaporFetchPromise) return allRaporFetchPromise;
+
+      allRaporFetchPromise = (async () => {
+        try {
+          const url = `${getApiUrl()}?action=getAllRaporSiswa`;
+          const res = await fetch(url, { method: 'GET', redirect: 'follow' });
+          const json = await res.json();
+          if (json.status === 'success' && json.data) {
+            Object.assign(raporDetailCache, json.data);
+            isAllRaporLoaded = true;
+          }
+        } catch (e) {
+          console.warn('Prefetch rapor massal gagal, akan menggunakan mode satuan:', e);
+        } finally {
+          allRaporFetchPromise = null;
+        }
+      })();
+
+      return allRaporFetchPromise;
+    }
+
+    async function fetchDataRaporSiswa(siswa) {
+      const cacheKey = siswa.nis || siswa.nama;
+      if (raporDetailCache[cacheKey]) {
+        return raporDetailCache[cacheKey];
+      }
+
+      if (!isAllRaporLoaded) {
+        await prefetchAllRaporData();
+        if (raporDetailCache[cacheKey]) {
+          return raporDetailCache[cacheKey];
+        }
+      }
+
+      // Fallback jika endpoint getAllRaporSiswa belum di-deploy di Apps Script
+      try {
+        const url = `${getApiUrl()}?action=getRaporSiswa&nis=${encodeURIComponent(siswa.nis || '')}&nama=${encodeURIComponent(siswa.nama || '')}`;
+        const res = await fetch(url, { method: 'GET', redirect: 'follow' });
+        const json = await res.json();
+        if (json.status === 'success' && json.data) {
+          raporDetailCache[cacheKey] = json.data;
+          return json.data;
+        }
+      } catch (e) {
+        console.warn('Fallback ke data lokal dashboard:', e);
+      }
+
+      const mapelFallback = ((dashboardCache && dashboardCache.mapelList) || []).map((m, idx) => ({
+        no: idx + 1,
+        namaMapel: m.namaMapel,
+        nilaiAkhir: '',
+        tercapaiList: [],
+        bimbinganList: []
+      }));
+      return {
+        mapelNilai: mapelFallback,
+        ekskulList: []
+      };
+    }
+
+    function toProperCase(str) {
+      if (!str) return '';
+      return String(str)
+        .toLowerCase()
+        .replace(/(^|\s|[-'])([a-zÀ-ɏ])/g, (match, prefix, char) => prefix + char.toUpperCase());
+    }
+
+    function buildCapaianKompetensiHtml(namaSiswa, item) {
+      const namaProper = toProperCase(namaSiswa);
+      const tercapaiText = (Array.isArray(item.tercapaiList) && item.tercapaiList.length > 0)
+        ? ' ' + item.tercapaiList.join(', ')
+        : '';
+      const bimbinganText = (Array.isArray(item.bimbinganList) && item.bimbinganList.length > 0)
+        ? ' ' + item.bimbinganList.join(', ')
+        : '';
+
+      return `
+        <div style="padding: 3px 0; border-bottom: 1px solid #cbd5e1;">
+          ${escapeHtml(namaProper)} menunjukkan pemahaman dalam${escapeHtml(tercapaiText)}
+        </div>
+        <div style="padding: 3px 0;">
+          ${escapeHtml(namaProper)} membutuhkan bimbingan dalam${escapeHtml(bimbinganText)}
+        </div>
+      `;
+    }
+
+    function buildRaporPageFooterHtml(namaSekolah, namaSiswa, kelas, fase, tahunPelajaran, semester, pageNum) {
+      return `
+        <div class="a4-footer">
+          <div>
+            <div>Rapor Intrakurikuler | ${escapeHtml(namaSekolah)}</div>
+            <div class="fw-semibold">${escapeHtml(namaSiswa)} | Kelas : ${escapeHtml(kelas)} | Fase: ${escapeHtml(fase)} | Tahun Pelajaran: ${escapeHtml(tahunPelajaran)} | Semester: ${escapeHtml(semester)}</div>
+          </div>
+          <div class="fw-bold" style="font-size: 9pt;">${pageNum}</div>
+        </div>
+      `;
+    }
+
+    async function renderCetakNilaiRaporA4(siswa) {
+      const sek = (dashboardCache && dashboardCache.dataSekolah) || {};
+      const id = (dashboardCache && dashboardCache.identitas) || {};
+      const container = document.getElementById('a4PagesContainer');
+
+      const detail = await fetchDataRaporSiswa(siswa);
+      const mapelNilai = Array.isArray(detail.mapelNilai) ? detail.mapelNilai : [];
+      const ekskulList = Array.isArray(detail.ekskulList) ? detail.ekskulList : [];
+
+      const namaSiswa = siswa.nama || '-';
+      const nisNisn = `${siswa.nis || '-'} / ${siswa.nisn || '-'}`;
+      const namaSekolah = sek.namaSekolah || id.namaSekolah || 'SMAN Khusus Keberbakatan Olahraga Prov. Sulawesi Selatan';
+      const alamatSekolah = sek.alamatSekolah || 'Jl. Pajjaiang Komp. GOR Sudiang';
+      const kelas = sek.kelas || id.kelas || 'X 1';
+      const fase = sek.fase || 'E';
+      const semester = sek.semester || id.semester || 'I (Satu)';
+      const tahunPelajaran = sek.tahunAjaran || id.tahunPelajaran || '2025/2026';
+
+      const waliKelas = sek.namaWaliKelas || id.waliKelas || '-';
+      const nipWali = sek.nipWaliKelas || id.nipWaliKelas || '-';
+      const kepalaSekolah = sek.namaKepalaSekolah || 'A. Syamsualam, S.Pd., M.Si.';
+      const nipKepsek = sek.nipKepalaSekolah || '19801220 200904 1 001';
+      const titimangsaRapor = sek.tempatTanggalRapor || 'Makassar, 19 Desember 2025';
+
+      // Bagi mata pelajaran: Halaman 1 = No 1..8, Halaman 2 = No 9..16 + baris kosong 17..18
+      const page1Mapel = mapelNilai.slice(0, 8);
+      const page2Mapel = mapelNilai.slice(8, 16);
+
+      let page1RowsHtml = '';
+      page1Mapel.forEach((m, idx) => {
+        page1RowsHtml += `
+          <tr>
+            <td class="text-center" style="width: 30px;">${idx + 1}</td>
+            <td style="width: 155px;">${escapeHtml(m.namaMapel)}</td>
+            <td class="text-center fw-bold" style="width: 48px;">${escapeHtml(m.nilaiAkhir !== '' && m.nilaiAkhir !== null ? m.nilaiAkhir : '')}</td>
+            <td style="font-size: 8.7pt;">${buildCapaianKompetensiHtml(namaSiswa, m)}</td>
+          </tr>
+        `;
+      });
+
+      let page2RowsHtml = '';
+      page2Mapel.forEach((m, idx) => {
+        page2RowsHtml += `
+          <tr>
+            <td class="text-center" style="width: 30px;">${idx + 9}</td>
+            <td style="width: 155px;">${escapeHtml(m.namaMapel)}</td>
+            <td class="text-center fw-bold" style="width: 48px;">${escapeHtml(m.nilaiAkhir !== '' && m.nilaiAkhir !== null ? m.nilaiAkhir : '')}</td>
+            <td style="font-size: 8.7pt;">${buildCapaianKompetensiHtml(namaSiswa, m)}</td>
+          </tr>
+        `;
+      });
+      // Tambahan baris 17 & 18 sesuai format rapor
+      for (let emptyNo = 17; emptyNo <= 18; emptyNo++) {
+        page2RowsHtml += `
+          <tr style="height: 24px;">
+            <td class="text-center">${emptyNo}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        `;
+      }
+
+      // HALAMAN 1 NILAI RAPOR
+      const raporPage1 = `
+        <div class="a4-page">
+          ${getWatermarkSvgHtml()}
+          <div class="a4-content">
+            <div class="d-flex justify-content-between align-items-center pb-2 mb-2" style="border-bottom: 3px solid #000000;">
+              <div class="d-flex align-items-center gap-2" style="min-width: 115px;">
+                <img src="assets/img/Logo pemprov bg putih.png" alt="Logo Provinsi Sulawesi Selatan" style="height: 54px; width: auto; object-fit: contain;" />
+                <img src="assets/img/Logo SMANKO fix (bg putih).png" alt="Logo SMANKO Sulsel" style="height: 56px; width: auto; object-fit: contain;" />
+              </div>
+              <div class="text-center px-2 flex-grow-1">
+                <div class="fw-bold" style="font-size: 12.5pt; letter-spacing: 0.3px;">LAPORAN HASIL BELAJAR INTRAKURIKULER</div>
+                <div class="fw-bold" style="font-size: 11.5pt; margin-top: 2px;">( RAPOR INTRAKURIKULER )</div>
+              </div>
+              <div class="d-flex align-items-center justify-content-end" style="min-width: 115px;">
+                <img src="assets/img/Logo Merdeka Belajar bg putih.png" alt="Logo Kurikulum Merdeka" style="height: 46px; width: auto; object-fit: contain;" />
+              </div>
+            </div><br>
+
+            <table style="width: 100%; font-size: 9.2pt; margin-bottom: 8px;">
+              <tr>
+                <td style="width: 18%;">Nama Peserta Didik</td>
+                <td style="width: 2%;">:</td>
+                <td style="width: 43%;" class="fw-bold text-uppercase">${escapeHtml(namaSiswa)}</td>
+                <td style="width: 16%;">Kelas</td>
+                <td style="width: 2%;">:</td>
+                <td style="width: 19%;">${escapeHtml(kelas)}</td>
+              </tr>
+              <tr>
+                <td>NIS/NISN</td>
+                <td>:</td>
+                <td>${escapeHtml(nisNisn)}</td>
+                <td>Fase</td>
+                <td>:</td>
+                <td>${escapeHtml(fase)}</td>
+              </tr>
+              <tr>
+                <td>Sekolah</td>
+                <td>:</td>
+                <td>${escapeHtml(namaSekolah)}</td>
+                <td>Semester</td>
+                <td>:</td>
+                <td>${escapeHtml(semester)}</td>
+              </tr>
+              <tr>
+                <td>Alamat</td>
+                <td>:</td>
+                <td>${escapeHtml(alamatSekolah)}</td>
+                <td>Tahun Pelajaran</td>
+                <td>:</td>
+                <td>${escapeHtml(tahunPelajaran)}</td>
+              </tr>
+            </table>
+
+            <table class="rapor-table">
+              <thead>
+                <tr>
+                  <th style="width: 30px;">No</th>
+                  <th style="width: 155px;">Mata Pelajaran</th>
+                  <th style="width: 48px;">Nilai<br>Akhir</th>
+                  <th>Capaian Kompetensi</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${page1RowsHtml}
+              </tbody>
+            </table>
+          </div>
+          ${buildRaporPageFooterHtml(namaSekolah, namaSiswa, kelas, fase, tahunPelajaran, semester, 1)}
+        </div>
+      `;
+
+      // HALAMAN 2 NILAI RAPOR
+      const raporPage2 = `
+        <div class="a4-page">
+          ${getWatermarkSvgHtml()}
+          <div class="a4-content">
+            <table class="rapor-table">
+              <thead>
+                <tr>
+                  <th style="width: 30px;">No</th>
+                  <th style="width: 155px;">Muatan Pelajaran</th>
+                  <th style="width: 48px;">Nilai<br>Akhir</th>
+                  <th>Capaian Kompetensi</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${page2RowsHtml}
+              </tbody>
+            </table>
+          </div>
+          ${buildRaporPageFooterHtml(namaSekolah, namaSiswa, kelas, fase, tahunPelajaran, semester, 2)}
+        </div>
+      `;
+
+      // HALAMAN 3 NILAI RAPOR (EKSTRAKURIKULER, KETIDAKHADIRAN & TANDA TANGAN)
+      let ekskulRowsHtml = '';
+      for (let i = 0; i < 5; i++) {
+        const ek = ekskulList[i] || { nama: '', keterangan: '' };
+        ekskulRowsHtml += `
+          <tr style="height: 24px;">
+            <td class="text-center" style="width: 32px;">${i + 1}</td>
+            <td style="width: 185px;">${escapeHtml(ek.nama)}</td>
+            <td>${escapeHtml(ek.keterangan)}</td>
+          </tr>
+        `;
+      }
+
+      const sakitVal = (siswa.sakit && String(siswa.sakit) !== '0') ? siswa.sakit : '-';
+      const izinVal = (siswa.izin && String(siswa.izin) !== '0') ? siswa.izin : '-';
+      const alphaVal = (siswa.alpha && String(siswa.alpha) !== '0') ? siswa.alpha : '-';
+
+      const raporPage3 = `
+        <div class="a4-page">
+          ${getWatermarkSvgHtml()}
+          <div class="a4-content">
+            <table class="rapor-table mb-4">
+              <thead>
+                <tr>
+                  <th style="width: 32px;">No</th>
+                  <th style="width: 185px;">Ekstrakurikuler</th>
+                  <th>Keterangan</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${ekskulRowsHtml}
+              </tbody>
+            </table>
+
+            <table class="rapor-table mb-4" style="width: 82mm;">
+              <thead>
+                <tr>
+                  <th colspan="3">Ketidakhadiran</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 44mm;">Sakit</td>
+                  <td class="text-center" style="width: 18mm;">${escapeHtml(sakitVal)}</td>
+                  <td style="width: 20mm;">hari</td>
+                </tr>
+                <tr>
+                  <td>Izin</td>
+                  <td class="text-center">${escapeHtml(izinVal)}</td>
+                  <td>hari</td>
+                </tr>
+                <tr>
+                  <td>Tanpa Keterangan</td>
+                  <td class="text-center">${escapeHtml(alphaVal)}</td>
+                  <td>hari</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="d-flex justify-content-between align-items-start mt-4 pt-2 px-3 text-center" style="font-size: 9.8pt;">
+              <div style="width: 65mm;">
+                <div>&nbsp;</div>
+                <div>Orang Tua,</div>
+                <div style="height: 20mm;"></div>
+                <div>........................................</div>
+              </div>
+              <div style="width: 72mm;">
+                <div>${escapeHtml(titimangsaRapor)}</div>
+                <div>Wali Kelas ${escapeHtml(kelas)},</div>
+                <div style="height: 20mm;"></div>
+                <div class="fw-bold text-decoration-underline">${escapeHtml(waliKelas)}</div>
+                <div>NIP. ${escapeHtml(nipWali)}</div>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-center mt-4 pt-2" style="font-size: 9.8pt;">
+              <div style="width: 75mm;">
+                <div class="text-center">Mengetahui,</div>
+                <div class="text-center">Kepala Sekolah,</div>
+                <div style="height: 20mm;"></div>
+                <div class="fw-bold text-decoration-underline text-center">${escapeHtml(kepalaSekolah)}</div>
+                <div class="text-center">NIP. ${escapeHtml(nipKepsek)}</div>
+              </div>
+            </div>
+          </div>
+          ${buildRaporPageFooterHtml(namaSekolah, namaSiswa, kelas, fase, tahunPelajaran, semester, 3)}
+        </div>
+      `;
+
+      container.innerHTML = raporPage1 + raporPage2 + raporPage3;
+    }
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function escapeQuotes(str) {
+      return String(str || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+    }
+  </script>
+</body>
+</html>
