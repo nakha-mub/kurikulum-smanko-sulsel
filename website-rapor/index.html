@@ -129,7 +129,7 @@
       </a>
       <div class="d-flex align-items-center gap-2">
         <button type="button" class="btn btn-light btn-sm fw-semibold text-primary" onclick="loadLandingPortal()">
-          <i class="bi bi-arrow-clockwise me-1"></i> Segarkan Daftar
+          <i class="bi bi-arrow-clockwise me-1"></i> Refresh
         </button>
       </div>
     </div>
@@ -149,12 +149,13 @@
                    style="width: 58px; height: 58px; object-fit: contain;" />
             </div>
             <div>
-              <span class="badge bg-white text-primary fw-semibold mb-1">
-                <i class="bi bi-mortarboard-fill me-1"></i> Sistem Informasi Pengolahan Nilai &amp; Rapor
-              </span>
-              <h2 class="fw-bold mb-0">Portal Website Rapor Akademik</h2>
+              
+              <h2 class="fw-bold mb-0"><big>Portal Utama</big><br>Website Rapor Akademik</h2>
             </div>
           </div>
+            <span class="badge bg-white text-primary fw-semibold mb-1">
+                <i class="bi bi-mortarboard-fill me-1"></i> Sistem Informasi Pengolahan Nilai &amp; Rapor
+              </span>
           <p class="mb-2 opacity-90" style="max-width: 720px;">
             Selamat datang di portal utama pengelolaan nilai dan rapor peserta didik
             <strong>SMAN Khusus Keberbakatan Olahraga Provinsi Sulawesi Selatan</strong>.
@@ -294,7 +295,7 @@
       // Otomatis diarahkan ke "267-S1/index.html" (atau ubah ke "/index_2.html" jika nama filenya index_2.html)
       const isExternal = /^https?:\/\//i.test(url);
       if (!isExternal && !/\.html(\?.*)?$/i.test(url)) {
-        url = url.replace(/\/+$/, '') + '/';
+        url = url.replace(/\/+$/, '') + '/index.html';
       }
       return url;
     }
