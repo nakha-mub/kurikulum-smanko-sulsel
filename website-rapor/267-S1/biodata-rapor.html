@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pengisian Biodata Siswa - Website Rapor Akademik</title>
+  <link rel="icon" type="image/png" href="assets/img/Logo SMANKO fix (bg putih).png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --primary-color: #0f4c81;
+      --secondary-color: #1b6ca8;
+      --bg-light: #f4f7fb;
+    }
+    body {
+      background-color: var(--bg-light);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: #1e293b;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .navbar-custom {
+      position: sticky;
+      top: 0;
+      z-index: 1030;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    }
+    .hero-banner {
+      background: linear-gradient(135deg, #0f4c81 0%, #1e6091 100%);
+      color: #ffffff;
+      border-radius: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-banner::after {
+      content: "";
+      position: absolute;
+      right: -40px;
+      bottom: -40px;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      pointer-events: none;
+    }
+    .card-modern {
+      border: none;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(15, 76, 129, 0.06);
+      background: #ffffff;
+    }
+    .kelas-btn-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      background: #ffffff;
+      transition: all 0.22s ease;
+      cursor: pointer;
+    }
+    .kelas-btn-card:hover {
+      border-color: var(--secondary-color);
+      box-shadow: 0 10px 24px rgba(15, 76, 129, 0.12);
+      transform: translateY(-3px);
+    }
+    .badge-tingkat-x { background-color: #e0f2fe; color: #0369a1; }
+    .badge-tingkat-xi { background-color: #fef3c7; color: #b45309; }
+    .badge-tingkat-xii { background-color: #dcfce7; color: #15803d; }
+
+    /* Gaya Google Form Terpusat */
+    .gform-wrapper {
+      max-width: 740px;
+      margin: 0 auto;
+    }
+    .gform-header-card {
+      border: 1px solid #e2e8f0;
+      border-top: 10px solid var(--primary-color);
+      border-radius: 14px;
+      box-shadow: 0 3px 12px rgba(15, 76, 129, 0.07);
+      background: #ffffff;
+    }
+    .gform-question-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      box-shadow: 0 2px 8px rgba(15, 76, 129, 0.04);
+      background: #ffffff;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .gform-question-card:focus-within {
+      border-left: 6px solid var(--primary-color);
+      box-shadow: 0 6px 18px rgba(15, 76, 129, 0.1);
+    }
+    .gform-section-banner {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: #ffffff;
+      border-radius: 12px 12px 0 0;
+      padding: 0.75rem 1.25rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+    }
+    .gform-label {
+      font-weight: 600;
+      font-size: 0.96rem;
+      color: #0f172a;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .gform-input {
+      border: none;
+      border-bottom: 2px solid #cbd5e1;
+      border-radius: 6px 6px 0 0;
+      background-color: #f8fafc;
+      padding: 0.65rem 0.85rem;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+    }
+    .gform-input:focus {
+      background-color: #ffffff;
+      border-bottom-color: var(--primary-color);
+      box-shadow: none;
+    }
+    .gform-select {
+      border: 2px solid #cbd5e1;
+      border-radius: 10px;
+      background-color: #f8fafc;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #0f172a;
+      transition: all 0.2s ease;
+    }
+    .gform-select:focus {
+      background-color: #ffffff;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.2rem rgba(15, 76, 129, 0.15);
+    }
+    .privacy-lock-box {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      border: 1px solid #fde68a;
+      border-left: 5px solid #d97706;
+      border-radius: 12px;
+    }
+    .wa-preview-box {
+      background-color: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 10px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.82rem;
+      white-space: pre-wrap;
+      max-height: 230px;
+      overflow-y: auto;
+    }
+    .info-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #64748b;
+      font-weight: 600;
+    }
+    .loading-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(3px);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    footer {
+      margin-top: auto;
+      background: #ffffff;
+      border-top: 1px solid #e2e8f0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loading Overlay -->
+  <div id="loadingOverlay" class="loading-overlay">
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status"></div>
+    <p id="loadingText" class="mt-3 fw-semibold text-primary">Memuat data dari Spreadsheet...</p>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-dark navbar-custom py-3 mb-4">
+    <div class="container-fluid px-4">
+      <a href="#" onclick="kembaliKePilihKelas(event)" class="navbar-brand fw-bold d-flex align-items-center gap-2 mb-0">
+        <img src="assets/img/Logo SMANKO fix (bg putih).png" alt="Logo SMANKO"
+             style="width: 34px; height: 34px; object-fit: contain; border-radius: 6px; background: #fff; padding: 2px;"
+             onerror="this.style.display='none'" />
+        <span>SMANKO SULSEL &mdash; Biodata Peserta Didik</span>
+      </a>
+      <div class="d-flex align-items-center gap-2 flex-wrap">
+        <button type="button" id="btnNavPilihKelas" class="btn btn-warning btn-sm fw-semibold text-dark d-none" onclick="kembaliKePilihKelas()">
+          <i class="bi bi-grid-3x3-gap-fill me-1"></i> Ganti Kelas
+        </button>
+        <button type="button" class="btn btn-light btn-sm fw-semibold text-primary" onclick="refreshCurrentView()">
+          <i class="bi bi-arrow-clockwise me-1"></i> Segarkan
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid px-3 px-md-4 pb-5">
+
+    <!-- Pesan Error Global -->
+    <div id="globalErrorAlert" class="alert alert-danger d-none mb-4" role="alert"></div>
+
+    <!-- ===================================================================== -->
+    <!-- TAMPILAN 1: PILIHAN BUTTON KELAS SESUAI SHEET PADA SPREADSHEET        -->
+    <!-- ===================================================================== -->
+    <div id="viewPilihKelas">
+      <div class="hero-banner p-4 p-md-5 mb-4 shadow-sm">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-8">
+            <span class="badge bg-white text-primary fw-semibold mb-2">
+              <i class="bi bi-shield-lock-fill me-1"></i> Formulir Pemutakhiran Biodata Rapor (Terproteksi Privasi)
+            </span>
+            <h2 class="fw-bold mb-2">Pengisian Biodata Peserta Didik</h2>
+            <p class="mb-0 opacity-90" style="max-width: 720px;">
+              Silakan pilih tombol <strong>Kelas</strong> di bawah ini sesuai dengan rombongan belajar Anda untuk mengisi atau memperbarui biodata siswa secara langsung ke database rapor.
+            </p>
+          </div>
+          <div class="col-lg-4 text-lg-end">
+            <div class="bg-white bg-opacity-10 border border-white border-opacity-25 rounded-4 p-3 text-start d-inline-block w-100" style="max-width: 330px;">
+              <div class="small opacity-75 mb-1"><i class="bi bi-info-circle me-1"></i> Alur Pengisian</div>
+              <ol class="small mb-0 ps-3 opacity-95" style="line-height: 1.55;">
+                <li>Klik tombol <strong>Kelas</strong> Anda.</li>
+                <li>Pilih <strong>Nama Peserta Didik</strong> pada dropdown.</li>
+                <li>Jika data sudah pernah diisi, masukkan <strong>NIS atau NISN</strong> untuk membuka &amp; mengedit data.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-modern p-4">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+          <div>
+            <h5 class="fw-bold text-primary mb-1">
+              <i class="bi bi-collection-fill me-2"></i>Pilih Kelas (<span id="totalSheetCount">0</span> Kelas Tersedia)
+            </h5>
+            <p class="text-muted small mb-0">
+              Daftar tombol kelas dihasilkan otomatis sesuai jumlah dan nama sheet pada spreadsheet.
+            </p>
+          </div>
+
+          <div class="d-flex flex-wrap gap-2 align-items-center">
+            <div class="btn-group btn-group-sm" role="group">
+              <button type="button" class="btn btn-primary active" id="filterAllBtn" onclick="setFilterTingkat('ALL')">Semua</button>
+              <button type="button" class="btn btn-outline-primary" id="filterXBtn" onclick="setFilterTingkat('X')">Kelas X</button>
+              <button type="button" class="btn btn-outline-primary" id="filterXIBtn" onclick="setFilterTingkat('XI')">Kelas XI</button>
+              <button type="button" class="btn btn-outline-primary" id="filterXIIBtn" onclick="setFilterTingkat('XII')">Kelas XII</button>
+            </div>
+
+            <div class="input-group input-group-sm" style="width: 220px;">
+              <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+              <input type="text" id="searchSheetInput" class="form-control" placeholder="Cari nama kelas..." onkeyup="renderClassButtons()" />
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-3" id="classButtonsGrid"></div>
+      </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- TAMPILAN 2: REKAP STATUS WA & GOOGLE FORM BIODATA PER KELAS           -->
+    <!-- ===================================================================== -->
+    <div id="viewFormKelas" class="d-none">
+      <div class="gform-wrapper">
+
+        <!-- Header Utama Google Form -->
+        <div class="gform-header-card p-4 mb-3">
+          <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+            <span class="badge bg-primary text-white px-3 py-2 fw-bold fs-6">
+              <i class="bi bi-mortarboard-fill me-1"></i> Kelas <span id="formHeaderClass">-</span>
+            </span>
+            <button type="button" class="btn btn-outline-secondary btn-sm fw-semibold" onclick="kembaliKePilihKelas()">
+              <i class="bi bi-arrow-left me-1"></i> Kembali ke Pilihan Kelas
+            </button>
+          </div>
+          <h3 class="fw-bold text-dark mt-2 mb-1">Formulir Biodata Peserta Didik</h3>
+          <p class="text-muted small mb-0">
+            Pilih nama peserta didik pada dropdown di bawah ini. Demi menjaga <strong>privasi data siswa</strong>, biodata yang sudah diisi hanya dapat dibuka dan diubah setelah memverifikasi <strong>NIS atau NISN</strong> siswa bersangkutan.
+          </p>
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- PANEL REKAP DAFTAR NAMA & STATUS PENGISIAN (TERSEMBUNYI DEFAULT)    -->
+        <!-- =================================================================== -->
+        <div class="gform-question-card p-4 mb-3">
+          <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <div>
+              <h6 class="fw-bold text-primary mb-0">
+                <i class="bi bi-whatsapp text-success me-1"></i> Rekap Status Pengisian Kelas <span id="rekapClassTitle">-</span>
+              </h6>
+              <div class="small text-muted">
+                Sudah Mengisi: <strong class="text-success" id="rekapCountSudah">0</strong> |
+                Belum Mengisi: <strong class="text-danger" id="rekapCountBelum">0</strong>
+              </div>
+            </div>
+
+            <div class="d-flex gap-2 flex-wrap">
+              <button type="button" id="btnToggleRekapWa" class="btn btn-outline-primary btn-sm fw-semibold"
+                      data-bs-toggle="collapse" data-bs-target="#collapseRekapWa"
+                      aria-expanded="false" aria-controls="collapseRekapWa">
+                <i class="bi bi-eye me-1"></i> Lihat Daftar
+              </button>
+            </div>
+          </div>
+
+          <div class="collapse mt-3" id="collapseRekapWa">
+            <div class="d-flex justify-content-end mb-2">
+              <button type="button" class="btn btn-success btn-sm fw-semibold" onclick="copyRekapToWhatsApp()">
+                <i class="bi bi-clipboard-check me-1"></i> <span id="btnCopyWaText">Salin Teks ke WA</span>
+              </button>
+            </div>
+            <div class="wa-preview-box p-3 text-dark" id="waRekapPreviewText">Memuat daftar...</div>
+          </div>
+        </div>
+
+        <!-- Alert Status Simpan -->
+        <div id="formSaveAlert" class="alert d-none mb-3 shadow-sm" role="alert"></div>
+
+        <form id="biodataForm" onsubmit="handleSaveBiodata(event)">
+
+          <!-- KARTU PERTANYAAN UTAMA: DROPDOWN PILIH NAMA SISWA -->
+          <div class="gform-question-card p-4 mb-3" style="border-left: 6px solid var(--primary-color);">
+            <label for="selectStudentDropdown" class="gform-label">
+              Nama Peserta Didik <span class="text-danger">*</span>
+            </label>
+            <p class="text-muted small mb-2">
+              Pilih nama siswa dari daftar kelas <strong id="labelKelasDropdown">-</strong> (<span id="countStudentsInClass">0</span> siswa)
+            </p>
+
+            <select id="selectStudentDropdown" class="form-select gform-select" required onchange="handleStudentDropdownChange(this.value)">
+              <option value="">-- Pilih Nama Peserta Didik --</option>
+            </select>
+
+            <!-- Ringkasan Identitas Non-Sensitif Siswa yang Dipilih -->
+            <div id="selectedStudentMetaBox" class="mt-3 p-3 rounded-3 bg-light border d-none">
+              <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+                <span class="badge bg-primary-subtle text-primary border border-primary-subtle fw-semibold" id="metaStatusPengisian">-</span>
+                <span class="small text-muted fw-semibold" id="metaRowSpreadsheet">Range: -</span>
+              </div>
+              <div class="row g-2 small">
+                <div class="col-4">
+                  <div class="info-label">No. Urut</div>
+                  <div class="fw-bold text-dark" id="metaNo">-</div>
+                </div>
+                <div class="col-4">
+                  <div class="info-label">L / P</div>
+                  <div class="fw-bold text-dark" id="metaJk">-</div>
+                </div>
+                <div class="col-4">
+                  <div class="info-label">Cabang Olahraga</div>
+                  <div class="fw-bold text-dark" id="metaCabor">-</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- =============================================================== -->
+            <!-- GERBANG PRIVASI: VERIFIKASI NIS / NISN JIKA DATA SUDAH TERISI   -->
+            <!-- =============================================================== -->
+            <div id="privacyVerificationBox" class="privacy-lock-box p-3 p-md-4 mt-3 d-none">
+              <div class="d-flex align-items-start gap-2 mb-2">
+                <i class="bi bi-shield-lock-fill text-warning fs-4"></i>
+                <div>
+                  <h6 class="fw-bold text-dark mb-1">Data Biodata Dilindungi Privasi</h6>
+                  <p class="small text-muted mb-0">
+                    Biodata untuk peserta didik ini <strong>sudah pernah diisi</strong>. Untuk mencegah orang lain melihat atau mengubah data Anda, masukkan <strong>NIS atau NISN</strong> Anda untuk membuka formulir.
+                  </p>
+                </div>
+              </div>
+
+              <div id="privacyAlertBox" class="alert alert-danger py-2 px-3 small mt-2 mb-2 d-none"></div>
+
+              <div class="row g-2 align-items-center mt-2">
+                <div class="col-sm-8">
+                  <input type="password" id="inputVerificationKey" class="form-control bg-white"
+                         placeholder="Masukkan NIS atau NISN Anda..."
+                         onkeydown="if(event.key==='Enter'){event.preventDefault(); verifyStudentPrivacy();}" />
+                </div>
+                <div class="col-sm-4 d-grid">
+                  <button type="button" class="btn btn-warning fw-bold text-dark" onclick="verifyStudentPrivacy()">
+                    <i class="bi bi-unlock-fill me-1"></i> Buka Data
+                  </button>
+                </div>
+              </div>
+              <div class="form-check mt-2">
+                <input class="form-check-input" type="checkbox" id="chkShowVerifyKey"
+                       onchange="document.getElementById('inputVerificationKey').type = this.checked ? 'text' : 'password'">
+                <label class="form-check-label small text-muted" for="chkShowVerifyKey">
+                  Tampilkan NIS / NISN yang diketik
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- CONTAINER FIELD BIODATA (MUNCUL JIKA SISWA BARU MENGISI ATAU SUDAH TERVERIFIKASI) -->
+          <div id="biodataFieldsWrapper" class="d-none">
+
+            <!-- BAGIAN 1: IDENTITAS PESERTA DIDIK (Kolom G - K) -->
+            <div class="gform-question-card mb-3 overflow-hidden">
+              <div class="gform-section-banner">
+                <i class="bi bi-person-badge-fill me-2"></i>Bagian 1 &mdash; Identitas Peserta Didik
+              </div>
+              <div class="p-4">
+                <div class="mb-4">
+                  <label for="fldTempatLahir" class="gform-label">Tempat Lahir</label>
+                  <input type="text" id="fldTempatLahir" class="form-control gform-input" placeholder="Jawaban Anda (Contoh: Makassar)" />
+                </div>
+
+                <div class="mb-4">
+                  <label for="fldTanggalLahir" class="gform-label">Tanggal Lahir</label>
+                  <input type="text" id="fldTanggalLahir" class="form-control gform-input" placeholder="Jawaban Anda (Contoh: 17 Agustus 2010)" />
+                </div>
+
+                <div class="mb-4">
+                  <label for="fldAgama" class="gform-label">Agama</label>
+                  <select id="fldAgama" class="form-select gform-input">
+                    <option value="">-- Pilih Agama --</option>
+                    <option value="Islam">Islam</option>
+                    <option value="Kristen Protestan">Kristen Protestan</option>
+                    <option value="Katolik">Katolik</option>
+                    <option value="Hindu">Hindu</option>
+                    <option value="Buddha">Buddha</option>
+                    <option value="Konghucu">Konghucu</option>
+                  </select>
+                </div>
+
+                <div class="mb-4">
+                  <label for="fldPendidikanSebelumnya" class="gform-label">Pendidikan Sebelumnya (Asal SMP/MTs)</label>
+                  <input type="text" id="fldPendidikanSebelumnya" class="form-control gform-input" placeholder="Jawaban Anda (Contoh: SMP Negeri 1 Makassar)" />
+                </div>
+
+                <div class="mb-0">
+                  <label for="fldAlamatSiswa" class="gform-label">Alamat Peserta Didik</label>
+                  <textarea id="fldAlamatSiswa" rows="2" class="form-control gform-input" placeholder="Jawaban Anda (Alamat lengkap peserta didik)"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- BAGIAN 2: DATA ORANG TUA KANDUNG (Kolom L - T) -->
+            <div class="gform-question-card mb-3 overflow-hidden">
+              <div class="gform-section-banner">
+                <i class="bi bi-people-fill me-2"></i>Bagian 2 &mdash; Data Orang Tua Kandung
+              </div>
+              <div class="p-4">
+                <div class="mb-4">
+                  <label for="fldNamaAyah" class="gform-label">Nama Ayah</label>
+                  <input type="text" id="fldNamaAyah" class="form-control gform-input" placeholder="Jawaban Anda" />
+                </div>
+
+                <div class="mb-4">
+                  <label for="fldNamaIbu" class="gform-label">Nama Ibu</label>
+                  <input type="text" id="fldNamaIbu" class="form-control gform-input" placeholder="Jawaban Anda" />
+                </div>
+
+                <div class="mb-4">
+                  <label for="fldPekerjaanAyah" class="gform-label">Pekerjaan Ayah</label>
+                  <input type="text" id="fldPekerjaanAyah" class="form-control gform-input" placeholder="Jawaban Anda" />
+                </div>
+
+                <div class="mb-4">
+                  <label for="fldPekerjaanIbu" class="gform-label">Pekerjaan Ibu</label>
+                  <input type="text" id="fldPekerjaanIbu" class="form-control gform-input" placeholder="Jawaban Anda" />
+                </div>
+
+                <div class="mb-4">
+                  <label for="fldJalanOrtu" class="gform-label">Alamat Orang Tua &mdash; Jalan / Dusun / RT-RW</label>
+                  <input type="text" id="fldJalanOrtu" class="form-control gform-input" placeholder="Jawaban Anda" />
+                </div>
+
+                <div class="mb-4">
+                  <label for="fldKelurahanOrtu" class="gform-label">Alamat Orang Tua &mdash; Kelurahan / Desa</label>
+                  <input type="text" id="fldKelurahanOrtu" class="form-control gform-input" placeholder="Jawaban Anda" />
+                </div>
+
+                <div class="mb-4">
+                  <label for="fldKecamatanOrtu" class="gform-label">Alamat Orang Tua &mdash; Kecamatan</label>
+                  <input type="text" id="fldKecamatanOrtu" class="form-control gform-input" placeholder="Jawaban Anda" />
+                </div>
+
+                <div class="mb-4">
+                  <label for="fldKabKotaOrtu" class="gform-label">Alamat Orang Tua &mdash; Kabupaten / Kota</label>
+                  <input type="text" id="fldKabKotaOrtu" class="form-control gform-input" placeholder="Jawaban Anda" />
+                </div>
+
+                <div class="mb-0">
+                  <label for="fldProvinsiOrtu" class="gform-label">Alamat Orang Tua &mdash; Provinsi</label>
+                  <input type="text" id="fldProvinsiOrtu" class="form-control gform-input" placeholder="Jawaban Anda" />
+                </div>
+              </div>
+            </div>
+
+            <!-- BAGIAN 3: WALI PESERTA DIDIK & KONTAK (Kolom U - X) -->
+            <div class="gform-question-card mb-4 overflow-hidden">
+              <div class="gform-section-banner d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <span><i class="bi bi-person-check-fill me-2"></i>Bagian 3 &mdash; Wali Peserta Didik &amp; Nomor Telepon</span>
+                <button type="button" class="btn btn-light btn-sm fw-semibold text-primary py-0 px-2" onclick="salinAlamatOrtuKeWali()">
+                  <i class="bi bi-files me-1"></i> Samakan Alamat Wali dgn Ortu
+                </button>
+              </div>
+              <div class="p-4">
+                <div class="mb-4">
+                  <label for="fldNamaWali" class="gform-label">Nama Wali <span class="text-muted fw-normal small">(Kosongkan jika tidak ada)</span></label>
+                  <input type="text" id="fldNamaWali" class="form-control gform-input" placeholder="Jawaban Anda" />
+                </div>
+
+                <div class="mb-4">
+                  <label for="fldPekerjaanWali" class="gform-label">Pekerjaan Wali</label>
+                  <input type="text" id="fldPekerjaanWali" class="form-control gform-input" placeholder="Jawaban Anda" />
+                </div>
+
+                <div class="mb-4">
+                  <label for="fldAlamatWali" class="gform-label">Alamat Wali</label>
+                  <textarea id="fldAlamatWali" rows="2" class="form-control gform-input" placeholder="Jawaban Anda"></textarea>
+                </div>
+
+                <div class="mb-0">
+                  <label for="fldNomorTelepon" class="gform-label">Nomor Telepon / HP (WhatsApp)</label>
+                  <input type="text" id="fldNomorTelepon" class="form-control gform-input" placeholder="Jawaban Anda (Contoh: 081234567890)" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Tombol Submit ala Google Form -->
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+              <button type="submit" class="btn btn-primary fw-bold px-4 py-2 shadow-sm">
+                <i class="bi bi-send-check-fill me-1"></i> Kirim &amp; Simpan Biodata
+              </button>
+
+              <button type="button" class="btn btn-link text-decoration-none fw-semibold text-secondary" onclick="resetFormToSavedData()">
+                <i class="bi bi-arrow-counterclockwise me-1"></i> Batalkan Perubahan
+              </button>
+            </div>
+
+          </div>
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="py-3 px-4 text-center text-muted small">
+    <div>&copy; <span id="footerYear"></span> <strong>SMAN Khusus Keberbakatan Olahraga Provinsi Sulawesi Selatan</strong> &mdash; Sistem Biodata Rapor Akademik</div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // =========================================================================
+    // KONFIGURASI URL WEB APP APPS SCRIPT (GANTI DENGAN URL /exec DEPLOYMENT ANDA)
+    // =========================================================================
+    const BIODATA_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwe2JiZRGq30-KXHptJMY5RuTvI9809pd9SJTRZ8YDJ94ikRSju9Ix4NlingIBdEDbL/exec';
+
+    let availableSheets = [];
+    let currentFilterTingkat = 'ALL';
+    let activeSheetName = '';
+    let classStudents = [];
+    let selectedStudentIndex = -1;
+    let verifiedStudentKey = '';
+    let unlockedBiodataCache = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+      // Sinkronkan label tombol "Lihat Daftar" / "Sembunyikan Daftar" saat dibuka/ditutup
+      const collapseEl = document.getElementById('collapseRekapWa');
+      const toggleBtn = document.getElementById('btnToggleRekapWa');
+      if (collapseEl && toggleBtn) {
+        collapseEl.addEventListener('show.bs.collapse', () => {
+          toggleBtn.innerHTML = `<i class="bi bi-eye-slash me-1"></i> Sembunyikan Daftar`;
+        });
+        collapseEl.addEventListener('hide.bs.collapse', () => {
+          toggleBtn.innerHTML = `<i class="bi bi-eye me-1"></i> Lihat Daftar`;
+        });
+      }
+
+      loadSheetsList();
+    });
+
+    function showLoading(text) {
+      document.getElementById('loadingText').textContent = text || 'Memproses data...';
+      document.getElementById('loadingOverlay').classList.remove('d-none');
+    }
+
+    function hideLoading() {
+      document.getElementById('loadingOverlay').classList.add('d-none');
+    }
+
+    function showGlobalError(msg) {
+      const box = document.getElementById('globalErrorAlert');
+      if (!msg) {
+        box.classList.add('d-none');
+        box.innerHTML = '';
+      } else {
+        box.innerHTML = `<i class="bi bi-exclamation-triangle-fill me-2"></i>${msg}`;
+        box.classList.remove('d-none');
+      }
+    }
+
+    function refreshCurrentView() {
+      if (activeSheetName) {
+        openClassSheet(activeSheetName);
+      } else {
+        loadSheetsList();
+      }
+    }
+
+    // =========================================================================
+    // 1. MEMUAT DAFTAR SHEET KELAS DARI SPREADSHEET
+    // =========================================================================
+    async function loadSheetsList() {
+      showGlobalError('');
+      if (!BIODATA_APPS_SCRIPT_URL || BIODATA_APPS_SCRIPT_URL.includes('PASTE_URL')) {
+        hideLoading();
+        showGlobalError('Konfigurasi URL belum diisi: Ganti <code>BIODATA_APPS_SCRIPT_URL</code> dengan URL Web App (<code>/exec</code>) dari Apps Script Anda.');
+        return;
+      }
+
+      showLoading('Mengambil daftar sheet kelas dari Spreadsheet Biodata...');
+      try {
+        const res = await fetch(`${BIODATA_APPS_SCRIPT_URL}?action=getSheets`, {
+          method: 'GET',
+          redirect: 'follow'
+        });
+        const json = await res.json();
+        if (json.status === 'error') {
+          throw new Error(json.message);
+        }
+        availableSheets = (json.data && json.data.sheets) ? json.data.sheets : [];
+        renderClassButtons();
+      } catch (err) {
+        showGlobalError('Gagal memuat daftar kelas: ' + escapeHtml(err.message));
+      } finally {
+        hideLoading();
+      }
+    }
+
+    function setFilterTingkat(tingkat) {
+      currentFilterTingkat = tingkat;
+      ['All', 'X', 'XI', 'XII'].forEach(t => {
+        const btn = document.getElementById('filter' + t + 'Btn');
+        if (btn) {
+          btn.className = ((t === 'All' && tingkat === 'ALL') || t === tingkat)
+            ? 'btn btn-primary active'
+            : 'btn btn-outline-primary';
+        }
+      });
+      renderClassButtons();
+    }
+
+    function renderClassButtons() {
+      const keyword = (document.getElementById('searchSheetInput').value || '').toLowerCase().trim();
+      const filtered = availableSheets.filter(item => {
+        const nameUpper = String(item.sheetName || '').trim().toUpperCase();
+        let matchTingkat = true;
+        if (currentFilterTingkat === 'X') {
+          matchTingkat = nameUpper.startsWith('X ') || nameUpper === 'X' || /^X[-_0-9]/.test(nameUpper);
+        } else if (currentFilterTingkat === 'XI') {
+          matchTingkat = nameUpper.startsWith('XI ') || nameUpper === 'XI' || /^XI[-_0-9]/.test(nameUpper);
+        } else if (currentFilterTingkat === 'XII') {
+          matchTingkat = nameUpper.startsWith('XII ') || nameUpper === 'XII' || /^XII[-_0-9]/.test(nameUpper);
+        }
+
+        const matchKeyword = !keyword || nameUpper.toLowerCase().includes(keyword);
+        return matchTingkat && matchKeyword;
+      });
+
+      document.getElementById('totalSheetCount').textContent = filtered.length;
+      const grid = document.getElementById('classButtonsGrid');
+      grid.innerHTML = '';
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-12">
+            <div class="alert alert-light border text-center py-4 text-muted mb-0">
+              Tidak ada sheet kelas yang sesuai dengan filter pencarian.
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach((item, idx) => {
+        const nameUpper = String(item.sheetName || '').trim().toUpperCase();
+        let badgeClass = 'badge-tingkat-x';
+        if (nameUpper.startsWith('XII')) badgeClass = 'badge-tingkat-xii';
+        else if (nameUpper.startsWith('XI')) badgeClass = 'badge-tingkat-xi';
+
+        const total = item.totalSiswa || 0;
+        const sudah = item.sudahMengisi || 0;
+        const persen = total > 0 ? Math.round((sudah / total) * 100) : 0;
+
+        const col = document.createElement('div');
+        col.className = 'col-sm-6 col-md-4 col-xl-3';
+        col.innerHTML = `
+          <div class="kelas-btn-card p-3 h-100 d-flex flex-column justify-content-between"
+               onclick="openClassSheet('${escapeHtmlAttr(item.sheetName)}')">
+            <div>
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="badge ${badgeClass} fs-6 px-3 py-2 fw-bold">
+                  Kelas ${escapeHtml(item.sheetName)}
+                </span>
+                <span class="badge bg-light text-muted border">Sheet #${idx + 1}</span>
+              </div>
+
+              <div class="small text-muted mb-1 d-flex justify-content-between">
+                <span>Total Peserta Didik:</span>
+                <strong class="text-dark">${total} Siswa</strong>
+              </div>
+              <div class="small text-muted mb-2 d-flex justify-content-between">
+                <span>Sudah Mengisi:</span>
+                <strong class="text-success">${sudah} / ${total} (${persen}%)</strong>
+              </div>
+
+              <div class="progress mb-3" style="height: 6px;">
+                <div class="progress-bar bg-primary" role="progressbar" style="width: ${persen}%"></div>
+              </div>
+            </div>
+
+            <button type="button" class="btn btn-primary btn-sm fw-semibold w-100">
+              <i class="bi bi-pencil-square me-1"></i> Isi Biodata Kelas ${escapeHtml(item.sheetName)}
+            </button>
+          </div>
+        `;
+        grid.appendChild(col);
+      });
+    }
+
+    // =========================================================================
+    // 2. MEMBUKA FORM KELAS, REKAP WHATSAPP & DROPDOWN NAMA SISWA
+    // =========================================================================
+    async function openClassSheet(sheetName) {
+      showGlobalError('');
+      showLoading(`Memuat daftar siswa & status pengisian kelas "${sheetName}"...`);
+
+      try {
+        const res = await fetch(`${BIODATA_APPS_SCRIPT_URL}?action=getClassStudents&sheetName=${encodeURIComponent(sheetName)}`, {
+          method: 'GET',
+          redirect: 'follow'
+        });
+        const json = await res.json();
+        if (json.status === 'error') {
+          throw new Error(json.message);
+        }
+
+        activeSheetName = sheetName;
+        classStudents = (json.data && json.data.students) ? json.data.students : [];
+        selectedStudentIndex = -1;
+        verifiedStudentKey = '';
+        unlockedBiodataCache = null;
+
+        document.getElementById('viewPilihKelas').classList.add('d-none');
+        document.getElementById('viewFormKelas').classList.remove('d-none');
+        document.getElementById('btnNavPilihKelas').classList.remove('d-none');
+
+        document.getElementById('formHeaderClass').textContent = sheetName;
+        document.getElementById('rekapClassTitle').textContent = sheetName;
+        document.getElementById('labelKelasDropdown').textContent = sheetName;
+        document.getElementById('countStudentsInClass').textContent = classStudents.length;
+
+        // Pastikan panel rekap WA dalam kondisi tersembunyi secara default
+        const collapseEl = document.getElementById('collapseRekapWa');
+        const toggleBtn = document.getElementById('btnToggleRekapWa');
+        if (collapseEl) {
+          collapseEl.classList.remove('show');
+        }
+        if (toggleBtn) {
+          toggleBtn.setAttribute('aria-expanded', 'false');
+          toggleBtn.innerHTML = `<i class="bi bi-eye me-1"></i> Lihat Daftar`;
+        }
+
+        document.getElementById('selectedStudentMetaBox').classList.add('d-none');
+        document.getElementById('privacyVerificationBox').classList.add('d-none');
+        document.getElementById('biodataFieldsWrapper').classList.add('d-none');
+        document.getElementById('formSaveAlert').classList.add('d-none');
+
+        renderWhatsAppRekap();
+        populateStudentDropdown();
+      } catch (err) {
+        showGlobalError('Gagal memuat data kelas: ' + escapeHtml(err.message));
+      } finally {
+        hideLoading();
+      }
+    }
+
+    function kembaliKePilihKelas(e) {
+      if (e) e.preventDefault();
+      activeSheetName = '';
+      classStudents = [];
+      selectedStudentIndex = -1;
+      verifiedStudentKey = '';
+      unlockedBiodataCache = null;
+
+      document.getElementById('viewFormKelas').classList.add('d-none');
+      document.getElementById('btnNavPilihKelas').classList.add('d-none');
+      document.getElementById('viewPilihKelas').classList.remove('d-none');
+      loadSheetsList();
+    }
+
+    // =========================================================================
+    // REKAP STATUS PENGISIAN UNTUK DI-COPY KE WHATSAPP
+    // =========================================================================
+    function buildWhatsAppRekapText() {
+      const total = classStudents.length;
+      const sudahCount = classStudents.filter(s => s.hasData).length;
+      const belumCount = total - sudahCount;
+
+      const lines = [
+        `*REKAP PENGISIAN BIODATA RAPOR*`,
+        `Kelas: *${activeSheetName}*`,
+        `Sudah Mengisi: *${sudahCount}* | Belum Mengisi: *${belumCount}* (Total: ${total})`,
+        ``
+      ];
+
+      classStudents.forEach((st, idx) => {
+        const nomor = st.no || (idx + 1);
+        const tanda = st.hasData ? '✅ (Sudah)' : '⏳ (Belum)';
+        lines.push(`${nomor}. ${st.nama} — ${tanda}`);
+      });
+
+      lines.push(``);
+      lines.push(`_Mohon bagi peserta didik yang bertanda ⏳ (Belum) agar segera melengkapi biodatanya._`);
+      return lines.join('\n');
+    }
+
+    function renderWhatsAppRekap() {
+      const total = classStudents.length;
+      const sudahCount = classStudents.filter(s => s.hasData).length;
+      const belumCount = total - sudahCount;
+
+      document.getElementById('rekapCountSudah').textContent = sudahCount;
+      document.getElementById('rekapCountBelum').textContent = belumCount;
+      document.getElementById('waRekapPreviewText').textContent = buildWhatsAppRekapText();
+    }
+
+    async function copyRekapToWhatsApp() {
+      const textToCopy = buildWhatsAppRekapText();
+      const btnLabel = document.getElementById('btnCopyWaText');
+
+      try {
+        await navigator.clipboard.writeText(textToCopy);
+        btnLabel.textContent = 'Tersalin ke Clipboard!';
+        setTimeout(() => {
+          btnLabel.textContent = 'Salin Teks ke WA';
+        }, 2200);
+      } catch (err) {
+        const ta = document.createElement('textarea');
+        ta.value = textToCopy;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        btnLabel.textContent = 'Tersalin ke Clipboard!';
+        setTimeout(() => {
+          btnLabel.textContent = 'Salin Teks ke WA';
+        }, 2200);
+      }
+    }
+
+    function populateStudentDropdown() {
+      const selectEl = document.getElementById('selectStudentDropdown');
+      const currentVal = selectEl.value;
+      selectEl.innerHTML = `<option value="">-- Pilih Nama Peserta Didik --</option>`;
+
+      classStudents.forEach((st, idx) => {
+        const statusMark = st.hasData ? '✅ Sudah Mengisi' : '⏳ Belum Mengisi';
+        const opt = document.createElement('option');
+        opt.value = String(idx);
+        opt.textContent = `${st.no}. ${st.nama} (${statusMark})`;
+        selectEl.appendChild(opt);
+      });
+
+      if (currentVal !== '' && Number(currentVal) < classStudents.length) {
+        selectEl.value = currentVal;
+      }
+    }
+
+    // =========================================================================
+    // 3. SAAT NAMA DI DROPDOWN DIPILIH -> CEK PRIVASI DATA
+    // =========================================================================
+    function handleStudentDropdownChange(val) {
+      const saveAlert = document.getElementById('formSaveAlert');
+      saveAlert.classList.add('d-none');
+
+      verifiedStudentKey = '';
+      unlockedBiodataCache = null;
+
+      if (val === '' || val === null || val === undefined) {
+        selectedStudentIndex = -1;
+        document.getElementById('selectedStudentMetaBox').classList.add('d-none');
+        document.getElementById('privacyVerificationBox').classList.add('d-none');
+        document.getElementById('biodataFieldsWrapper').classList.add('d-none');
+        return;
+      }
+
+      const idx = Number(val);
+      if (isNaN(idx) || idx < 0 || idx >= classStudents.length) return;
+
+      selectedStudentIndex = idx;
+      const st = classStudents[idx];
+
+      document.getElementById('selectedStudentMetaBox').classList.remove('d-none');
+      document.getElementById('metaRowSpreadsheet').textContent = `Baris Spreadsheet: G${st.rowNumber}:X${st.rowNumber}`;
+      document.getElementById('metaNo').textContent = st.no || '-';
+      document.getElementById('metaJk').textContent = st.jk || '-';
+      document.getElementById('metaCabor').textContent = st.cabor || '-';
+
+      const statusBadgeEl = document.getElementById('metaStatusPengisian');
+
+      if (st.hasData && st.hasVerificationKey) {
+        statusBadgeEl.className = 'badge bg-warning-subtle text-dark border border-warning-subtle fw-semibold';
+        statusBadgeEl.innerHTML = `<i class="bi bi-lock-fill me-1"></i>Terkunci Privasi (Sudah Terisi ${st.filledFields}/18 Kolom)`;
+
+        document.getElementById('biodataFieldsWrapper').classList.add('d-none');
+        document.getElementById('privacyVerificationBox').classList.remove('d-none');
+        document.getElementById('privacyAlertBox').classList.add('d-none');
+        document.getElementById('inputVerificationKey').value = '';
+        document.getElementById('inputVerificationKey').type = 'password';
+        document.getElementById('chkShowVerifyKey').checked = false;
+        setTimeout(() => document.getElementById('inputVerificationKey').focus(), 100);
+      } else {
+        statusBadgeEl.className = 'badge bg-secondary-subtle text-secondary border fw-semibold';
+        statusBadgeEl.innerHTML = `<i class="bi bi-pencil-square me-1"></i>Belum Ada Data (Pengisian Baru)`;
+
+        document.getElementById('privacyVerificationBox').classList.add('d-none');
+        document.getElementById('biodataFieldsWrapper').classList.remove('d-none');
+        populateFormFields({});
+      }
+    }
+
+    // =========================================================================
+    // VERIFIKASI NIS / NISN KE SERVER UNTUK MEMBUKA DATA SISWA YANG SUDAH TERISI
+    // =========================================================================
+    async function verifyStudentPrivacy() {
+      if (selectedStudentIndex < 0 || selectedStudentIndex >= classStudents.length) return;
+      const st = classStudents[selectedStudentIndex];
+      const inputKey = document.getElementById('inputVerificationKey').value.trim();
+      const privAlert = document.getElementById('privacyAlertBox');
+      privAlert.classList.add('d-none');
+
+      if (!inputKey) {
+        privAlert.textContent = 'Silakan masukkan NIS atau NISN Anda terlebih dahulu.';
+        privAlert.classList.remove('d-none');
+        return;
+      }
+
+      showLoading(`Memverifikasi NIS/NISN untuk ${st.nama}...`);
+      try {
+        const res = await fetch(BIODATA_APPS_SCRIPT_URL, {
+          method: 'POST',
+          redirect: 'follow',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({
+            action: 'verifyAndGetBiodata',
+            sheetName: activeSheetName,
+            rowNumber: st.rowNumber,
+            verificationKey: inputKey
+          })
+        });
+        const json = await res.json();
+
+        if (json.status !== 'success') {
+          privAlert.textContent = json.message || 'NIS / NISN tidak cocok.';
+          privAlert.classList.remove('d-none');
+          return;
+        }
+
+        verifiedStudentKey = inputKey;
+        unlockedBiodataCache = json.biodata || {};
+
+        const statusBadgeEl = document.getElementById('metaStatusPengisian');
+        statusBadgeEl.className = 'badge bg-success-subtle text-success border border-success-subtle fw-semibold';
+        statusBadgeEl.innerHTML = `<i class="bi bi-unlock-fill me-1"></i>Terverifikasi (NIS: ${escapeHtml(json.nis || '-')})`;
+
+        document.getElementById('privacyVerificationBox').classList.add('d-none');
+        document.getElementById('biodataFieldsWrapper').classList.remove('d-none');
+        populateFormFields(unlockedBiodataCache);
+      } catch (err) {
+        privAlert.textContent = 'Gagal terhubung ke server: ' + err.message;
+        privAlert.classList.remove('d-none');
+      } finally {
+        hideLoading();
+      }
+    }
+
+    function populateFormFields(b) {
+      document.getElementById('fldTempatLahir').value = b.tempatLahir || '';
+      document.getElementById('fldTanggalLahir').value = b.tanggalLahir || '';
+
+      const agamaSelect = document.getElementById('fldAgama');
+      const agamaVal = String(b.agama || '').trim();
+      if (agamaVal) {
+        const exists = Array.from(agamaSelect.options).some(o => o.value.toLowerCase() === agamaVal.toLowerCase());
+        if (!exists) {
+          const customOpt = document.createElement('option');
+          customOpt.value = agamaVal;
+          customOpt.textContent = agamaVal;
+          agamaSelect.appendChild(customOpt);
+        }
+        const matchedOpt = Array.from(agamaSelect.options).find(o => o.value.toLowerCase() === agamaVal.toLowerCase());
+        agamaSelect.value = matchedOpt ? matchedOpt.value : agamaVal;
+      } else {
+        agamaSelect.value = '';
+      }
+
+      document.getElementById('fldPendidikanSebelumnya').value = b.pendidikanSebelumnya || '';
+      document.getElementById('fldAlamatSiswa').value = b.alamatSiswa || '';
+      document.getElementById('fldNamaAyah').value = b.namaAyah || '';
+      document.getElementById('fldNamaIbu').value = b.namaIbu || '';
+      document.getElementById('fldPekerjaanAyah').value = b.pekerjaanAyah || '';
+      document.getElementById('fldPekerjaanIbu').value = b.pekerjaanIbu || '';
+      document.getElementById('fldJalanOrtu').value = b.jalanOrtu || '';
+      document.getElementById('fldKelurahanOrtu').value = b.kelurahanOrtu || '';
+      document.getElementById('fldKecamatanOrtu').value = b.kecamatanOrtu || '';
+      document.getElementById('fldKabKotaOrtu').value = b.kabKotaOrtu || '';
+      document.getElementById('fldProvinsiOrtu').value = b.provinsiOrtu || '';
+      document.getElementById('fldNamaWali').value = b.namaWali || '';
+      document.getElementById('fldPekerjaanWali').value = b.pekerjaanWali || '';
+      document.getElementById('fldAlamatWali').value = b.alamatWali || '';
+      document.getElementById('fldNomorTelepon').value = b.nomorTelepon || '';
+    }
+
+    function resetFormToSavedData() {
+      if (selectedStudentIndex < 0 || selectedStudentIndex >= classStudents.length) return;
+      populateFormFields(unlockedBiodataCache || {});
+    }
+
+    function salinAlamatOrtuKeWali() {
+      const parts = [
+        document.getElementById('fldJalanOrtu').value.trim(),
+        document.getElementById('fldKelurahanOrtu').value.trim() ? 'Kel. ' + document.getElementById('fldKelurahanOrtu').value.trim() : '',
+        document.getElementById('fldKecamatanOrtu').value.trim() ? 'Kec. ' + document.getElementById('fldKecamatanOrtu').value.trim() : '',
+        document.getElementById('fldKabKotaOrtu').value.trim(),
+        document.getElementById('fldProvinsiOrtu').value.trim()
+      ].filter(Boolean);
+
+      document.getElementById('fldAlamatWali').value = parts.join(', ');
+    }
+
+    // =========================================================================
+    // 4. SIMPAN / TIMPA BIODATA ATAS NAMA SISWA YANG DIPILIH DI DROPDOWN
+    // =========================================================================
+    async function handleSaveBiodata(event) {
+      event.preventDefault();
+      const saveAlert = document.getElementById('formSaveAlert');
+      saveAlert.classList.add('d-none');
+
+      if (selectedStudentIndex < 0 || selectedStudentIndex >= classStudents.length) {
+        saveAlert.className = 'alert alert-warning py-2 px-3 small';
+        saveAlert.innerHTML = `<i class="bi bi-exclamation-circle-fill me-1"></i> Silakan pilih <strong>Nama Peserta Didik</strong> pada dropdown terlebih dahulu.`;
+        saveAlert.classList.remove('d-none');
+        return;
+      }
+
+      const st = classStudents[selectedStudentIndex];
+
+      const biodataPayload = {
+        tempatLahir: document.getElementById('fldTempatLahir').value.trim(),
+        tanggalLahir: document.getElementById('fldTanggalLahir').value.trim(),
+        agama: document.getElementById('fldAgama').value.trim(),
+        pendidikanSebelumnya: document.getElementById('fldPendidikanSebelumnya').value.trim(),
+        alamatSiswa: document.getElementById('fldAlamatSiswa').value.trim(),
+        namaAyah: document.getElementById('fldNamaAyah').value.trim(),
+        namaIbu: document.getElementById('fldNamaIbu').value.trim(),
+        pekerjaanAyah: document.getElementById('fldPekerjaanAyah').value.trim(),
+        pekerjaanIbu: document.getElementById('fldPekerjaanIbu').value.trim(),
+        jalanOrtu: document.getElementById('fldJalanOrtu').value.trim(),
+        kelurahanOrtu: document.getElementById('fldKelurahanOrtu').value.trim(),
+        kecamatanOrtu: document.getElementById('fldKecamatanOrtu').value.trim(),
+        kabKotaOrtu: document.getElementById('fldKabKotaOrtu').value.trim(),
+        provinsiOrtu: document.getElementById('fldProvinsiOrtu').value.trim(),
+        namaWali: document.getElementById('fldNamaWali').value.trim(),
+        pekerjaanWali: document.getElementById('fldPekerjaanWali').value.trim(),
+        alamatWali: document.getElementById('fldAlamatWali').value.trim(),
+        nomorTelepon: document.getElementById('fldNomorTelepon').value.trim()
+      };
+
+      showLoading(`Menyimpan biodata atas nama ${st.nama} ke sheet "${activeSheetName}"...`);
+      try {
+        const res = await fetch(BIODATA_APPS_SCRIPT_URL, {
+          method: 'POST',
+          redirect: 'follow',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({
+            action: 'saveStudentBiodata',
+            sheetName: activeSheetName,
+            rowNumber: st.rowNumber,
+            verificationKey: verifiedStudentKey,
+            biodata: biodataPayload
+          })
+        });
+        const json = await res.json();
+
+        if (json.status !== 'success') {
+          throw new Error(json.message || 'Gagal menyimpan biodata.');
+        }
+
+        const filledCount = Object.values(biodataPayload).filter(v => String(v || '').trim() !== '').length;
+        st.filledFields = filledCount;
+        st.hasData = filledCount > 0;
+        unlockedBiodataCache = { ...biodataPayload };
+
+        renderWhatsAppRekap();
+        populateStudentDropdown();
+        document.getElementById('selectStudentDropdown').value = String(selectedStudentIndex);
+
+        verifiedStudentKey = '';
+        unlockedBiodataCache = null;
+        handleStudentDropdownChange(String(selectedStudentIndex));
+
+        saveAlert.className = 'alert alert-success py-3 px-4 small';
+        saveAlert.innerHTML = `<i class="bi bi-check-circle-fill me-1"></i> <strong>Tersimpan!</strong> Biodata atas nama <strong>${escapeHtml(st.nama)}</strong> berhasil disimpan pada sheet <strong>${escapeHtml(activeSheetName)}</strong> (baris ${st.rowNumber}), dan formulir otomatis dikunci kembali untuk menjaga privasi Anda.`;
+        saveAlert.classList.remove('d-none');
+        saveAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } catch (err) {
+        saveAlert.className = 'alert alert-danger py-2 px-3 small';
+        saveAlert.innerHTML = `<i class="bi bi-x-circle-fill me-1"></i> <strong>Gagal menyimpan:</strong> ${escapeHtml(err.message)}`;
+        saveAlert.classList.remove('d-none');
+      } finally {
+        hideLoading();
+      }
+    }
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function escapeHtmlAttr(str) {
+      return escapeHtml(str).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+    }
+  </script>
+</body>
+</html>
